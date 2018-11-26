@@ -1,0 +1,12 @@
+package admin.mmmgdzl.service;
+
+import com.mmmgdzl.domain.Result;
+
+public interface AdminService {
+	
+	/**
+	 * π‹¿Ì‘±µ«¬º
+	 */
+	Result adminLogin(String account, String password);
+	
+}
