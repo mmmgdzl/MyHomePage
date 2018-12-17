@@ -3,6 +3,7 @@ package admin.mmmgdzl.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -37,4 +38,10 @@ public class AdminServiceImpl implements AdminService {
 		//结果正确返回数据
 		return Result.OK(adminList.get(0));
 	}
+
+	@Test
+	public void test() {
+		System.out.println(DigestUtils.md5DigestAsHex("asd".getBytes()));
+	}
+
 }

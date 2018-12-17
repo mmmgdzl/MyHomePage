@@ -16,16 +16,6 @@ public class Result {
 	}
 	
 	/**
-	 * 返回码为200的带信息的成功结果
-	 */
-	public static Result OK(String msg) {
-		Result result = new Result();
-		result.code = 200;
-		result.msg = msg;
-		return result;
-	}
-	
-	/**
 	 * 返回码为200的带数据的成功结果
 	 */
 	public static Result OK(Object data) {

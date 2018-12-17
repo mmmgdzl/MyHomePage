@@ -17,6 +17,9 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
+	/**
+	 * 管理员登录
+	 */
 	@RequestMapping("/xk/adminLogin")
 	@ResponseBody
 	public Result adminLogin(String account, String password, HttpSession session) {
@@ -28,6 +31,16 @@ public class AdminController {
 			result.setData(null);
 		}
 		return result;
+	}
+
+	/**
+	 * 管理员登出
+	 */
+	@RequestMapping("/xk/adminLogout")
+	@ResponseBody
+	public Result adminLogout(HttpSession httpSession) {
+		httpSession.setAttribute("admin", null);
+		return Result.OK();
 	}
 
 }

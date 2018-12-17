@@ -12,6 +12,11 @@ public class AdminPageController {
 		return "xk/login";
 	}
 
+	@RequestMapping("/xk/index")
+	public String toStartPage() {
+		return "xk/outside";
+	}
+
 	@RequestMapping("/xk/{page}")
 	public String toAdminPage(@PathVariable String page) {
 		return "xk/" + page;

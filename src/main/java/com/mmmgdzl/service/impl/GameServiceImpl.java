@@ -20,7 +20,7 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public List<GameWebsiteCat> getGameWebSiteCatList() {
 		//设置分页(取top10)
-        PageHelper.startPage(0, 10);
+        PageHelper.startPage(1, 10);
 		//创建空查询条件
 		GameWebsiteCatExample example = new GameWebsiteCatExample();
 		//执行查询获得列表

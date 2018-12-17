@@ -44,19 +44,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="${pageContext.request.contextPath }/static/admin/layui/layui.js"></script>
 <script type="text/javascript">
     layui.use(['form','layer','jquery'], function () {
- 
         // 操作对象
         var form = layui.form;
         var $ = layui.jquery;
         form.on('submit(login)',function (data) {
             $.ajax({
-                url:'xk/adminLogin',
+                url:'${pageContext.request.contextPath}/xk/adminLogin',
                 data:data.field,
                 dataType:'json',
                 type:'post',
                 success:function (data) {
                     if(data.code=="200") {
-                    	location.href="xk/index.html";
+                        layer.msg("登陆成功");
+                    	setTimeout("location.href='xk/index'",500);
                     } else {
                     	layer.msg(data.msg);
                     	$(".layui-form")[0].reset();
@@ -65,7 +65,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
             return false;
         });
- 		
     });
 </script>
 </body>
