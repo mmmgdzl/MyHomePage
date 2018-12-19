@@ -14,31 +14,55 @@
             </fieldset>
             <form id="tf" class="layui-form" action="">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">管理员账号<sup style="color:red;font-size:15px;">*</sup></label>
+                    <label class="layui-form-label">账号<sup style="color:red;font-size:15px;">*</sup></label>
                     <div class="layui-input-inline">
-                        <input type="text" id="account" name="account" lay-verify="required" placeholder="请输入账号"
+                        <input type="text" id="account" name="aaccount" lay-verify="required|account" placeholder="请输入账号(小于10个字符)"
                                autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">等级<sup style="color:red;font-size:15px;">*</sup></label>
+                    <div class="layui-input-inline">
+                        <select lay-verify="required" name="alevel">
+                            <option value="0">超级管理员</option>
+                            <option value="1">管理员</option>
+                            <option value="2" selected>普通用户</option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码<sup style="color:red;font-size:15px;">*</sup></label>
                     <div class="layui-input-inline">
-                        <input type="password" id="password" lay-verify="required" name="password"
+                        <input type="password" id="password" lay-verify="required|pass" name="apassword"
                                placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
-                </div>
-                <div class="layui-form-item">
                     <label class="layui-form-label">确认密码<sup style="color:red;font-size:15px;">*</sup></label>
                     <div class="layui-input-inline">
-                        <input type="password" id="password_re" lay-verify="required" placeholder="请重复密码"
+                        <input type="password" id="password_re" lay-verify="required|pass" placeholder="请重复密码"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">管理员等级<sup style="color:red;font-size:15px;">*</sup></label>
+                    <label class="layui-form-label">昵称</label>
                     <div class="layui-input-inline">
-                        <input type="number" id="level" name="level" lay-verify="required" placeholder="请输入管理员等级" min="0"
+                        <input type="text" id="aname" name="aname" lay-verify="name" placeholder="请输入昵称(小于10个字符)"
                                autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="radio" name="agender" value="0" title="男">
+                        <input type="radio" name="agender" value="1" title="女">
+                        <input type="radio" name="agender" value="2" title="保密" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">邮箱<sup style="color:red;font-size:15px;">*</sup></label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="amail" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="aphone" lay-verify="myPhone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -87,6 +111,35 @@
             return false;
         });
 
+        //自定义验证规则
+        form.verify({
+            account: function(value){
+                if(value.length > 10){
+                    return '管理员账号不能超过10个字符';
+                }
+            }
+            ,pass: function(value){
+                if(value.length < 6 || value.length>12){
+                    return '密码必须为6到12位';
+                }
+            }
+            ,name: function(value){
+                if(value.length > 10){
+                    return '昵称不能超过10个字符';
+                }
+            }
+            ,myPhone: function (value) {
+                if(value!="") {
+                    var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                    if (!myreg.test(value)) {
+                        return "请输入正确的手机号";
+                    }
+                }
+            }
+
+        });
+        //在页面完成加载后再次渲染
+        form.render();
     });
 
     /**

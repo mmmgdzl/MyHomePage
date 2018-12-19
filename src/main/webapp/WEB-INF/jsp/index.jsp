@@ -53,29 +53,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- END LOADER -->
 
     <div id="wrapper">
-        <!-- BEGIN # MODAL LOGIN -->
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Begin # DIV Form -->
-                    <div id="div-forms">
-                        <form id="login-form">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span class="flaticon-add" aria-hidden="true"></span>
-                            </button>
-                            <div class="modal-body" style="display:inline-block;">
-                                <input class="form-control" type="text" placeholder="你 在 想 。。。" required>
-                            </div>
-                            <div class="modal-body" style="display:inline-block;">
-                            	<img src="${resourceServer }/my/game/${gameWebSiteCatList[0].image }" />
-                            </div>
-                        </form><!-- End # Login Form -->
-                    </div><!-- End # DIV Form -->
-                </div>
-            </div>
-        </div>
-        <!-- END # MODAL LOGIN -->
-
         <jsp:include page="header.jsp"></jsp:include>
 
         <section id="home" class="video-section js-height-full">
@@ -92,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </div>
             <div class="slider-bottom">
-                <span>Copyright &copy; 2018 - 2018  MMMGDZL 执行</span>
+                <span>Copyright &copy; 2018 - 2019  MMMGDZL 执行</span>
             </div>
         </section>
 
@@ -121,6 +98,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#gameLogo").attr("src", "${resourceServer }/my/game/" + logo);
 			$("#gameLabel").html(label);
 		}
+
+		window.onload = function() {
+		    //切换为主页特殊样式
+		    $("#logoImage").attr("src", "${resourceServer }/images/logo.png");
+		    $("#header").removeClass("header-normal");
+        }
+
 	</script>
 	
 </body>

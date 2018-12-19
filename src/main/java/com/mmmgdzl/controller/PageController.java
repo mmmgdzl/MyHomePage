@@ -22,12 +22,8 @@ public class PageController {
 	 */
 	@RequestMapping("/")
 	public String toHomePage(Model model) {
-		//获取游戏预览列表
-		List<GameWebsiteCat> gameWebSiteCatList = gameService.getGameWebSiteCatList();
-		
-		//将参数放入模型中
-		model.addAttribute("gameWebSiteCatList", gameWebSiteCatList);
-		
+		//设置head中的列表
+		setHeadAttribute(model);
 		return "index";
 	}
 	
@@ -35,7 +31,20 @@ public class PageController {
 	 * 跳转到对应页面
 	 */
 	@RequestMapping("/{page}")
-	public String toPage(@PathVariable String page) {
+	public String toPage(@PathVariable String page, Model model) {
+		//设置head中的列表
+		setHeadAttribute(model);
 		return page;
+	}
+
+	/**
+	 * 设置头部信息
+	 */
+	private void setHeadAttribute(Model model) {
+		//获取游戏预览列表
+		List<GameWebsiteCat> gameWebSiteCatList = gameService.getGameWebSiteCatList();
+
+		//将参数放入模型中
+		model.addAttribute("gameWebSiteCatList", gameWebSiteCatList);
 	}
 }

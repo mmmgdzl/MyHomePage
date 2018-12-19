@@ -10,6 +10,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
  
     <title>星空の聚合</title>
+
+	<!-- 设置标题图片 -->
+	<link rel="shortcut icon" type="image/x-icon" href="${resourceServer}/images/favicon.ico" />
+
     <link rel="stylesheet" href="${pageContext.request.contextPath }/static/admin/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/static/admin/css/style.css">
     

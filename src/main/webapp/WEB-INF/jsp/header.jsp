@@ -4,7 +4,26 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<header class="header">
+<!-- BEGIN # MODAL LOGIN -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Begin # DIV Form -->
+            <div id="div-forms">
+                <form id="login-form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="flaticon-add" aria-hidden="true"></span>
+                    </button>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" placeholder="你 在 想 。。。(按ESC退出)" required>
+                    </div>
+                </form><!-- End # Login Form -->
+            </div><!-- End # DIV Form -->
+        </div>
+    </div>
+</div>
+<!-- END # MODAL LOGIN -->
+<header id="header" class="header header-normal">
 	<audio src="${resourceServer }/my/music/christmas-bg.mp3" autoplay="autoplay" loop="loop"></audio>
     <div class="topbar clearfix">
         <div class="container">
@@ -38,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <span class="icon-bar"></span>
                 </button>
                 <div class="logo-normal">
-                    <a class="navbar-brand" href="index.html"><img src="${resourceServer }/images/logo.png" alt=""></a>
+                    <a class="navbar-brand" href="index.html"><img id="logoImage" src="${resourceServer }/images/logo-dark.png" alt=""></a>
                 </div>
             </div>
 

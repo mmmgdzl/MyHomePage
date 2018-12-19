@@ -47,6 +47,12 @@
             <artifactId>javassist</artifactId>
             <version>3.17.1-GA</version>
         </dependency>
+        <!-- 引入邮件依赖 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
         <!-- 引入动态代理库 -->
         <dependency>
             <groupId>cglib</groupId>

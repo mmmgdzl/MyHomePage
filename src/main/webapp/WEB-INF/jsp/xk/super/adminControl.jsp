@@ -14,13 +14,51 @@
                 <legend>管理员管理</legend>
             </fieldset>
             <div class="demoTable">
-                筛选账号：
                 <form class="layui-form layui-inline">
-                    <div class="layui-inline">
-                        <input type="text" id="account" name="account" class="layui-input" lay-search>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">账号:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="aaccount" name="aaccount" placeholder="筛选账号(小于10个字符)"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">管理员等级:</label>
+                        <div class="layui-input-inline">
+                            <select id="alevel" name="alevel">
+                                <option value="">--所有--</option>
+                                <option value="0">超级管理员</option>
+                                <option value="1">管理员</option>
+                                <option value="2">普通用户</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label">性别:</label>
+                        <div class="layui-input-inline">
+                            <select id="agender" name="agender">
+                                <option value="">--所有--</option>
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                                <option value="2">保密</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">昵称:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="aname" name="aname" placeholder="筛选昵称(小于10个字符)"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">邮箱:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="amail" name="amail" value="${editAdmin.amail}" placeholder="筛选邮箱" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <label class="layui-form-label">联系电话:</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" id="aphone" name="aphone" value="${editAdmin.aphone}" placeholder="筛选联系电话" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </form>
-                <button class="layui-btn" data-type="reload">筛选</button>
+                <button class="layui-btn" data-type="reload" onsubmit="return false;">筛选</button>
             </div>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -47,8 +85,9 @@
     })();
 </script>
 <script>
-    layui.use('table', function(){
+    layui.use(['form', 'table'], function(){
         var table = layui.table;
+        var form = layui.form;
         //方法级渲染
         table.render({
             elem: '#table'
@@ -56,9 +95,16 @@
             ,toolbar: '#toolbarDemo'
             ,cols: [[
                 {checkbox: true}
-                ,{field:'id', title: 'ID', width:150}
-                ,{field:'account', title: '账号', width:150}
-                ,{field:'level', title: '管理员等级', width:150}
+                ,{field:'aid', title: 'ID', width:45}
+                ,{field:'aaccount', title: '账号', width:100}
+                ,{field:'alevel', title: '等级', width:100}
+                ,{field:'aactive', title: '是否激活', width:100}
+                ,{field:'aenable', title: '是否可用', width:100}
+                ,{field:'acreatedate', title: '创建日期', width:150}
+                ,{field:'aname', title: '昵称', width:100}
+                ,{field:'agender', title: '性别', width:60}
+                ,{field:'amail', title: '邮箱', width:170}
+                ,{field:'aphone', title: '联系电话', width:150}
                 ,{field:'right', title: '操作', width:170,toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
@@ -69,11 +115,14 @@
 
         var $ = layui.$, active = {
             reload: function(){
-                var account = $('#account');
-
                 table.reload('testReload', {
                     where: {
-                        account: account.val()
+                        aaccount: $('#aaccount').val()
+                        ,alevel: $('#alevel').val()
+                        ,aname: $('#aname').val()
+                        ,agender: $('#agender').val()
+                        ,amail: $('#amail').val()
+                        ,aphone: $('#aphone').val()
                     }
                 });
             }
@@ -104,15 +153,17 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
-                layer.confirm('确定删除ID为' + data.id + '的行么', function(index){
+                layer.confirm('确定删除ID为' + data.aid + '的行么', function(index){
                     layer.close(index);
-                    del(data.id);
+                    del(data.aid);
                 });
             } else if(obj.event === 'edit'){
                 //跳转至目标页面
-               loadPage("${pageContext.request.contextPath}/xk/super/admin/" + data.id);
+               loadPage("${pageContext.request.contextPath}/xk/super/admin/" + data.aid);
             }
         });
+        //在页面完成加载后再次渲染
+        form.render();
     });
 
     //执行删除
@@ -148,7 +199,7 @@
                 layer.close(index);
                 var idArray = new Array();
                 for(var i=0; i<data.length; i++) {
-                    idArray[i] = data[i].id;
+                    idArray[i] = data[i].aid;
                 }
                 //执行删除
                 $.ajax({

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmmgdzl.mapper.ResourceColumnMapper" >
+  <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceColumn" >
+    <id column="cId" property="cid" jdbcType="INTEGER" />
+    <result column="cName" property="cname" jdbcType="VARCHAR" />
+    <result column="cParent" property="cparent" jdbcType="INTEGER" />
+    <result column="cIsParent" property="cisparent" jdbcType="INTEGER" />
+    <result column="cCreateDate" property="ccreatedate" jdbcType="DATE" />
+    <result column="cCreater" property="ccreater" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cId, cName, cParent, cIsParent, cCreateDate, cCreater
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.ResourceColumnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resource_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource_column
+    where cId = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from resource_column
+    where cId = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mmmgdzl.pojo.ResourceColumnExample" >
+    delete from resource_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
+    insert into resource_column (cId, cName, cParent, 
+      cIsParent, cCreateDate, cCreater
+      )
+    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{cparent,jdbcType=INTEGER}, 
+      #{cisparent,jdbcType=INTEGER}, #{ccreatedate,jdbcType=DATE}, #{ccreater,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
+    insert into resource_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cId,
+      </if>
+      <if test="cname != null" >
+        cName,
+      </if>
+      <if test="cparent != null" >
+        cParent,
+      </if>
+      <if test="cisparent != null" >
+        cIsParent,
+      </if>
+      <if test="ccreatedate != null" >
+        cCreateDate,
+      </if>
+      <if test="ccreater != null" >
+        cCreater,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cparent != null" >
+        #{cparent,jdbcType=INTEGER},
+      </if>
+      <if test="cisparent != null" >
+        #{cisparent,jdbcType=INTEGER},
+      </if>
+      <if test="ccreatedate != null" >
+        #{ccreatedate,jdbcType=DATE},
+      </if>
+      <if test="ccreater != null" >
+        #{ccreater,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mmmgdzl.pojo.ResourceColumnExample" resultType="java.lang.Integer" >
+    select count(*) from resource_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update resource_column
+    <set >
+      <if test="record.cid != null" >
+        cId = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cname != null" >
+        cName = #{record.cname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cparent != null" >
+        cParent = #{record.cparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.cisparent != null" >
+        cIsParent = #{record.cisparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.ccreatedate != null" >
+        cCreateDate = #{record.ccreatedate,jdbcType=DATE},
+      </if>
+      <if test="record.ccreater != null" >
+        cCreater = #{record.ccreater,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update resource_column
+    set cId = #{record.cid,jdbcType=INTEGER},
+      cName = #{record.cname,jdbcType=VARCHAR},
+      cParent = #{record.cparent,jdbcType=INTEGER},
+      cIsParent = #{record.cisparent,jdbcType=INTEGER},
+      cCreateDate = #{record.ccreatedate,jdbcType=DATE},
+      cCreater = #{record.ccreater,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
+    update resource_column
+    <set >
+      <if test="cname != null" >
+        cName = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cparent != null" >
+        cParent = #{cparent,jdbcType=INTEGER},
+      </if>
+      <if test="cisparent != null" >
+        cIsParent = #{cisparent,jdbcType=INTEGER},
+      </if>
+      <if test="ccreatedate != null" >
+        cCreateDate = #{ccreatedate,jdbcType=DATE},
+      </if>
+      <if test="ccreater != null" >
+        cCreater = #{ccreater,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cId = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
+    update resource_column
+    set cName = #{cname,jdbcType=VARCHAR},
+      cParent = #{cparent,jdbcType=INTEGER},
+      cIsParent = #{cisparent,jdbcType=INTEGER},
+      cCreateDate = #{ccreatedate,jdbcType=DATE},
+      cCreater = #{ccreater,jdbcType=INTEGER}
+    where cId = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -19,6 +19,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
 
+    <!-- 设置标题图片 -->
+    <link rel="shortcut icon" type="image/x-icon" href="${resourceServer}/images/favicon.ico" />
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/layui.css?t=1542630986927"  media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/global.css?t=1542630986927-6" media="all">
     <style>
@@ -35,10 +38,11 @@
             <div class="layui-form component" lay-filter="LAY-site-header-component"></div>
             <ul class="layui-nav">
                 <li class="layui-nav-item layui-this">
-                    <a href="javascript:void(0);">管理员:${admin.account}</a>
+                    <a href="javascript:void(0);">管理员:${admin.aaccount}</a>
                     <dl class="layui-nav-child">
                         <dd class=" layui-show-xs" lay-unselect>
-                            <a href="javascript:void(0);">修改密码</a>
+                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/toPersonalCenter">个人中心</a>
+                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/changePassword">修改密码</a>
                         </dd>
                     </dl>
                 </li>
@@ -55,27 +59,37 @@
                 <li class="layui-nav-item">
                     <a class="javascript:;" href="javascript:;">数据管理</a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd style="text-align: center;">
                             <a href="/demo/">预览数据管理</a>
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a class="javascript:;" href="javascript:;">系统设置</a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="${pageContext.request.contextPath}/xk/indexConfig">主界面设置</a>
-                        </dd>
-                    </dl>
-                </li>
-                <c:if test="${! (admin.level>0)}">
+                <c:if test="${admin.alevel<=1}">
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">网站详情</a>
+                        <dl class="layui-nav-child">
+                            <dd style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/addAdmin">站点统计</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </c:if>
+                <c:if test="${admin.alevel<=0}">
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">系统设置</a>
+                        <dl class="layui-nav-child">
+                            <dd style="text-align: center;">
+                                <a href="${pageContext.request.contextPath}/xk/indexConfig">主界面设置</a>
+                            </dd>
+                        </dl>
+                    </li>
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">权限管理</a>
                         <dl class="layui-nav-child">
-                            <dd>
+                            <dd style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/addAdmin">添加管理员</a>
                             </dd>
-                            <dd>
+                            <dd style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/adminControl">管理员管理</a>
                             </dd>
                         </dl>
@@ -112,22 +126,22 @@
             url:"/xk/adminLogout",
             dataType:"json",
             success:function(data) {
-                if(data.code == "200") {
-                    layer.msg("退出登录成功!");
-                    setTimeout("location.href='${pageContext.request.contextPath}/xk'", 500);
-                } else {
-                    layer.msg("退出登录失败!");
-                }
+                //无论成功失败都要跳回到登录界面
+                layer.msg("退出登录成功!");
+                setTimeout("location.href='${pageContext.request.contextPath}/xk'", 500);
             }
         })
     }
 
+    //根据a标签的value属性加载页面
     function toLoadPage(a) {
         loadPage($(a).attr("value"))
     }
-
+    var lastLoadPage;
+    //加载页面
     function loadPage(page) {
         $("#loadBody").html("");
+        lastLoadPage = page;
         $("#loadBody").load(page);
     }
 

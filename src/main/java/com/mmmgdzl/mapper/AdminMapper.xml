@@ -2,10 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mmmgdzl.mapper.AdminMapper" >
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.Admin" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="account" property="account" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="INTEGER" />
+    <id column="aId" property="aid" jdbcType="INTEGER" />
+    <result column="aAccount" property="aaccount" jdbcType="VARCHAR" />
+    <result column="aPassword" property="apassword" jdbcType="VARCHAR" />
+    <result column="aLevel" property="alevel" jdbcType="INTEGER" />
+    <result column="aEnable" property="aenable" jdbcType="INTEGER" />
+    <result column="aActive" property="aactive" jdbcType="INTEGER" />
+    <result column="aActiveCode" property="aactivecode" jdbcType="VARCHAR" />
+    <result column="aCreateDate" property="acreatedate" jdbcType="DATE" />
+    <result column="aName" property="aname" jdbcType="VARCHAR" />
+    <result column="aGender" property="agender" jdbcType="INTEGER" />
+    <result column="aMail" property="amail" jdbcType="VARCHAR" />
+    <result column="aPhone" property="aphone" jdbcType="VARCHAR" />
+    <result column="aHeadImg" property="aheadimg" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, account, password, level
+    aId, aAccount, aPassword, aLevel, aEnable, aActive, aActiveCode, aCreateDate, aName, 
+    aGender, aMail, aPhone, aHeadImg
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.AdminExample" >
     select
@@ -86,11 +96,11 @@
     select 
     <include refid="Base_Column_List" />
     from admin
-    where id = #{id,jdbcType=INTEGER}
+    where aId = #{aid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from admin
-    where id = #{id,jdbcType=INTEGER}
+    where aId = #{aid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.mmmgdzl.pojo.AdminExample" >
     delete from admin
@@ -99,39 +109,99 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mmmgdzl.pojo.Admin" >
-    insert into admin (id, account, password, 
-      level)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{level,jdbcType=INTEGER})
+    insert into admin (aId, aAccount, aPassword, 
+      aLevel, aEnable, aActive, 
+      aActiveCode, aCreateDate, aName, 
+      aGender, aMail, aPhone, 
+      aHeadImg)
+    values (#{aid,jdbcType=INTEGER}, #{aaccount,jdbcType=VARCHAR}, #{apassword,jdbcType=VARCHAR}, 
+      #{alevel,jdbcType=INTEGER}, #{aenable,jdbcType=INTEGER}, #{aactive,jdbcType=INTEGER}, 
+      #{aactivecode,jdbcType=VARCHAR}, #{acreatedate,jdbcType=DATE}, #{aname,jdbcType=VARCHAR}, 
+      #{agender,jdbcType=INTEGER}, #{amail,jdbcType=VARCHAR}, #{aphone,jdbcType=VARCHAR}, 
+      #{aheadimg,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.Admin" >
     insert into admin
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="aid != null" >
+        aId,
       </if>
-      <if test="account != null" >
-        account,
+      <if test="aaccount != null" >
+        aAccount,
       </if>
-      <if test="password != null" >
-        password,
+      <if test="apassword != null" >
+        aPassword,
       </if>
-      <if test="level != null" >
-        level,
+      <if test="alevel != null" >
+        aLevel,
+      </if>
+      <if test="aenable != null" >
+        aEnable,
+      </if>
+      <if test="aactive != null" >
+        aActive,
+      </if>
+      <if test="aactivecode != null" >
+        aActiveCode,
+      </if>
+      <if test="acreatedate != null" >
+        aCreateDate,
+      </if>
+      <if test="aname != null" >
+        aName,
+      </if>
+      <if test="agender != null" >
+        aGender,
+      </if>
+      <if test="amail != null" >
+        aMail,
+      </if>
+      <if test="aphone != null" >
+        aPhone,
+      </if>
+      <if test="aheadimg != null" >
+        aHeadImg,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
       </if>
-      <if test="account != null" >
-        #{account,jdbcType=VARCHAR},
+      <if test="aaccount != null" >
+        #{aaccount,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="apassword != null" >
+        #{apassword,jdbcType=VARCHAR},
       </if>
-      <if test="level != null" >
-        #{level,jdbcType=INTEGER},
+      <if test="alevel != null" >
+        #{alevel,jdbcType=INTEGER},
+      </if>
+      <if test="aenable != null" >
+        #{aenable,jdbcType=INTEGER},
+      </if>
+      <if test="aactive != null" >
+        #{aactive,jdbcType=INTEGER},
+      </if>
+      <if test="aactivecode != null" >
+        #{aactivecode,jdbcType=VARCHAR},
+      </if>
+      <if test="acreatedate != null" >
+        #{acreatedate,jdbcType=DATE},
+      </if>
+      <if test="aname != null" >
+        #{aname,jdbcType=VARCHAR},
+      </if>
+      <if test="agender != null" >
+        #{agender,jdbcType=INTEGER},
+      </if>
+      <if test="amail != null" >
+        #{amail,jdbcType=VARCHAR},
+      </if>
+      <if test="aphone != null" >
+        #{aphone,jdbcType=VARCHAR},
+      </if>
+      <if test="aheadimg != null" >
+        #{aheadimg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -144,17 +214,44 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update admin
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.aid != null" >
+        aId = #{record.aid,jdbcType=INTEGER},
       </if>
-      <if test="record.account != null" >
-        account = #{record.account,jdbcType=VARCHAR},
+      <if test="record.aaccount != null" >
+        aAccount = #{record.aaccount,jdbcType=VARCHAR},
       </if>
-      <if test="record.password != null" >
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.apassword != null" >
+        aPassword = #{record.apassword,jdbcType=VARCHAR},
       </if>
-      <if test="record.level != null" >
-        level = #{record.level,jdbcType=INTEGER},
+      <if test="record.alevel != null" >
+        aLevel = #{record.alevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.aenable != null" >
+        aEnable = #{record.aenable,jdbcType=INTEGER},
+      </if>
+      <if test="record.aactive != null" >
+        aActive = #{record.aactive,jdbcType=INTEGER},
+      </if>
+      <if test="record.aactivecode != null" >
+        aActiveCode = #{record.aactivecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acreatedate != null" >
+        aCreateDate = #{record.acreatedate,jdbcType=DATE},
+      </if>
+      <if test="record.aname != null" >
+        aName = #{record.aname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agender != null" >
+        aGender = #{record.agender,jdbcType=INTEGER},
+      </if>
+      <if test="record.amail != null" >
+        aMail = #{record.amail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aphone != null" >
+        aPhone = #{record.aphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aheadimg != null" >
+        aHeadImg = #{record.aheadimg,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -163,10 +260,19 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update admin
-    set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      level = #{record.level,jdbcType=INTEGER}
+    set aId = #{record.aid,jdbcType=INTEGER},
+      aAccount = #{record.aaccount,jdbcType=VARCHAR},
+      aPassword = #{record.apassword,jdbcType=VARCHAR},
+      aLevel = #{record.alevel,jdbcType=INTEGER},
+      aEnable = #{record.aenable,jdbcType=INTEGER},
+      aActive = #{record.aactive,jdbcType=INTEGER},
+      aActiveCode = #{record.aactivecode,jdbcType=VARCHAR},
+      aCreateDate = #{record.acreatedate,jdbcType=DATE},
+      aName = #{record.aname,jdbcType=VARCHAR},
+      aGender = #{record.agender,jdbcType=INTEGER},
+      aMail = #{record.amail,jdbcType=VARCHAR},
+      aPhone = #{record.aphone,jdbcType=VARCHAR},
+      aHeadImg = #{record.aheadimg,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -174,23 +280,59 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mmmgdzl.pojo.Admin" >
     update admin
     <set >
-      <if test="account != null" >
-        account = #{account,jdbcType=VARCHAR},
+      <if test="aaccount != null" >
+        aAccount = #{aaccount,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="apassword != null" >
+        aPassword = #{apassword,jdbcType=VARCHAR},
       </if>
-      <if test="level != null" >
-        level = #{level,jdbcType=INTEGER},
+      <if test="alevel != null" >
+        aLevel = #{alevel,jdbcType=INTEGER},
+      </if>
+      <if test="aenable != null" >
+        aEnable = #{aenable,jdbcType=INTEGER},
+      </if>
+      <if test="aactive != null" >
+        aActive = #{aactive,jdbcType=INTEGER},
+      </if>
+      <if test="aactivecode != null" >
+        aActiveCode = #{aactivecode,jdbcType=VARCHAR},
+      </if>
+      <if test="acreatedate != null" >
+        aCreateDate = #{acreatedate,jdbcType=DATE},
+      </if>
+      <if test="aname != null" >
+        aName = #{aname,jdbcType=VARCHAR},
+      </if>
+      <if test="agender != null" >
+        aGender = #{agender,jdbcType=INTEGER},
+      </if>
+      <if test="amail != null" >
+        aMail = #{amail,jdbcType=VARCHAR},
+      </if>
+      <if test="aphone != null" >
+        aPhone = #{aphone,jdbcType=VARCHAR},
+      </if>
+      <if test="aheadimg != null" >
+        aHeadImg = #{aheadimg,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where aId = #{aid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.Admin" >
     update admin
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      level = #{level,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
+    set aAccount = #{aaccount,jdbcType=VARCHAR},
+      aPassword = #{apassword,jdbcType=VARCHAR},
+      aLevel = #{alevel,jdbcType=INTEGER},
+      aEnable = #{aenable,jdbcType=INTEGER},
+      aActive = #{aactive,jdbcType=INTEGER},
+      aActiveCode = #{aactivecode,jdbcType=VARCHAR},
+      aCreateDate = #{acreatedate,jdbcType=DATE},
+      aName = #{aname,jdbcType=VARCHAR},
+      aGender = #{agender,jdbcType=INTEGER},
+      aMail = #{amail,jdbcType=VARCHAR},
+      aPhone = #{aphone,jdbcType=VARCHAR},
+      aHeadImg = #{aheadimg,jdbcType=VARCHAR}
+    where aId = #{aid,jdbcType=INTEGER}
   </update>
 </mapper>
