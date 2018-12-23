@@ -691,6 +691,66 @@ public class ResourceExample {
             addCriterion("rViews not between", value1, value2, "rviews");
             return (Criteria) this;
         }
+
+        public Criteria andRenableIsNull() {
+            addCriterion("rEnable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableIsNotNull() {
+            addCriterion("rEnable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableEqualTo(Integer value) {
+            addCriterion("rEnable =", value, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableNotEqualTo(Integer value) {
+            addCriterion("rEnable <>", value, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableGreaterThan(Integer value) {
+            addCriterion("rEnable >", value, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rEnable >=", value, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableLessThan(Integer value) {
+            addCriterion("rEnable <", value, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableLessThanOrEqualTo(Integer value) {
+            addCriterion("rEnable <=", value, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableIn(List<Integer> values) {
+            addCriterion("rEnable in", values, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableNotIn(List<Integer> values) {
+            addCriterion("rEnable not in", values, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableBetween(Integer value1, Integer value2) {
+            addCriterion("rEnable between", value1, value2, "renable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenableNotBetween(Integer value1, Integer value2) {
+            addCriterion("rEnable not between", value1, value2, "renable");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

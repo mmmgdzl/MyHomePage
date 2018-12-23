@@ -8,15 +8,31 @@ import com.mmmgdzl.pojo.Admin;
  */
 
 public interface AdminService {
-	
 	/**
-	 * 管理员登录
+	 * 用户登录
 	 */
 	Result adminLogin(String account, String password);
 
 	/**
-	 * 管理员修改密码
+	 * 用户修改密码
 	 */
 	Result adminChangePassword(Admin admin, String newPassword);
+
+	/**
+	 * 用户修改个人信息
+	 */
+	Result adminUpdateInfo(Admin admin);
+
+	/**
+	 * 管理员注册
+	 */
+	Result adminRegister(Admin admin);
+
+	/**
+	 * 管理员激活
+	 */
+	Result adminActive(String activeCode);
+
+
 	
 }

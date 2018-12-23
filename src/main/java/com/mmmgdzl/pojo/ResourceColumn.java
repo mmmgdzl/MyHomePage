@@ -7,10 +7,6 @@ public class ResourceColumn {
 
     private String cname;
 
-    private Integer cparent;
-
-    private Integer cisparent;
-
     private Date ccreatedate;
 
     private Integer ccreater;
@@ -29,22 +25,6 @@ public class ResourceColumn {
 
     public void setCname(String cname) {
         this.cname = cname == null ? null : cname.trim();
-    }
-
-    public Integer getCparent() {
-        return cparent;
-    }
-
-    public void setCparent(Integer cparent) {
-        this.cparent = cparent;
-    }
-
-    public Integer getCisparent() {
-        return cisparent;
-    }
-
-    public void setCisparent(Integer cisparent) {
-        this.cisparent = cisparent;
     }
 
     public Date getCcreatedate() {

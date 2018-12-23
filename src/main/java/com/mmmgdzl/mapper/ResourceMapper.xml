@@ -11,6 +11,7 @@
     <result column="rUpdateDate" property="rupdatedate" jdbcType="DATE" />
     <result column="rUpdater" property="rupdater" jdbcType="INTEGER" />
     <result column="rViews" property="rviews" jdbcType="INTEGER" />
+    <result column="rEnable" property="renable" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.mmmgdzl.pojo.Resource" extends="BaseResultMap" >
     <result column="rContent" property="rcontent" jdbcType="LONGVARCHAR" />
@@ -74,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    rId, rTitle, rTitleImg, rColumn, rCreateDate, rCreater, rUpdateDate, rUpdater, rViews
+    rId, rTitle, rTitleImg, rColumn, rCreateDate, rCreater, rUpdateDate, rUpdater, rViews, 
+    rEnable
   </sql>
   <sql id="Blob_Column_List" >
     rContent
@@ -131,11 +133,11 @@
     insert into resource (rId, rTitle, rTitleImg, 
       rColumn, rCreateDate, rCreater, 
       rUpdateDate, rUpdater, rViews, 
-      rContent)
+      rEnable, rContent)
     values (#{rid,jdbcType=INTEGER}, #{rtitle,jdbcType=VARCHAR}, #{rtitleimg,jdbcType=VARCHAR}, 
       #{rcolumn,jdbcType=INTEGER}, #{rcreatedate,jdbcType=DATE}, #{rcreater,jdbcType=INTEGER}, 
       #{rupdatedate,jdbcType=DATE}, #{rupdater,jdbcType=INTEGER}, #{rviews,jdbcType=INTEGER}, 
-      #{rcontent,jdbcType=LONGVARCHAR})
+      #{renable,jdbcType=INTEGER}, #{rcontent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.Resource" >
     insert into resource
@@ -166,6 +168,9 @@
       </if>
       <if test="rviews != null" >
         rViews,
+      </if>
+      <if test="renable != null" >
+        rEnable,
       </if>
       <if test="rcontent != null" >
         rContent,
@@ -198,6 +203,9 @@
       </if>
       <if test="rviews != null" >
         #{rviews,jdbcType=INTEGER},
+      </if>
+      <if test="renable != null" >
+        #{renable,jdbcType=INTEGER},
       </if>
       <if test="rcontent != null" >
         #{rcontent,jdbcType=LONGVARCHAR},
@@ -240,6 +248,9 @@
       <if test="record.rviews != null" >
         rViews = #{record.rviews,jdbcType=INTEGER},
       </if>
+      <if test="record.renable != null" >
+        rEnable = #{record.renable,jdbcType=INTEGER},
+      </if>
       <if test="record.rcontent != null" >
         rContent = #{record.rcontent,jdbcType=LONGVARCHAR},
       </if>
@@ -259,6 +270,7 @@
       rUpdateDate = #{record.rupdatedate,jdbcType=DATE},
       rUpdater = #{record.rupdater,jdbcType=INTEGER},
       rViews = #{record.rviews,jdbcType=INTEGER},
+      rEnable = #{record.renable,jdbcType=INTEGER},
       rContent = #{record.rcontent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -274,7 +286,8 @@
       rCreater = #{record.rcreater,jdbcType=INTEGER},
       rUpdateDate = #{record.rupdatedate,jdbcType=DATE},
       rUpdater = #{record.rupdater,jdbcType=INTEGER},
-      rViews = #{record.rviews,jdbcType=INTEGER}
+      rViews = #{record.rviews,jdbcType=INTEGER},
+      rEnable = #{record.renable,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -306,6 +319,9 @@
       <if test="rviews != null" >
         rViews = #{rviews,jdbcType=INTEGER},
       </if>
+      <if test="renable != null" >
+        rEnable = #{renable,jdbcType=INTEGER},
+      </if>
       <if test="rcontent != null" >
         rContent = #{rcontent,jdbcType=LONGVARCHAR},
       </if>
@@ -322,6 +338,7 @@
       rUpdateDate = #{rupdatedate,jdbcType=DATE},
       rUpdater = #{rupdater,jdbcType=INTEGER},
       rViews = #{rviews,jdbcType=INTEGER},
+      rEnable = #{renable,jdbcType=INTEGER},
       rContent = #{rcontent,jdbcType=LONGVARCHAR}
     where rId = #{rid,jdbcType=INTEGER}
   </update>
@@ -334,7 +351,8 @@
       rCreater = #{rcreater,jdbcType=INTEGER},
       rUpdateDate = #{rupdatedate,jdbcType=DATE},
       rUpdater = #{rupdater,jdbcType=INTEGER},
-      rViews = #{rviews,jdbcType=INTEGER}
+      rViews = #{rviews,jdbcType=INTEGER},
+      rEnable = #{renable,jdbcType=INTEGER}
     where rId = #{rid,jdbcType=INTEGER}
   </update>
 </mapper>

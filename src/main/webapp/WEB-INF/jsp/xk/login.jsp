@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <header class="layui-elip" style="margin-top:150px;padding-top:10px;">星空の聚合</header>
 	    <form class="layui-form" >
 	        <div class="layui-input-inline">
-	            <input type="text" name="account" required lay-verify="required" placeholder="用户名" autocomplete="off"
+	            <input type="text" name="account" required lay-verify="required" value="${activeAdminAccount}" placeholder="用户名" autocomplete="off"
 	                   class="layui-input">
 	        </div>
 	        <div class="layui-input-inline">
@@ -39,7 +39,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <div class="layui-input-inline login-btn">
 	            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
 	        </div>
-	        <hr/>
+			<div class="layui-input-inline">
+				<a href="javascript:void(0);" style="float: right;margin-right: 15px;" onclick="doRegister()">没有账号?</a>
+			</div>
 	    </form>
     </div>
 </div>
@@ -60,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success:function (data) {
                     if(data.code=="200") {
                         layer.msg("登陆成功");
-                    	setTimeout("location.href='xk/index'",500);
+                    	setTimeout("location.href='${pageContext.request.contextPath}/xk/protect/index'",500);
                     } else {
                     	layer.msg(data.msg);
                     	$(".layui-form")[0].reset();
@@ -70,6 +72,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return false;
         });
     });
+    //弹出注册窗口
+	function doRegister() {
+        layer.open({
+            type: 2,
+            title: '注册用户',
+            shadeClose: true,
+            shade: false,
+            area: ['350px', '400px'],
+            content: '${pageContext.request.contextPath}/xk/register'
+        });
+    }
+
+    window.onload = function() {
+	  if(${empty activeResult ? false : true}) {
+	      layer.msg("${activeResult}");
+      }
+	};
+
 </script>
 </body>
 </html>

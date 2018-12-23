@@ -4,8 +4,6 @@
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceColumn" >
     <id column="cId" property="cid" jdbcType="INTEGER" />
     <result column="cName" property="cname" jdbcType="VARCHAR" />
-    <result column="cParent" property="cparent" jdbcType="INTEGER" />
-    <result column="cIsParent" property="cisparent" jdbcType="INTEGER" />
     <result column="cCreateDate" property="ccreatedate" jdbcType="DATE" />
     <result column="cCreater" property="ccreater" jdbcType="INTEGER" />
   </resultMap>
@@ -68,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    cId, cName, cParent, cIsParent, cCreateDate, cCreater
+    cId, cName, cCreateDate, cCreater
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.ResourceColumnExample" >
     select
@@ -101,12 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
-    insert into resource_column (cId, cName, cParent, 
-      cIsParent, cCreateDate, cCreater
-      )
-    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{cparent,jdbcType=INTEGER}, 
-      #{cisparent,jdbcType=INTEGER}, #{ccreatedate,jdbcType=DATE}, #{ccreater,jdbcType=INTEGER}
-      )
+    insert into resource_column (cId, cName, cCreateDate, 
+      cCreater)
+    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccreatedate,jdbcType=DATE}, 
+      #{ccreater,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
     insert into resource_column
@@ -116,12 +112,6 @@
       </if>
       <if test="cname != null" >
         cName,
-      </if>
-      <if test="cparent != null" >
-        cParent,
-      </if>
-      <if test="cisparent != null" >
-        cIsParent,
       </if>
       <if test="ccreatedate != null" >
         cCreateDate,
@@ -136,12 +126,6 @@
       </if>
       <if test="cname != null" >
         #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="cparent != null" >
-        #{cparent,jdbcType=INTEGER},
-      </if>
-      <if test="cisparent != null" >
-        #{cisparent,jdbcType=INTEGER},
       </if>
       <if test="ccreatedate != null" >
         #{ccreatedate,jdbcType=DATE},
@@ -166,12 +150,6 @@
       <if test="record.cname != null" >
         cName = #{record.cname,jdbcType=VARCHAR},
       </if>
-      <if test="record.cparent != null" >
-        cParent = #{record.cparent,jdbcType=INTEGER},
-      </if>
-      <if test="record.cisparent != null" >
-        cIsParent = #{record.cisparent,jdbcType=INTEGER},
-      </if>
       <if test="record.ccreatedate != null" >
         cCreateDate = #{record.ccreatedate,jdbcType=DATE},
       </if>
@@ -187,8 +165,6 @@
     update resource_column
     set cId = #{record.cid,jdbcType=INTEGER},
       cName = #{record.cname,jdbcType=VARCHAR},
-      cParent = #{record.cparent,jdbcType=INTEGER},
-      cIsParent = #{record.cisparent,jdbcType=INTEGER},
       cCreateDate = #{record.ccreatedate,jdbcType=DATE},
       cCreater = #{record.ccreater,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -200,12 +176,6 @@
     <set >
       <if test="cname != null" >
         cName = #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="cparent != null" >
-        cParent = #{cparent,jdbcType=INTEGER},
-      </if>
-      <if test="cisparent != null" >
-        cIsParent = #{cisparent,jdbcType=INTEGER},
       </if>
       <if test="ccreatedate != null" >
         cCreateDate = #{ccreatedate,jdbcType=DATE},
@@ -219,8 +189,6 @@
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
     update resource_column
     set cName = #{cname,jdbcType=VARCHAR},
-      cParent = #{cparent,jdbcType=INTEGER},
-      cIsParent = #{cisparent,jdbcType=INTEGER},
       cCreateDate = #{ccreatedate,jdbcType=DATE},
       cCreater = #{ccreater,jdbcType=INTEGER}
     where cId = #{cid,jdbcType=INTEGER}

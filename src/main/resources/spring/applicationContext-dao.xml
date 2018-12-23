@@ -9,7 +9,7 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
 	<!-- 加载配置文件 -->
-	<context:property-placeholder location="classpath:mybatis/db.properties" />
+	<context:property-placeholder location="classpath:mybatis/db.properties,classpath:conf/resource.properties" />
 
 	<!-- 数据库连接池 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -35,7 +35,4 @@
 		<!-- 配置Mapper扫描包 -->
 		<property name="basePackage" value="com.mmmgdzl.mapper" />
 	</bean>
-
-
-
 </beans>

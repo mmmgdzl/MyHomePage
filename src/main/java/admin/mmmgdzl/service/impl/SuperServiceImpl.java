@@ -77,7 +77,7 @@ public class SuperServiceImpl implements SuperService {
     }
 
     @Override
-    public boolean updateAdminSelective(Admin admin) throws RuntimeException {
+    public Admin updateAdminSelective(Admin admin) throws RuntimeException {
         //清除空值
         ClearBlankUtil.clearStringBlank(admin);
 
@@ -108,7 +108,7 @@ public class SuperServiceImpl implements SuperService {
             admin.setApassword(DigestUtils.md5DigestAsHex(admin.getApassword().getBytes()));
         //根据已有元素进行更新而不是完全更新
         adminMapper.updateByPrimaryKeySelective(admin);
-        return true;
+        return adminMapper.selectByPrimaryKey(admin.getAid());
     }
 
     @Override
@@ -169,7 +169,7 @@ public class SuperServiceImpl implements SuperService {
     }
 
     @Override
-    public LayUIResult<LayUIAdmin> selectAdmins(Admin admin, Integer currentPage, Integer pageSize) {
+    public LayUIResult<LayUIAdmin> selectAdminsForLayUI(Admin admin, Integer currentPage, Integer pageSize) {
         //创建模板对象
         AdminExample ae = new AdminExample();
         AdminExample.Criteria criteria = ae.createCriteria();
@@ -193,7 +193,7 @@ public class SuperServiceImpl implements SuperService {
                 criteria.andAphoneLike("%" + admin.getAphone() + "%");
         }
         //获取总条数
-        int totalNum = count(ae);
+        int totalNum = this.count(ae);
         //设置分页
         PageHelper.startPage(currentPage, pageSize);
         //执行查询

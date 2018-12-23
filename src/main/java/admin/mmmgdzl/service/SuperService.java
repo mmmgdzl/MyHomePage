@@ -21,7 +21,7 @@ public interface SuperService {
     /**
      * 更新管理员信息
      */
-   boolean updateAdminSelective(Admin admin);
+   Admin updateAdminSelective(Admin admin);
 
     /**
      * 删除管理员
@@ -46,7 +46,7 @@ public interface SuperService {
     /**
      * 根据条件查询一组管理员
      */
-    LayUIResult<LayUIAdmin> selectAdmins(Admin admin, Integer currentPage, Integer pageSize);
+    LayUIResult<LayUIAdmin> selectAdminsForLayUI(Admin admin, Integer currentPage, Integer pageSize);
 
     /**
      * 根据条件查询总条数

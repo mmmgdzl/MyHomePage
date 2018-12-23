@@ -56,7 +56,7 @@ public class SuperController {
     public LayUIResult<LayUIAdmin> selectAdminsLikeAccount(Admin admin,
                                                            @RequestParam(defaultValue = "1") Integer page,
                                                            @RequestParam(defaultValue = "10")Integer limit) {
-        return superService.selectAdmins(admin, page, limit);
+        return superService.selectAdminsForLayUI(admin, page, limit);
     }
 
     /**
@@ -70,7 +70,7 @@ public class SuperController {
         admin.setApassword(null);
         //将数据存入
         data.addAttribute("editAdmin", admin);
-        return "xk/super/editAdmin";
+        return "xk/super/adminPage/editAdmin";
     }
 
     /**
@@ -78,10 +78,16 @@ public class SuperController {
      */
     @PutMapping("/xk/super/admin")
     @ResponseBody
-    public Result updateAdmin(Admin admin) {
+    public Result updateAdmin(Admin admin, HttpSession session) {
         //执行更新
         try {
-            superService.updateAdminSelective(admin);
+            Admin checkAdmin = superService.updateAdminSelective(admin);
+            Admin currentAdmin = (Admin) session.getAttribute("admin");
+            if(checkAdmin.getAid() == currentAdmin.getAid()) {
+                session.setAttribute("admin", checkAdmin);
+            }
+            //返回成功结果
+            return Result.OK(checkAdmin);
         } catch (XKException e) {
             //如果执行出现异常则返回异常原因
             e.printStackTrace();
@@ -91,8 +97,7 @@ public class SuperController {
             e.printStackTrace();
             return Result.build(500, "未知错误");
         }
-        //返回成功结果
-        return Result.OK();
+
     }
 
     /**
@@ -127,6 +132,14 @@ public class SuperController {
             return Result.build(500, "未知错误");
         }
         return Result.OK();
+    }
+
+    /**
+     * 页面定向
+     */
+    @RequestMapping("/xk/super/adminPage/{path}")
+    public String toSuperPage(@PathVariable String path) {
+        return "xk/super/adminPage/" + path;
     }
 
 }

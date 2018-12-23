@@ -21,6 +21,8 @@ public class Resource {
 
     private Integer rviews;
 
+    private Integer renable;
+
     private String rcontent;
 
     public Integer getRid() {
@@ -93,6 +95,14 @@ public class Resource {
 
     public void setRviews(Integer rviews) {
         this.rviews = rviews;
+    }
+
+    public Integer getRenable() {
+        return renable;
+    }
+
+    public void setRenable(Integer renable) {
+        this.renable = renable;
     }
 
     public String getRcontent() {

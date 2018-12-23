@@ -1,70 +1,192 @@
 package admin.mmmgdzl.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import admin.mmmgdzl.service.SuperService;
+import admin.mmmgdzl.service.UploadService;
 import com.mmmgdzl.exception.XKException;
 import com.mmmgdzl.pojo.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import admin.mmmgdzl.service.AdminService;
 
 import com.mmmgdzl.domain.Result;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 /**
- * è¯¥Controllerç”¨äºæä¾›åå°ç®¡ç†å‘˜æ“ä½œçš„å‰ç«¯è®¿é—®æ¥å£
+ * ¸ÃControllerÓÃÓÚÌá¹©ºóÌ¨¹ÜÀíÔ±²Ù×÷µÄÇ°¶Ë·ÃÎÊ½Ó¿Ú
  */
 
 @Controller
 public class AdminController {
 
-	@Autowired
-	private AdminService adminService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private SuperService superService;
+    @Autowired
+    private UploadService uploadService;
 
-	/**
-	 * ç®¡ç†å‘˜ç™»å½•
-	 */
-	@RequestMapping("/xk/adminLogin")
-	@ResponseBody
-	public Result adminLogin(String account, String password, HttpSession session) {
-		//æ ¡å¯¹è´¦å·å¯†ç 
-		Result result = adminService.adminLogin(account, password);
-		//å¦‚æœç™»é™†æˆåŠŸåˆ™å°†ç®¡ç†å‘˜ä¿¡æ¯æ”¾å…¥sessionä¸­
-		if(result.getCode() == 200) {
-			session.setAttribute("admin", result.getData());
-			result.setData(null);
-		}
-		return result;
-	}
+    /**
+     * ¹ÜÀíÔ±µÇÂ¼
+     */
+    @RequestMapping("/xk/adminLogin")
+    @ResponseBody
+    public Result adminLogin(String account, String password, HttpSession session) {
+        //Ğ£¶ÔÕËºÅÃÜÂë
+        Result result = adminService.adminLogin(account, password);
+        //Èç¹ûµÇÂ½³É¹¦Ôò½«¹ÜÀíÔ±ĞÅÏ¢·ÅÈësessionÖĞ
+        if(result.getCode() == 200) {
+            session.setAttribute("admin", result.getData());
+            result.setData(null);
+        }
+        return result;
+    }
 
-	/**
-	 * ç®¡ç†å‘˜ç™»å‡º
-	 */
-	@RequestMapping("/xk/adminLogout")
-	@ResponseBody
-	public Result adminLogout(HttpSession httpSession) {
-		httpSession.setAttribute("admin", null);
-		return Result.OK();
-	}
+    /**
+     * ¹ÜÀíÔ±×¢²á
+     */
+    @RequestMapping("/xk/doRegister")
+    @ResponseBody
+    public Result adminRegister(Admin admin) {
+        try{
+            Result result = adminService.adminRegister(admin);
+            return result;
+        } catch (XKException e) {
+            return Result.build(500, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  Result.build(500, "Î´Öª´íÎó");
+        }
+    }
 
-	/**
-	 * ç®¡ç†å‘˜ä¿®æ”¹å¯†ç 
-	 */
-	@RequestMapping("/xk/doChangePassword")
-	@ResponseBody
-	public Result changePassword(Admin admin, String newPassword) {
-		Result result = null;
-		try{
-			result = adminService.adminChangePassword(admin, newPassword);
-		} catch (XKException e) {
-			return Result.build(500, e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return  Result.build(500, "æœªçŸ¥é”™è¯¯");
-		}
-		return result;
-	}
+    /**
+     * ¹ÜÀíÔ±¼¤»î
+     */
+    @RequestMapping(value="/xk/activeAccount/{activeCode}")
+    public String activeAccount(@PathVariable String activeCode, Model model) {
+        try{
+            Result result = adminService.adminActive(activeCode);
+            model.addAttribute("activeAdminAccount", result.getData());
+            model.addAttribute("activeResult", "¼¤»î³É¹¦");
+        } catch (XKException e) {
+            model.addAttribute("activeResult", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("activeResult", "Î´Öª´íÎó");
+        }
+        return "xk/login";
+    }
+
+    /**
+     * ¹ÜÀíÔ±µÇ³ö
+     */
+    @RequestMapping("/xk/protect/adminLogout")
+    @ResponseBody
+    public Result adminLogout(HttpSession httpSession) {
+        httpSession.setAttribute("admin", null);
+        return Result.OK();
+    }
+
+    /**
+     * ¹ÜÀíÔ±ĞŞ¸ÄÃÜÂë
+     */
+    @RequestMapping("/xk/protect/doChangePassword")
+    @ResponseBody
+    public Result changePassword(Admin admin, String newPassword) {
+        try{
+            Result result = adminService.adminChangePassword(admin, newPassword);
+            return result;
+        } catch (XKException e) {
+            return Result.build(500, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  Result.build(500, "Î´Öª´íÎó");
+        }
+    }
+
+    /**
+     * ÉÏ´«/¸üĞÂÍ·Ïñ
+     */
+    @RequestMapping("/xk/protect/upload/headImage")
+    @ResponseBody
+    public Result uploadHeadImage(@RequestParam("file") MultipartFile multipartFile, HttpSession session) {
+        try {
+            //´ÓsessionÓòÖĞ»ñÈ¡µ±Ç°µÇÂ¼ÓÃ»§
+            Admin admin = (Admin) session.getAttribute("admin");
+            //»ñÈ¡µ±Ç°ÓÃ»§µÄaid
+            Integer aid = admin.getAid();
+            //¸üĞÂµ±Ç°µÇÂ¼ÓÃ»§µÄÍ·Ïñ
+            Result result = uploadService.updateHeadImage(multipartFile, aid);
+            //¸üĞÂµ±Ç°sessionÖĞµÄ¹ÜÀíÔ±Í·ÏñĞÅÏ¢
+            Admin refreshAdmin = superService.selectAdminById(admin.getAid());
+            session.setAttribute("admin", refreshAdmin);
+            return result;
+        } catch(XKException e) {
+            return  Result.build(500, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.build(500, "Î´Öª´íÎó");
+        }
+    }
+
+    /**
+     * ÓÃ»§ĞŞ¸Ä¸öÈËĞÅÏ¢
+     */
+    @RequestMapping("/xk/protect/doChangeUserInfo")
+    @ResponseBody
+    public Result doChangeUserInfo(Admin admin, HttpSession session) {
+        try {
+            //´ÓsessionÖĞ»ñÈ¡µ±Ç°µÇÂ¼ÓÃ»§
+            Admin currentAdmin = (Admin) session.getAttribute("admin");
+            //ÉèÖÃÓÃ»§aid
+            admin.setAid(currentAdmin.getAid());
+            //¸üĞÂÓÃ»§ĞÅÏ¢
+            adminService.adminUpdateInfo(admin);
+            //»ñÈ¡¸üĞÂºóµÄÓÃ»§ĞÅÏ¢
+            currentAdmin = superService.selectAdminById(currentAdmin.getAid());
+            //½«¸üĞÂºóµÄÓÃ»§ĞÅÏ¢·ÅÈësessionÓòÖĞ
+            session.setAttribute("admin", currentAdmin);
+            return Result.OK(currentAdmin);
+        } catch (XKException e) {
+            return Result.build(500, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.build(500, "Î´Öª´íÎó");
+        }
+    }
+
+    /**
+     * Ò³Ãæ¶¨Ïò
+     */
+    @RequestMapping("/xk")
+    public String toAdminLogin() {
+        return "xk/login";
+    }
+
+
+    @RequestMapping("/xk/{path}")
+    public String toPage(@PathVariable String path) {
+        return "xk/" + path;
+    }
+
+    @RequestMapping("/xk/protect/index")
+    public String toStartPage() {
+        return "xk/protect/outside";
+    }
+
+    @RequestMapping("/xk/protect/personalPage/{page}")
+    public String toAdminPage(@PathVariable String page) {
+        return "xk/protect/personalPage/" + page;
+    }
 
 }
