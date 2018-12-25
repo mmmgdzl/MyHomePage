@@ -61,14 +61,13 @@
                     <a class="javascript:;" href="javascript:;">资源管理</a>
                     <dl class="layui-nav-child">
                         <dd id="oAddResource" style="text-align: center;">
-                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/addResource">资源添加</a>
+                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourcePage/addResource">资源添加</a>
                         </dd>
                         <dd id="oResourceControl" style="text-align: center;">
-                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourceControl">资源管理</a>
+                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourcePage/resourceControl">资源管理</a>
                         </dd>
                     </dl>
                 </li>
-                <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">栏目管理</a>
                         <dl class="layui-nav-child">
@@ -80,7 +79,6 @@
                             </dd>
                         </dl>
                     </li>
-                </c:if>
                 <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">权限管理</a>
@@ -94,7 +92,7 @@
                         </dl>
                     </li>
                 </c:if>
-                <c:if test="${sessionScope.admin.alevel<=1}">
+                <%--<c:if test="${sessionScope.admin.alevel<=1}">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">网站详情</a>
                         <dl class="layui-nav-child">
@@ -113,7 +111,7 @@
                             </dd>
                         </dl>
                     </li>
-                </c:if>
+                </c:if>--%>
                 <li class="layui-nav-item" style="height: 30px; text-align: center"></li>
             </ul>
         </div>
@@ -161,6 +159,11 @@
         $("#loadBody").html("");
         lastLoadPage = page;
         $("#loadBody").load(page);
+    }
+
+    window.onload = function() {
+        //加载欢迎页面
+        loadPage("${pageContext.request.contextPath}/xk/welcome");
     }
 
 </script>
