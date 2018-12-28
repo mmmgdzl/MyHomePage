@@ -29,6 +29,8 @@ public class Admin {
 
     private String aheadimg;
 
+    private String aintroduce;
+
     public Integer getAid() {
         return aid;
     }
@@ -131,5 +133,13 @@ public class Admin {
 
     public void setAheadimg(String aheadimg) {
         this.aheadimg = aheadimg == null ? null : aheadimg.trim();
+    }
+
+    public String getAintroduce() {
+        return aintroduce;
+    }
+
+    public void setAintroduce(String aintroduce) {
+        this.aintroduce = aintroduce == null ? null : aintroduce.trim();
     }
 }

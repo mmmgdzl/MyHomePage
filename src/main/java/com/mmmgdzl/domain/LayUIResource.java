@@ -1,29 +1,64 @@
-package com.mmmgdzl.pojo;
+package com.mmmgdzl.domain;
 
-import java.util.Date;
+import com.mmmgdzl.pojo.Resource;
 
-public class Resource {
+import java.text.SimpleDateFormat;
+
+public class LayUIResource {
     private Integer rid;
 
     private String rtitle;
 
-    private String rtitleimg;
+    private String rcolumn;
 
-    private Integer rcolumn;
+    private String rcreatedate;
 
-    private Date rcreatedate;
+    private String rcreater;
 
-    private Integer rcreater;
+    private String rupdatedate;
 
-    private Date rupdatedate;
-
-    private Integer rupdater;
+    private String rupdater;
 
     private Integer rviews;
 
-    private Integer renable;
+    private String renable;
 
     private String rcontent;
+
+    private String rtitleimg;
+
+    public LayUIResource(){};
+    public LayUIResource(Resource resource) {
+        this.rid = resource.getRid();
+        this.rtitle = resource.getRtitle();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.rcreatedate = sdf.format(resource.getRcreatedate());
+        this.rupdatedate = sdf.format(resource.getRupdatedate());
+        this.rviews = resource.getRviews();
+        if(resource.getRenable() == 0) {
+            this.renable = "·ñ";
+        } else {
+            this.renable = "ÊÇ";
+        }
+        this.rcontent = resource.getRcontent();
+        this.rtitleimg = resource.getRtitleimg();
+    }
+
+    public String getRtitleimg() {
+        return rtitleimg;
+    }
+
+    public void setRtitleimg(String rtitleimg) {
+        this.rtitleimg = rtitleimg;
+    }
+
+    public String getRcontent() {
+        return rcontent;
+    }
+
+    public void setRcontent(String rcontent) {
+        this.rcontent = rcontent;
+    }
 
     public Integer getRid() {
         return rid;
@@ -38,54 +73,46 @@ public class Resource {
     }
 
     public void setRtitle(String rtitle) {
-        this.rtitle = rtitle == null ? null : rtitle.trim();
+        this.rtitle = rtitle;
     }
 
-    public String getRtitleimg() {
-        return rtitleimg;
-    }
-
-    public void setRtitleimg(String rtitleimg) {
-        this.rtitleimg = rtitleimg == null ? null : rtitleimg.trim();
-    }
-
-    public Integer getRcolumn() {
+    public String getRcolumn() {
         return rcolumn;
     }
 
-    public void setRcolumn(Integer rcolumn) {
+    public void setRcolumn(String rcolumn) {
         this.rcolumn = rcolumn;
     }
 
-    public Date getRcreatedate() {
+    public String getRcreatedate() {
         return rcreatedate;
     }
 
-    public void setRcreatedate(Date rcreatedate) {
+    public void setRcreatedate(String rcreatedate) {
         this.rcreatedate = rcreatedate;
     }
 
-    public Integer getRcreater() {
+    public String getRcreater() {
         return rcreater;
     }
 
-    public void setRcreater(Integer rcreater) {
+    public void setRcreater(String rcreater) {
         this.rcreater = rcreater;
     }
 
-    public Date getRupdatedate() {
+    public String getRupdatedate() {
         return rupdatedate;
     }
 
-    public void setRupdatedate(Date rupdatedate) {
+    public void setRupdatedate(String rupdatedate) {
         this.rupdatedate = rupdatedate;
     }
 
-    public Integer getRupdater() {
+    public String getRupdater() {
         return rupdater;
     }
 
-    public void setRupdater(Integer rupdater) {
+    public void setRupdater(String rupdater) {
         this.rupdater = rupdater;
     }
 
@@ -97,19 +124,11 @@ public class Resource {
         this.rviews = rviews;
     }
 
-    public Integer getRenable() {
+    public String getRenable() {
         return renable;
     }
 
-    public void setRenable(Integer renable) {
+    public void setRenable(String renable) {
         this.renable = renable;
-    }
-
-    public String getRcontent() {
-        return rcontent;
-    }
-
-    public void setRcontent(String rcontent) {
-        this.rcontent = rcontent == null ? null : rcontent.trim();
     }
 }

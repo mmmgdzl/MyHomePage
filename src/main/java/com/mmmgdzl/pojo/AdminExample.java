@@ -981,6 +981,76 @@ public class AdminExample {
             addCriterion("aHeadImg not between", value1, value2, "aheadimg");
             return (Criteria) this;
         }
+
+        public Criteria andAintroduceIsNull() {
+            addCriterion("aIntroduce is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceIsNotNull() {
+            addCriterion("aIntroduce is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceEqualTo(String value) {
+            addCriterion("aIntroduce =", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceNotEqualTo(String value) {
+            addCriterion("aIntroduce <>", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceGreaterThan(String value) {
+            addCriterion("aIntroduce >", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceGreaterThanOrEqualTo(String value) {
+            addCriterion("aIntroduce >=", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceLessThan(String value) {
+            addCriterion("aIntroduce <", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceLessThanOrEqualTo(String value) {
+            addCriterion("aIntroduce <=", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceLike(String value) {
+            addCriterion("aIntroduce like", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceNotLike(String value) {
+            addCriterion("aIntroduce not like", value, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceIn(List<String> values) {
+            addCriterion("aIntroduce in", values, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceNotIn(List<String> values) {
+            addCriterion("aIntroduce not in", values, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceBetween(String value1, String value2) {
+            addCriterion("aIntroduce between", value1, value2, "aintroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAintroduceNotBetween(String value1, String value2) {
+            addCriterion("aIntroduce not between", value1, value2, "aintroduce");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

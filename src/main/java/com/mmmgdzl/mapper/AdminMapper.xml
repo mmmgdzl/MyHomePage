@@ -15,6 +15,7 @@
     <result column="aMail" property="amail" jdbcType="VARCHAR" />
     <result column="aPhone" property="aphone" jdbcType="VARCHAR" />
     <result column="aHeadImg" property="aheadimg" jdbcType="VARCHAR" />
+    <result column="aIntroduce" property="aintroduce" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     aId, aAccount, aPassword, aLevel, aEnable, aActive, aActiveCode, aCreateDate, aName, 
-    aGender, aMail, aPhone, aHeadImg
+    aGender, aMail, aPhone, aHeadImg, aIntroduce
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.AdminExample" >
     select
@@ -113,12 +114,12 @@
       aLevel, aEnable, aActive, 
       aActiveCode, aCreateDate, aName, 
       aGender, aMail, aPhone, 
-      aHeadImg)
+      aHeadImg, aIntroduce)
     values (#{aid,jdbcType=INTEGER}, #{aaccount,jdbcType=VARCHAR}, #{apassword,jdbcType=VARCHAR}, 
       #{alevel,jdbcType=INTEGER}, #{aenable,jdbcType=INTEGER}, #{aactive,jdbcType=INTEGER}, 
       #{aactivecode,jdbcType=VARCHAR}, #{acreatedate,jdbcType=DATE}, #{aname,jdbcType=VARCHAR}, 
       #{agender,jdbcType=INTEGER}, #{amail,jdbcType=VARCHAR}, #{aphone,jdbcType=VARCHAR}, 
-      #{aheadimg,jdbcType=VARCHAR})
+      #{aheadimg,jdbcType=VARCHAR}, #{aintroduce,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.Admin" >
     insert into admin
@@ -162,6 +163,9 @@
       <if test="aheadimg != null" >
         aHeadImg,
       </if>
+      <if test="aintroduce != null" >
+        aIntroduce,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="aid != null" >
@@ -202,6 +206,9 @@
       </if>
       <if test="aheadimg != null" >
         #{aheadimg,jdbcType=VARCHAR},
+      </if>
+      <if test="aintroduce != null" >
+        #{aintroduce,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -253,6 +260,9 @@
       <if test="record.aheadimg != null" >
         aHeadImg = #{record.aheadimg,jdbcType=VARCHAR},
       </if>
+      <if test="record.aintroduce != null" >
+        aIntroduce = #{record.aintroduce,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -272,7 +282,8 @@
       aGender = #{record.agender,jdbcType=INTEGER},
       aMail = #{record.amail,jdbcType=VARCHAR},
       aPhone = #{record.aphone,jdbcType=VARCHAR},
-      aHeadImg = #{record.aheadimg,jdbcType=VARCHAR}
+      aHeadImg = #{record.aheadimg,jdbcType=VARCHAR},
+      aIntroduce = #{record.aintroduce,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -316,6 +327,9 @@
       <if test="aheadimg != null" >
         aHeadImg = #{aheadimg,jdbcType=VARCHAR},
       </if>
+      <if test="aintroduce != null" >
+        aIntroduce = #{aintroduce,jdbcType=VARCHAR},
+      </if>
     </set>
     where aId = #{aid,jdbcType=INTEGER}
   </update>
@@ -332,7 +346,8 @@
       aGender = #{agender,jdbcType=INTEGER},
       aMail = #{amail,jdbcType=VARCHAR},
       aPhone = #{aphone,jdbcType=VARCHAR},
-      aHeadImg = #{aheadimg,jdbcType=VARCHAR}
+      aHeadImg = #{aheadimg,jdbcType=VARCHAR},
+      aIntroduce = #{aintroduce,jdbcType=VARCHAR}
     where aId = #{aid,jdbcType=INTEGER}
   </update>
 </mapper>

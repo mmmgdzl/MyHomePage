@@ -68,6 +68,7 @@
                         </dd>
                     </dl>
                 </li>
+                <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">栏目管理</a>
                         <dl class="layui-nav-child">
@@ -79,6 +80,7 @@
                             </dd>
                         </dl>
                     </li>
+                </c:if>
                 <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">权限管理</a>

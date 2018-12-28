@@ -26,6 +26,9 @@ public class LayUIAdmin {
 
     private String aphone;
 
+    private String aintroduce;
+
+
     public LayUIAdmin(){};
     public LayUIAdmin(Admin admin) {
         this.aid = admin.getAid();
@@ -52,6 +55,7 @@ public class LayUIAdmin {
         }
         this.amail = admin.getAmail();
         this.aphone = admin.getAphone();
+        this.aintroduce = admin.getAintroduce();
     }
 
     public Integer getAid() {
@@ -132,5 +136,13 @@ public class LayUIAdmin {
 
     public void setAphone(String aphone) {
         this.aphone = aphone;
+    }
+
+    public String getAintroduce() {
+        return aintroduce;
+    }
+
+    public void setAintroduce(String aintroduce) {
+        this.aintroduce = aintroduce;
     }
 }

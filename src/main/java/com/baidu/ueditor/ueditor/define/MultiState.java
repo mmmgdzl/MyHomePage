@@ -16,7 +16,7 @@ import com.baidu.ueditor.define.State;
  * @author hancong03@baidu.com
  *
  */
-public class MultiState implements com.baidu.ueditor.define.State {
+public class MultiState implements State {
 
 	private boolean state = false;
 	private String info = null;
@@ -35,7 +35,7 @@ public class MultiState implements com.baidu.ueditor.define.State {
 	
 	public MultiState ( boolean state, int infoKey ) {
 		this.state = state;
-		this.info = com.baidu.ueditor.define.AppInfo.getStateInfo( infoKey );
+		this.info = AppInfo.getStateInfo( infoKey );
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class MultiState implements com.baidu.ueditor.define.State {
 	@Override
 	public String toJSONString() {
 		
-		String stateVal = this.isSuccess() ? com.baidu.ueditor.define.AppInfo.getStateInfo( AppInfo.SUCCESS ) : this.info;
+		String stateVal = this.isSuccess() ? AppInfo.getStateInfo( AppInfo.SUCCESS ) : this.info;
 		
 		StringBuilder builder = new StringBuilder();
 		

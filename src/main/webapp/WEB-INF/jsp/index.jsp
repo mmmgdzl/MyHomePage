@@ -44,8 +44,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<![endif]-->
 	
 </head>
-<body>  
-
+<body>
+    <audio src="${resourceServer }/my/music/christmas-bg.mp3" autoplay="autoplay" loop="loop"></audio>
     <!-- LOADER -->
     <div id="preloader">
         <img class="preloader" src="${resourceServer }/images/loader.gif" alt="">
@@ -88,21 +88,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- VIDEO BG PLUGINS -->
     <script src="${pageContext.request.contextPath }/static/js/videobg.js"></script>
 	<script type="text/javascript">
-		function gameChange(obj) {
-			var href=$(obj).attr("href");
-			var logo=$(obj).attr("logo");
-			var label=$(obj).html();
-			
-			$("#gameHref1").attr("href", href);
-			$("#gameHref2").attr("href", href);
-			$("#gameLogo").attr("src", "${resourceServer }/my/game/" + logo);
-			$("#gameLabel").html(label);
-		}
 
 		window.onload = function() {
-		    //切换为主页特殊样式
-		    $("#logoImage").attr("src", "${resourceServer }/images/logo.png");
+            //切换为主页特殊样式
+            $("#logoImage").attr("src", "${resourceServer }/images/logo.png");
 		    $("#header").removeClass("header-normal");
+		    $("a[xkfilter='flag']").attr("target", "_blank");
         }
 
 	</script>

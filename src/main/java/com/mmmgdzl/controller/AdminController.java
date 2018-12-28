@@ -1,10 +1,10 @@
-package admin.mmmgdzl.controller;
+package com.mmmgdzl.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import admin.mmmgdzl.service.SuperService;
-import admin.mmmgdzl.service.UploadService;
+import com.mmmgdzl.service.AdminService;
+import com.mmmgdzl.service.SuperService;
+import com.mmmgdzl.service.FileService;
+import com.mmmgdzl.utils.ConstantValueUtil;
+import com.mmmgdzl.domain.Result;
 import com.mmmgdzl.exception.XKException;
 import com.mmmgdzl.pojo.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import admin.mmmgdzl.service.AdminService;
-
-import com.mmmgdzl.domain.Result;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 /**
  * 该Controller用于提供后台管理员操作的前端访问接口
@@ -34,26 +30,30 @@ public class AdminController {
     @Autowired
     private SuperService superService;
     @Autowired
-    private UploadService uploadService;
+    private FileService fileService;
 
     /**
-     * 管理员登录
+     * 用户登录
      */
     @RequestMapping("/xk/adminLogin")
     @ResponseBody
     public Result adminLogin(String account, String password, HttpSession session) {
-        //校对账号密码
-        Result result = adminService.adminLogin(account, password);
-        //如果登陆成功则将管理员信息放入session中
-        if(result.getCode() == 200) {
-            session.setAttribute("admin", result.getData());
-            result.setData(null);
+        try{
+            //校对账号密码
+            Admin admin = adminService.adminLogin(account, password);
+            //将登陆的管理员信息放入session中
+            session.setAttribute(ConstantValueUtil.ADMIN, admin);
+            return Result.OK();
+        } catch (XKException e) {
+            return Result.build(500, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  Result.build(500, "未知错误");
         }
-        return result;
     }
 
     /**
-     * 管理员注册
+     * 用户注册
      */
     @RequestMapping("/xk/doRegister")
     @ResponseBody
@@ -70,7 +70,7 @@ public class AdminController {
     }
 
     /**
-     * 管理员激活
+     * 用户激活
      */
     @RequestMapping(value="/xk/activeAccount/{activeCode}")
     public String activeAccount(@PathVariable String activeCode, Model model) {
@@ -88,17 +88,19 @@ public class AdminController {
     }
 
     /**
-     * 管理员登出
+     * 用户登出
      */
     @RequestMapping("/xk/protect/adminLogout")
     @ResponseBody
     public Result adminLogout(HttpSession httpSession) {
-        httpSession.setAttribute("admin", null);
+        //删除session域中的用户信息
+        httpSession.setAttribute(ConstantValueUtil.ADMIN, null);
+        //返回成功结果
         return Result.OK();
     }
 
     /**
-     * 管理员修改密码
+     * 用户修改密码
      */
     @RequestMapping("/xk/protect/doChangePassword")
     @ResponseBody
@@ -122,14 +124,14 @@ public class AdminController {
     public Result uploadHeadImage(@RequestParam("file") MultipartFile multipartFile, HttpSession session) {
         try {
             //从session域中获取当前登录用户
-            Admin admin = (Admin) session.getAttribute("admin");
+            Admin admin = (Admin) session.getAttribute(ConstantValueUtil.ADMIN);
             //获取当前用户的aid
             Integer aid = admin.getAid();
             //更新当前登录用户的头像
-            Result result = uploadService.updateHeadImage(multipartFile, aid);
+            Result result = fileService.updateHeadImage(multipartFile, aid);
             //更新当前session中的管理员头像信息
             Admin refreshAdmin = superService.selectAdminById(admin.getAid());
-            session.setAttribute("admin", refreshAdmin);
+            session.setAttribute(ConstantValueUtil.ADMIN, refreshAdmin);
             return result;
         } catch(XKException e) {
             return  Result.build(500, e.getMessage());
@@ -147,13 +149,15 @@ public class AdminController {
     public Result doChangeUserInfo(Admin admin, HttpSession session) {
         try {
             //从session中获取当前登录用户
-            Admin currentAdmin = (Admin) session.getAttribute("admin");
+            Admin currentAdmin = (Admin) session.getAttribute(ConstantValueUtil.ADMIN);
             //设置用户aid
             admin.setAid(currentAdmin.getAid());
             //更新用户信息
             adminService.adminUpdateInfo(admin);
             //获取更新后的用户信息
             currentAdmin = superService.selectAdminById(currentAdmin.getAid());
+            //去除密码
+            currentAdmin.setApassword(null);
             //将更新后的用户信息放入session域中
             session.setAttribute("admin", currentAdmin);
             return Result.OK(currentAdmin);
@@ -173,15 +177,14 @@ public class AdminController {
         return "xk/login";
     }
 
-
     @RequestMapping("/xk/{path}")
     public String toPage(@PathVariable String path) {
         return "xk/" + path;
     }
 
-    @RequestMapping("/xk/protect/index")
+    @RequestMapping("/xk/index")
     public String toStartPage() {
-        return "xk/protect/outside";
+        return "xk/outside";
     }
 
     @RequestMapping("/xk/protect/personalPage/{page}")

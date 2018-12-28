@@ -1,9 +1,9 @@
-package admin.mmmgdzl.service.impl;
+package com.mmmgdzl.service.impl;
 
-import admin.mmmgdzl.service.SuperService;
+import com.mmmgdzl.service.SuperService;
+import com.mmmgdzl.service.FileService;
 import com.github.pagehelper.PageHelper;
 import com.mmmgdzl.domain.LayUIAdmin;
-import com.mmmgdzl.domain.LayUIResult;
 import com.mmmgdzl.exception.XKException;
 import com.mmmgdzl.mapper.AdminLevelMapper;
 import com.mmmgdzl.mapper.AdminMapper;
@@ -14,26 +14,25 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import com.mmmgdzl.domain.Result;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * 该Service提供管理员管理服务
- */
 @Service
 public class SuperServiceImpl implements SuperService {
 
     @Autowired
     private AdminMapper adminMapper;
-
+    @Autowired
+    private FileService fileService;
     @Autowired
     private AdminLevelMapper adminLevelMapper;
 
     @Override
-    public boolean addAdmin(Admin admin, Admin currentAdmin) throws RuntimeException {
-        //查询管理员账号是否已经存在
+    public Result addAdmin(Admin admin, Admin currentAdmin) {
+        //查询用户账号是否已经存在
         Admin a = selectAdminByAccount(admin.getAaccount());
         if(a != null) {
             if(a.getAactive() == 0) {
@@ -41,7 +40,7 @@ public class SuperServiceImpl implements SuperService {
                 adminMapper.deleteByPrimaryKey(a.getAid());
             } else {
                 //若已经存在且已激活则抛出异常
-                throw new XKException("该管理员账号已存在!");
+                throw new XKException("该账号被注册");
             }
         }
         //验证邮箱是否已经存在
@@ -52,14 +51,14 @@ public class SuperServiceImpl implements SuperService {
                 adminMapper.deleteByPrimaryKey(a.getAid());
             } else {
                 //若已经存在且已激活则抛出异常
-                throw new XKException("该邮箱已被注册!");
+                throw new XKException("该邮箱已被注册");
             }
         }
         //填充数据
         admin.setAid(0);
         admin.setAenable(1);
         admin.setAactive(1);
-        //设置激活码为当前管理员编号
+        //设置激活码为当前用户编号
         admin.setAactivecode(currentAdmin.getAid() + "");
         admin.setAcreatedate(new Date());
         admin.setAheadimg("default.jpg");
@@ -67,17 +66,104 @@ public class SuperServiceImpl implements SuperService {
         admin.setApassword(DigestUtils.md5DigestAsHex(admin.getApassword().getBytes()));
         //清除空值
         ClearBlankUtil.clearStringBlank(admin);
-        //自动生成昵称
+        //如果昵称为空则设置昵称与账号相同
         if(admin.getAname() == null) {
             admin.setAname(admin.getAaccount());
         }
         //执行插入操作
         adminMapper.insert(admin);
-        return true;
+        //返回成功信息
+        return Result.OK();
     }
 
     @Override
-    public Admin updateAdminSelective(Admin admin) throws RuntimeException {
+    public AdminExample transformAdminToAdminExample(Admin admin) {
+        //清除空白项
+        ClearBlankUtil.clearStringBlank(admin);
+        //创建查询模板对象
+        AdminExample ae = new AdminExample();
+        AdminExample.Criteria criteria = ae.createCriteria();
+        //添加查询条件
+        if(admin != null) {
+            //清除空值
+            ClearBlankUtil.clearStringBlank(admin);
+            //添加查询条件
+            if (admin.getAaccount() != null)
+                criteria.andAaccountLike("%" + admin.getAaccount() + "%");
+            if (admin.getAlevel() != null)
+                criteria.andAlevelEqualTo(admin.getAlevel());
+            if(admin.getAname() != null)
+                criteria.andAnameLike("%"+ admin.getAname() + "%");
+            if(admin.getAgender() != null)
+                criteria.andAgenderEqualTo(admin.getAgender());
+            if(admin.getAmail() != null)
+                criteria.andAmailLike("%" + admin.getAmail() + "%");
+            if(admin.getAphone() != null)
+                criteria.andAphoneLike("%" + admin.getAphone() + "%");
+        }
+        //返回查询模板对象
+        return ae;
+    }
+
+    @Override
+    public List<Admin> selectAdmins(AdminExample adminExample, Integer currentPage, Integer pageSize) {
+        if(currentPage != null && pageSize != null) {
+            //设置分页
+            PageHelper.startPage(currentPage, pageSize);
+        }
+        //执行查询
+        List<Admin> adminList = adminMapper.selectByExample(adminExample);
+        //消除密码
+        for(Admin a : adminList) {
+            a.setApassword(null);
+        }
+        //返回管理员列表
+        return adminList;
+    }
+
+    @Override
+    public List<Admin> selectAdmins(Admin admin, Integer currentPage, Integer pageSize) {
+        //将管理员对象转换为查询模板对象
+        AdminExample adminExample = this.transformAdminToAdminExample(admin);
+        //执行查询并返回
+        return this.selectAdmins(adminExample, currentPage, pageSize);
+    }
+
+    @Override
+    public Integer count(AdminExample adminExample) {
+        return adminMapper.countByExample(adminExample);
+    }
+
+    @Override
+    public Integer count(Admin admin) {
+        //将管理员对象转换为查询模板对象
+        AdminExample adminExample = this.transformAdminToAdminExample(admin);
+        //执行统计并返回
+        return count(adminExample);
+    }
+
+    @Override
+    public LayUIAdmin renderAdminForLayUI(Admin admin) {
+        LayUIAdmin layUIAdmin = new LayUIAdmin(admin);
+        //渲染用户等级名称
+        layUIAdmin.setAlevel(adminLevelMapper.selectByPrimaryKey(admin.getAlevel()).getLname());
+        //返回渲染结果
+        return layUIAdmin;
+    }
+
+    @Override
+    public List<LayUIAdmin> renderAdminsForLayUI(List<Admin> admins) {
+        //执行数据渲染
+        List<LayUIAdmin> adminList = new ArrayList<>();
+        for(Admin admin : admins) {
+            adminList.add(renderAdminForLayUI(admin));
+        }
+        //返回渲染后的用户列表
+        return adminList;
+    }
+
+    @Override
+    public Admin updateAdminSelective(Admin admin) {
         //清除空值
         ClearBlankUtil.clearStringBlank(admin);
 
@@ -89,7 +175,7 @@ public class SuperServiceImpl implements SuperService {
                 adminMapper.deleteByPrimaryKey(checkAdmin.getAid());
             } else {
                 //若已经存在且不是当前编辑账号且已激活则抛出异常
-                throw new XKException("该账号已经存在");
+                throw new XKException("该账号已被注册");
             }
         }
         //验证邮箱是否已经存在
@@ -108,15 +194,21 @@ public class SuperServiceImpl implements SuperService {
             admin.setApassword(DigestUtils.md5DigestAsHex(admin.getApassword().getBytes()));
         //根据已有元素进行更新而不是完全更新
         adminMapper.updateByPrimaryKeySelective(admin);
+        //返回更新后的用户
         return adminMapper.selectByPrimaryKey(admin.getAid());
     }
 
     @Override
-    public boolean deleteAdminsByIds(Integer[] ids) {
-        for(Integer id : ids) {
-            adminMapper.deleteByPrimaryKey(id);
+    public Result deleteAdminsByIds(List<Integer> idList) {
+        if(idList != null) {
+            for (Integer id : idList) {
+                //删除头像文件
+                fileService.deletePreHeadImg(id);
+                //删除管理员
+                adminMapper.deleteByPrimaryKey(id);
+            }
         }
-        return true;
+        return Result.OK();
     }
 
     @Override
@@ -126,7 +218,7 @@ public class SuperServiceImpl implements SuperService {
 
     @Override
     public Admin selectAdminByAccount(String account) {
-        if(account == null) {
+        if(StringUtils.isBlank(account)) {
             return null;
         }
         //创建模板对象
@@ -148,13 +240,12 @@ public class SuperServiceImpl implements SuperService {
 
     @Override
     public Admin selectAdminByMail(String mail) {
-        if(mail == null) {
+        if(StringUtils.isBlank(mail)) {
             return null;
         }
         //创建模板对象
         AdminExample adminExample = new AdminExample();
         AdminExample.Criteria criteria = adminExample.createCriteria();
-
         //设置查询条件
         criteria.andAmailEqualTo(mail);
         //执行查询
@@ -169,51 +260,18 @@ public class SuperServiceImpl implements SuperService {
     }
 
     @Override
-    public LayUIResult<LayUIAdmin> selectAdminsForLayUI(Admin admin, Integer currentPage, Integer pageSize) {
-        //创建模板对象
-        AdminExample ae = new AdminExample();
-        AdminExample.Criteria criteria = ae.createCriteria();
-
-        //添加查询条件
-        if(admin != null) {
-            //清除空值
-            ClearBlankUtil.clearStringBlank(admin);
-            //添加查询条件
-            if (admin.getAaccount() != null)
-                criteria.andAaccountLike("%" + admin.getAaccount() + "%");
-            if (admin.getAlevel() != null)
-                criteria.andAlevelEqualTo(admin.getAlevel());
-            if(admin.getAname() != null)
-                criteria.andAnameLike("%"+ admin.getAname() + "%");
-            if(admin.getAgender() != null)
-                criteria.andAgenderEqualTo(admin.getAgender());
-            if(admin.getAmail() != null)
-                criteria.andAmailLike("%" + admin.getAmail() + "%");
-            if(admin.getAphone() != null)
-                criteria.andAphoneLike("%" + admin.getAphone() + "%");
+    public Admin renderAdminIntroduce(Admin admin) {
+        if(StringUtils.isBlank(admin.getAintroduce())) {
+            admin.setAintroduce("这货很懒, 连介绍都没写~~");
         }
-        //获取总条数
-        int totalNum = this.count(ae);
-        //设置分页
-        PageHelper.startPage(currentPage, pageSize);
-        //执行查询
-        List<Admin> adminList = adminMapper.selectByExample(ae);
-        //执行数据渲染
-        List<LayUIAdmin> adminList2 = new ArrayList<>();
-        for(Admin admin1 : adminList) {
-            LayUIAdmin layUIAdmin = new LayUIAdmin(admin1);
-            layUIAdmin.setAlevel(adminLevelMapper.selectByPrimaryKey(admin1.getAlevel()).getLname());
-            adminList2.add(layUIAdmin);
-        }
-        //消除密码
-        for(Admin a : adminList) {
-            a.setApassword(null);
-        }
-        return new LayUIResult<>(0, totalNum, adminList2);
+        return admin;
     }
 
     @Override
-    public Integer count(AdminExample adminExample) {
-        return adminMapper.countByExample(adminExample);
+    public List<Admin> renderAdminsIntroduce(List<Admin> admins) {
+        for(Admin admin : admins) {
+            renderAdminIntroduce(admin);
+        }
+        return admins;
     }
 }

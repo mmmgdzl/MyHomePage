@@ -18,7 +18,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">账号:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="aaccount" name="aaccount" placeholder="筛选账号(小于10个字符)"
+                            <input type="text" id="aaccount" name="aaccount" placeholder="筛选账号"
                                    autocomplete="off" class="layui-input">
                         </div>
                         <label class="layui-form-label">管理员等级:</label>
@@ -43,7 +43,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">昵称:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="aname" name="aname" placeholder="筛选昵称(小于10个字符)"
+                            <input type="text" id="aname" name="aname" placeholder="筛选昵称"
                                    autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-inline">
@@ -153,7 +153,7 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
-                layer.confirm('确定删除ID为' + data.aid + '的行么', function(index){
+                layer.confirm('确定删除ID为' + data.aid + '的用户么', function(index){
                     layer.close(index);
                     del(data.aid);
                 });

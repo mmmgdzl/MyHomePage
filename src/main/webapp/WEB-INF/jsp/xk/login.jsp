@@ -62,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success:function (data) {
                     if(data.code=="200") {
                         layer.msg("登陆成功");
-                    	setTimeout("location.href='${pageContext.request.contextPath}/xk/protect/index'",500);
+                    	setTimeout("location.href='${pageContext.request.contextPath}/xk/index'",500);
                     } else {
                     	layer.msg(data.msg);
                     	$(".layui-form")[0].reset();

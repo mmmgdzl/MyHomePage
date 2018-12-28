@@ -2,7 +2,7 @@ package com.mmmgdzl.domain;
 
 import java.util.List;
 
-public class PageBean<T> {
+public class ResourceListPageBean<T> {
 
     //当前页码
     private Integer currentPage;
@@ -14,10 +14,6 @@ public class PageBean<T> {
     private Integer pageSize;
     //当前页面主题
     private String type;
-
-    //用于存放查询条件的对象,也可作他用
-    private T obj;
-
     //用于存放列表数据
     private List<T> data;
 
@@ -53,12 +49,12 @@ public class PageBean<T> {
         this.pageSize = pageSize;
     }
 
-    public T getObj() {
-        return obj;
+    public String getType() {
+        return type;
     }
 
-    public void setObj(T obj) {
-        this.obj = obj;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<T> getData() {
@@ -67,13 +63,5 @@ public class PageBean<T> {
 
     public void setData(List<T> data) {
         this.data = data;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

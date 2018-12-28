@@ -33,4 +33,13 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<!-- 权限校验拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.mmmgdzl.web.interceptor.AdminInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 </beans>

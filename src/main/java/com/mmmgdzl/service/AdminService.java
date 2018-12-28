@@ -1,4 +1,4 @@
-package admin.mmmgdzl.service;
+package com.mmmgdzl.service;
 
 import com.mmmgdzl.domain.Result;
 import com.mmmgdzl.pojo.Admin;
@@ -11,7 +11,12 @@ public interface AdminService {
 	/**
 	 * 用户登录
 	 */
-	Result adminLogin(String account, String password);
+	Admin adminLogin(String account, String password);
+
+	/**
+	 * 用户注册
+	 */
+	Result adminRegister(Admin admin);
 
 	/**
 	 * 用户修改密码
@@ -24,12 +29,7 @@ public interface AdminService {
 	Result adminUpdateInfo(Admin admin);
 
 	/**
-	 * 管理员注册
-	 */
-	Result adminRegister(Admin admin);
-
-	/**
-	 * 管理员激活
+	 * 用户激活
 	 */
 	Result adminActive(String activeCode);
 

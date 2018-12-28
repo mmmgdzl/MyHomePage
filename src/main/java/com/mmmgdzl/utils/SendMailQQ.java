@@ -10,7 +10,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.sun.mail.util.MailSSLSocketFactory;
-import org.junit.Test;
 
 /**
 *JavaMail发送邮件:前提是QQ邮箱里帐号设置要开启POP3/SMTP协议

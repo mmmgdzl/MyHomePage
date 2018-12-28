@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mmmgdzl.mapper.ResourceCommentMapper" >
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceComment" >
-    <id column="rc_id" property="rcId" jdbcType="INTEGER" />
+    <id column="rcId" property="rcid" jdbcType="INTEGER" />
+    <result column="rcCount" property="rccount" jdbcType="INTEGER" />
     <result column="rcCreateDate" property="rccreatedate" jdbcType="DATE" />
     <result column="rcCreater" property="rccreater" jdbcType="INTEGER" />
     <result column="rcResource" property="rcresource" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mmmgdzl.pojo.ResourceComment" extends="BaseResultMap" >
-    <result column="rcContent" property="rccontent" jdbcType="LONGVARCHAR" />
+    <result column="rcReply" property="rcreply" jdbcType="INTEGER" />
+    <result column="rcContent" property="rccontent" jdbcType="VARCHAR" />
+    <result column="rcEnable" property="rcenable" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,27 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    rc_id, rcCreateDate, rcCreater, rcResource
+    rcId, rcCount, rcCreateDate, rcCreater, rcResource, rcReply, rcContent, rcEnable
   </sql>
-  <sql id="Blob_Column_List" >
-    rcContent
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.mmmgdzl.pojo.ResourceCommentExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from resource_comment
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.ResourceCommentExample" >
     select
     <if test="distinct" >
@@ -104,17 +86,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from resource_comment
-    where rc_id = #{rcId,jdbcType=INTEGER}
+    where rcId = #{rcid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from resource_comment
-    where rc_id = #{rcId,jdbcType=INTEGER}
+    where rcId = #{rcid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.mmmgdzl.pojo.ResourceCommentExample" >
     delete from resource_comment
@@ -123,16 +103,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mmmgdzl.pojo.ResourceComment" >
-    insert into resource_comment (rc_id, rcCreateDate, rcCreater, 
-      rcResource, rcContent)
-    values (#{rcId,jdbcType=INTEGER}, #{rccreatedate,jdbcType=DATE}, #{rccreater,jdbcType=INTEGER}, 
-      #{rcresource,jdbcType=INTEGER}, #{rccontent,jdbcType=LONGVARCHAR})
+    insert into resource_comment (rcId, rcCount, rcCreateDate, 
+      rcCreater, rcResource, rcReply, 
+      rcContent, rcEnable)
+    values (#{rcid,jdbcType=INTEGER}, #{rccount,jdbcType=INTEGER}, #{rccreatedate,jdbcType=DATE}, 
+      #{rccreater,jdbcType=INTEGER}, #{rcresource,jdbcType=INTEGER}, #{rcreply,jdbcType=INTEGER}, 
+      #{rccontent,jdbcType=VARCHAR}, #{rcenable,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.ResourceComment" >
     insert into resource_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="rcId != null" >
-        rc_id,
+      <if test="rcid != null" >
+        rcId,
+      </if>
+      <if test="rccount != null" >
+        rcCount,
       </if>
       <if test="rccreatedate != null" >
         rcCreateDate,
@@ -143,13 +128,22 @@
       <if test="rcresource != null" >
         rcResource,
       </if>
+      <if test="rcreply != null" >
+        rcReply,
+      </if>
       <if test="rccontent != null" >
         rcContent,
       </if>
+      <if test="rcenable != null" >
+        rcEnable,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="rcId != null" >
-        #{rcId,jdbcType=INTEGER},
+      <if test="rcid != null" >
+        #{rcid,jdbcType=INTEGER},
+      </if>
+      <if test="rccount != null" >
+        #{rccount,jdbcType=INTEGER},
       </if>
       <if test="rccreatedate != null" >
         #{rccreatedate,jdbcType=DATE},
@@ -160,8 +154,14 @@
       <if test="rcresource != null" >
         #{rcresource,jdbcType=INTEGER},
       </if>
+      <if test="rcreply != null" >
+        #{rcreply,jdbcType=INTEGER},
+      </if>
       <if test="rccontent != null" >
-        #{rccontent,jdbcType=LONGVARCHAR},
+        #{rccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="rcenable != null" >
+        #{rcenable,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -174,8 +174,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update resource_comment
     <set >
-      <if test="record.rcId != null" >
-        rc_id = #{record.rcId,jdbcType=INTEGER},
+      <if test="record.rcid != null" >
+        rcId = #{record.rcid,jdbcType=INTEGER},
+      </if>
+      <if test="record.rccount != null" >
+        rcCount = #{record.rccount,jdbcType=INTEGER},
       </if>
       <if test="record.rccreatedate != null" >
         rcCreateDate = #{record.rccreatedate,jdbcType=DATE},
@@ -186,31 +189,30 @@
       <if test="record.rcresource != null" >
         rcResource = #{record.rcresource,jdbcType=INTEGER},
       </if>
+      <if test="record.rcreply != null" >
+        rcReply = #{record.rcreply,jdbcType=INTEGER},
+      </if>
       <if test="record.rccontent != null" >
-        rcContent = #{record.rccontent,jdbcType=LONGVARCHAR},
+        rcContent = #{record.rccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rcenable != null" >
+        rcEnable = #{record.rcenable,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExample" parameterType="map" >
     update resource_comment
-    set rc_id = #{record.rcId,jdbcType=INTEGER},
+    set rcId = #{record.rcid,jdbcType=INTEGER},
+      rcCount = #{record.rccount,jdbcType=INTEGER},
       rcCreateDate = #{record.rccreatedate,jdbcType=DATE},
       rcCreater = #{record.rccreater,jdbcType=INTEGER},
       rcResource = #{record.rcresource,jdbcType=INTEGER},
-      rcContent = #{record.rccontent,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update resource_comment
-    set rc_id = #{record.rcId,jdbcType=INTEGER},
-      rcCreateDate = #{record.rccreatedate,jdbcType=DATE},
-      rcCreater = #{record.rccreater,jdbcType=INTEGER},
-      rcResource = #{record.rcresource,jdbcType=INTEGER}
+      rcReply = #{record.rcreply,jdbcType=INTEGER},
+      rcContent = #{record.rccontent,jdbcType=VARCHAR},
+      rcEnable = #{record.rcenable,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -218,6 +220,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mmmgdzl.pojo.ResourceComment" >
     update resource_comment
     <set >
+      <if test="rccount != null" >
+        rcCount = #{rccount,jdbcType=INTEGER},
+      </if>
       <if test="rccreatedate != null" >
         rcCreateDate = #{rccreatedate,jdbcType=DATE},
       </if>
@@ -227,25 +232,27 @@
       <if test="rcresource != null" >
         rcResource = #{rcresource,jdbcType=INTEGER},
       </if>
+      <if test="rcreply != null" >
+        rcReply = #{rcreply,jdbcType=INTEGER},
+      </if>
       <if test="rccontent != null" >
-        rcContent = #{rccontent,jdbcType=LONGVARCHAR},
+        rcContent = #{rccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="rcenable != null" >
+        rcEnable = #{rcenable,jdbcType=INTEGER},
       </if>
     </set>
-    where rc_id = #{rcId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mmmgdzl.pojo.ResourceComment" >
-    update resource_comment
-    set rcCreateDate = #{rccreatedate,jdbcType=DATE},
-      rcCreater = #{rccreater,jdbcType=INTEGER},
-      rcResource = #{rcresource,jdbcType=INTEGER},
-      rcContent = #{rccontent,jdbcType=LONGVARCHAR}
-    where rc_id = #{rcId,jdbcType=INTEGER}
+    where rcId = #{rcid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.ResourceComment" >
     update resource_comment
-    set rcCreateDate = #{rccreatedate,jdbcType=DATE},
+    set rcCount = #{rccount,jdbcType=INTEGER},
+      rcCreateDate = #{rccreatedate,jdbcType=DATE},
       rcCreater = #{rccreater,jdbcType=INTEGER},
-      rcResource = #{rcresource,jdbcType=INTEGER}
-    where rc_id = #{rcId,jdbcType=INTEGER}
+      rcResource = #{rcresource,jdbcType=INTEGER},
+      rcReply = #{rcreply,jdbcType=INTEGER},
+      rcContent = #{rccontent,jdbcType=VARCHAR},
+      rcEnable = #{rcenable,jdbcType=INTEGER}
+    where rcId = #{rcid,jdbcType=INTEGER}
   </update>
 </mapper>

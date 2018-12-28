@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: mmmgdzl
-  Date: 2018/11/28
-  Time: 0:51
+  Date: 2018/12/23
+  Time: 20:03
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,54 +12,28 @@
     <div class="layui-main">
         <div id="LAY_preview">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>管理员管理</legend>
+                <legend>资源管理</legend>
             </fieldset>
             <div class="demoTable">
                 <form class="layui-form layui-inline">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">账号:</label>
+                        <label class="layui-form-label">标题:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="aaccount" name="aaccount" placeholder="筛选账号(小于10个字符)"
+                            <input type="text" id="rtitle" name="rtitle" placeholder="筛选标题"
                                    autocomplete="off" class="layui-input">
                         </div>
-                        <label class="layui-form-label">管理员等级:</label>
+                        <label class="layui-form-label">栏目:</label>
                         <div class="layui-input-inline">
-                            <select id="alevel" name="alevel">
+                            <select id="rcolumn" name="rcolumn">
                                 <option value="">--所有--</option>
-                                <option value="0">超级管理员</option>
-                                <option value="1">管理员</option>
-                                <option value="2">普通用户</option>
+                                <c:forEach items="${resourceColumnList}" var="resourceColumn" varStatus="vs">
+                                    <option value="${resourceColumn.cid}">${resourceColumn.cname}</option>
+                                </c:forEach>
                             </select>
-                        </div>
-                        <label class="layui-form-label">性别:</label>
-                        <div class="layui-input-inline">
-                            <select id="agender" name="agender">
-                                <option value="">--所有--</option>
-                                <option value="0">男</option>
-                                <option value="1">女</option>
-                                <option value="2">保密</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">昵称:</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="aname" name="aname" placeholder="筛选昵称(小于10个字符)"
-                                   autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">邮箱:</label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="amail" name="amail" value="${editAdmin.amail}" placeholder="筛选邮箱" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <label class="layui-form-label">联系电话:</label>
-                        <div class="layui-input-inline">
-                            <input type="tel" id="aphone" name="aphone" value="${editAdmin.aphone}" placeholder="筛选联系电话" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </form>
-                <button class="layui-btn" data-type="reload" onsubmit="return false;">筛选</button>
+                <button class="layui-btn" data-type="reload" style="position:relative;top:-8px;">筛选</button>
             </div>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -91,20 +66,21 @@
         //方法级渲染
         table.render({
             elem: '#table'
-            ,url: '${pageContext.request.contextPath}/xk/super/admin'
+            ,url: '${pageContext.request.contextPath}/xk/protect/resource'
             ,toolbar: '#toolbarDemo'
             ,cols: [[
                 {checkbox: true}
-                ,{field:'aid', title: 'ID', width:45}
-                ,{field:'aaccount', title: '账号', width:100}
-                ,{field:'alevel', title: '等级', width:100}
-                ,{field:'aactive', title: '是否激活', width:100}
-                ,{field:'aenable', title: '是否可用', width:100}
-                ,{field:'acreatedate', title: '创建日期', width:150}
-                ,{field:'aname', title: '昵称', width:100}
-                ,{field:'agender', title: '性别', width:60}
-                ,{field:'amail', title: '邮箱', width:170}
-                ,{field:'aphone', title: '联系电话', width:150}
+                ,{field:'rid', title: 'ID', width:60}
+                ,{field:'rtitle', title: '标题', width:200}
+                ,{field:'rcolumn', title: '所属栏目', width:100}
+                <c:if test="${sessionScope.admin.alevel<2}">
+                ,{field:'rupdater', title: '创建用户', width:100}
+                </c:if>
+                ,{field:'rcreatedate', title: '创建日期', width:120}
+                ,{field:'rupdater', title: '修改用户', width:100}
+                ,{field:'rupdatedate', title: '修改日期', width:120}
+                ,{field:'rviews', title: '浏览量', width:100}
+                ,{field:'renable', title: '是否可用', width:100}
                 ,{field:'right', title: '操作', width:170,toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
@@ -117,12 +93,8 @@
             reload: function(){
                 table.reload('testReload', {
                     where: {
-                        aaccount: $('#aaccount').val()
-                        ,alevel: $('#alevel').val()
-                        ,aname: $('#aname').val()
-                        ,agender: $('#agender').val()
-                        ,amail: $('#amail').val()
-                        ,aphone: $('#aphone').val()
+                        rtitle: $('#rtitle').val()
+                        ,rcolumn: $('#rcolumn').val()
                     }
                 });
             }
@@ -153,13 +125,13 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
-                layer.confirm('确定删除ID为' + data.aid + '的用户么', function(index){
+                layer.confirm('确定删除ID为' + data.rid + '的资源么', function(index){
                     layer.close(index);
-                    del(data.aid);
+                    del(data.rid);
                 });
             } else if(obj.event === 'edit'){
                 //跳转至目标页面
-               loadPage("${pageContext.request.contextPath}/xk/super/admin/" + data.aid);
+               loadPage("${pageContext.request.contextPath}/xk/protect/resource/" + data.rid);
             }
         });
         //在页面完成加载后再次渲染
@@ -172,7 +144,7 @@
         idArray[0] = id;
         //ajax请求删除数据
         $.ajax({
-            url:'${pageContext.request.contextPath}/xk/super/admin'
+            url:'${pageContext.request.contextPath}/xk/protect/resource'
             ,type:'DELETE'
             ,dataType:'json'
             ,data:{ids:JSON.stringify(idArray)}
@@ -185,7 +157,7 @@
                     layer.msg("删除失败:" + data.msg);
                 }
                 //成功与否都刷新页面
-                setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/adminPage/adminControl')", 500);
+                setTimeout("loadPage('${pageContext.request.contextPath}/xk/protect/resourcePage/resourceControl')", 500);
             }
         });
     }
@@ -199,11 +171,11 @@
                 layer.close(index);
                 var idArray = new Array();
                 for(var i=0; i<data.length; i++) {
-                    idArray[i] = data[i].aid;
+                    idArray[i] = data[i].rid;
                 }
                 //执行删除
                 $.ajax({
-                    url:'${pageContext.request.contextPath}/xk/super/admin'
+                    url:'${pageContext.request.contextPath}/xk/protect/resource'
                     ,type:'DELETE'
                     ,dataType:'json'
                     ,data:{ids:JSON.stringify(idArray)}
@@ -215,7 +187,7 @@
                         } else {
                             layer.msg("删除失败:" + data1.msg);
                         }
-                        setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/adminPage/adminControl')", 500);
+                        setTimeout("loadPage('${pageContext.request.contextPath}/xk/protect/resourcePage/resourceControl')", 500);
                     }
                 });
             });

@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span class="flaticon-add" aria-hidden="true"></span>
                     </button>
                     <div class="modal-body">
-                        <input class="form-control" type="text" placeholder="你 在 想 。。。(按ESC退出)" required>
+                        <input class="form-control" type="text" placeholder="你 在 想 。。。(别想了,这个还没做好)" required>
                     </div>
                 </form><!-- End # Login Form -->
             </div><!-- End # DIV Form -->
@@ -24,7 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <!-- END # MODAL LOGIN -->
 <header id="header" class="header header-normal">
-	<audio src="${resourceServer }/my/music/christmas-bg.mp3" autoplay="autoplay" loop="loop"></audio>
     <div class="topbar clearfix">
         <div class="container">
             <div class="row-fluid">
@@ -57,14 +56,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <span class="icon-bar"></span>
                 </button>
                 <div class="logo-normal">
-                    <a class="navbar-brand" href="index.html"><img id="logoImage" src="${resourceServer }/images/logo-dark.png" alt=""></a>
+                    <a class="navbar-brand" href="javascript:void(0);"><img id="logoImage" src="${resourceServer }/images/logo-dark.png" alt=""></a>
                 </div>
             </div>
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="${pageContext.request.contextPath }">主页</a></li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/index" class="dropdown-toggle active">游戏 <b class="fa fa-angle-down"></b></a>
+                    <li><a href="${pageContext.request.contextPath }/">主页</a></li>
+                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/1" class="dropdown-toggle" xkfilter="flag">游戏 <b class="fa fa-angle-down"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="yamm-content clearfix">
@@ -95,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${resourceServer }/index" class="dropdown-toggle active">视频 <b class="fa fa-angle-down"></b></a>
+                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/2" class="dropdown-toggle" xkfilter="flag">视频 <b class="fa fa-angle-down"></b></a>
                         <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
                             <li>
                                 <div class="yamm-content clearfix">
@@ -104,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${resourceServer }/index" class="dropdown-toggle active">音乐 <b class="fa fa-angle-down"></b></a>
+                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/3" class="dropdown-toggle" xkfilter="flag">音乐 <b class="fa fa-angle-down"></b></a>
                          <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
                             <li>
                                 <div class="yamm-content clearfix">
@@ -113,16 +112,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${resourceServer }/index" class="dropdown-toggle active">学习 <b class="fa fa-angle-down"></b></a>
+                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/xk" target="_blank" class="dropdown-toggle">资源分享<b class="fa fa-angle-down"></b></a>
                         <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
                             <li>
                                 <div class="yamm-content clearfix">
-                                    <h4 style="margin:0; padding:0;text-align:center;">不存在的</h4>
+                                    <h4 style="margin:0; padding:0;text-align:center;">老铁们帮我刷<br>多点测试数据呗</h4>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/about" class="dropdown-toggle active">关于本站 <b class="fa fa-angle-down"></b></a>
+                    <li class="dropdown yamm-fw yamm-half"><a href="javascript:void(0);" target="_blank" class="dropdown-toggle">关于本站 <b class="fa fa-angle-down"></b></a>
                         <ul class="dropdown-menu" style="min-width: 300px;margin: 5px 10px; padding:5px 10px;">
                             <li>
                                 <div class="col-md-12 col-sm-12">
@@ -142,3 +141,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </nav><!-- end navbar -->
     </div><!-- end container -->
 </header>
+<script type="text/javascript">
+    function gameChange(obj) {
+        var href=$(obj).attr("href");
+        var logo=$(obj).attr("logo");
+        var label=$(obj).html();
+
+        $("#gameHref1").attr("href", href);
+        $("#gameHref2").attr("href", href);
+        $("#gameLogo").attr("src", "${resourceServer }/my/game/" + logo);
+        $("#gameLabel").html(label);
+    }
+
+
+</script>

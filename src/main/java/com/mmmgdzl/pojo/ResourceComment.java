@@ -3,7 +3,9 @@ package com.mmmgdzl.pojo;
 import java.util.Date;
 
 public class ResourceComment {
-    private Integer rcId;
+    private Integer rcid;
+
+    private Integer rccount;
 
     private Date rccreatedate;
 
@@ -11,14 +13,26 @@ public class ResourceComment {
 
     private Integer rcresource;
 
+    private Integer rcreply;
+
     private String rccontent;
 
-    public Integer getRcId() {
-        return rcId;
+    private Integer rcenable;
+
+    public Integer getRcid() {
+        return rcid;
     }
 
-    public void setRcId(Integer rcId) {
-        this.rcId = rcId;
+    public void setRcid(Integer rcid) {
+        this.rcid = rcid;
+    }
+
+    public Integer getRccount() {
+        return rccount;
+    }
+
+    public void setRccount(Integer rccount) {
+        this.rccount = rccount;
     }
 
     public Date getRccreatedate() {
@@ -45,11 +59,27 @@ public class ResourceComment {
         this.rcresource = rcresource;
     }
 
+    public Integer getRcreply() {
+        return rcreply;
+    }
+
+    public void setRcreply(Integer rcreply) {
+        this.rcreply = rcreply;
+    }
+
     public String getRccontent() {
         return rccontent;
     }
 
     public void setRccontent(String rccontent) {
         this.rccontent = rccontent == null ? null : rccontent.trim();
+    }
+
+    public Integer getRcenable() {
+        return rcenable;
+    }
+
+    public void setRcenable(Integer rcenable) {
+        this.rcenable = rcenable;
     }
 }

@@ -78,10 +78,10 @@
                         <div class="layui-input-inline">
                             <input type="text" name="amail" lay-verify="required|email" value="${editAdmin.amail}" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                         </div>
-                    </div>
-                    <label class="layui-form-label">联系电话</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="aphone" lay-verify="myPhone" value="${editAdmin.aphone}" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="aphone" lay-verify="myPhone" value="${editAdmin.aphone}" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
                 <div class="layui-form-item">

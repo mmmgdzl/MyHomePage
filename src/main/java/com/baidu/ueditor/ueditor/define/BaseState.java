@@ -30,7 +30,7 @@ public class BaseState implements State {
 	
 	public BaseState ( boolean state, int infoCode ) {
 		this.setState( state );
-		this.info = com.baidu.ueditor.define.AppInfo.getStateInfo( infoCode );
+		this.info = AppInfo.getStateInfo( infoCode );
 	}
 	
 	public boolean isSuccess () {
@@ -46,7 +46,7 @@ public class BaseState implements State {
 	}
 	
 	public void setInfo ( int infoCode ) {
-		this.info = com.baidu.ueditor.define.AppInfo.getStateInfo( infoCode );
+		this.info = AppInfo.getStateInfo( infoCode );
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class BaseState implements State {
 	public String toString () {
 		
 		String key = null;
-		String stateVal = this.isSuccess() ? com.baidu.ueditor.define.AppInfo.getStateInfo( AppInfo.SUCCESS ) : this.info;
+		String stateVal = this.isSuccess() ? AppInfo.getStateInfo( AppInfo.SUCCESS ) : this.info;
 		
 		StringBuilder builder = new StringBuilder();
 		

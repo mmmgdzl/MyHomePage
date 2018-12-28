@@ -132,63 +132,123 @@ public class ResourceCommentExample {
             addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
-        public Criteria andRcIdIsNull() {
-            addCriterion("rc_id is null");
+        public Criteria andRcidIsNull() {
+            addCriterion("rcId is null");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdIsNotNull() {
-            addCriterion("rc_id is not null");
+        public Criteria andRcidIsNotNull() {
+            addCriterion("rcId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdEqualTo(Integer value) {
-            addCriterion("rc_id =", value, "rcId");
+        public Criteria andRcidEqualTo(Integer value) {
+            addCriterion("rcId =", value, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdNotEqualTo(Integer value) {
-            addCriterion("rc_id <>", value, "rcId");
+        public Criteria andRcidNotEqualTo(Integer value) {
+            addCriterion("rcId <>", value, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdGreaterThan(Integer value) {
-            addCriterion("rc_id >", value, "rcId");
+        public Criteria andRcidGreaterThan(Integer value) {
+            addCriterion("rcId >", value, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("rc_id >=", value, "rcId");
+        public Criteria andRcidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rcId >=", value, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdLessThan(Integer value) {
-            addCriterion("rc_id <", value, "rcId");
+        public Criteria andRcidLessThan(Integer value) {
+            addCriterion("rcId <", value, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdLessThanOrEqualTo(Integer value) {
-            addCriterion("rc_id <=", value, "rcId");
+        public Criteria andRcidLessThanOrEqualTo(Integer value) {
+            addCriterion("rcId <=", value, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdIn(List<Integer> values) {
-            addCriterion("rc_id in", values, "rcId");
+        public Criteria andRcidIn(List<Integer> values) {
+            addCriterion("rcId in", values, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdNotIn(List<Integer> values) {
-            addCriterion("rc_id not in", values, "rcId");
+        public Criteria andRcidNotIn(List<Integer> values) {
+            addCriterion("rcId not in", values, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdBetween(Integer value1, Integer value2) {
-            addCriterion("rc_id between", value1, value2, "rcId");
+        public Criteria andRcidBetween(Integer value1, Integer value2) {
+            addCriterion("rcId between", value1, value2, "rcid");
             return (Criteria) this;
         }
 
-        public Criteria andRcIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("rc_id not between", value1, value2, "rcId");
+        public Criteria andRcidNotBetween(Integer value1, Integer value2) {
+            addCriterion("rcId not between", value1, value2, "rcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountIsNull() {
+            addCriterion("rcCount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountIsNotNull() {
+            addCriterion("rcCount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountEqualTo(Integer value) {
+            addCriterion("rcCount =", value, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountNotEqualTo(Integer value) {
+            addCriterion("rcCount <>", value, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountGreaterThan(Integer value) {
+            addCriterion("rcCount >", value, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rcCount >=", value, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountLessThan(Integer value) {
+            addCriterion("rcCount <", value, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountLessThanOrEqualTo(Integer value) {
+            addCriterion("rcCount <=", value, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountIn(List<Integer> values) {
+            addCriterion("rcCount in", values, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountNotIn(List<Integer> values) {
+            addCriterion("rcCount not in", values, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountBetween(Integer value1, Integer value2) {
+            addCriterion("rcCount between", value1, value2, "rccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccountNotBetween(Integer value1, Integer value2) {
+            addCriterion("rcCount not between", value1, value2, "rccount");
             return (Criteria) this;
         }
 
@@ -369,6 +429,196 @@ public class ResourceCommentExample {
 
         public Criteria andRcresourceNotBetween(Integer value1, Integer value2) {
             addCriterion("rcResource not between", value1, value2, "rcresource");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyIsNull() {
+            addCriterion("rcReply is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyIsNotNull() {
+            addCriterion("rcReply is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyEqualTo(Integer value) {
+            addCriterion("rcReply =", value, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyNotEqualTo(Integer value) {
+            addCriterion("rcReply <>", value, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyGreaterThan(Integer value) {
+            addCriterion("rcReply >", value, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rcReply >=", value, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyLessThan(Integer value) {
+            addCriterion("rcReply <", value, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyLessThanOrEqualTo(Integer value) {
+            addCriterion("rcReply <=", value, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyIn(List<Integer> values) {
+            addCriterion("rcReply in", values, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyNotIn(List<Integer> values) {
+            addCriterion("rcReply not in", values, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyBetween(Integer value1, Integer value2) {
+            addCriterion("rcReply between", value1, value2, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcreplyNotBetween(Integer value1, Integer value2) {
+            addCriterion("rcReply not between", value1, value2, "rcreply");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentIsNull() {
+            addCriterion("rcContent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentIsNotNull() {
+            addCriterion("rcContent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentEqualTo(String value) {
+            addCriterion("rcContent =", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentNotEqualTo(String value) {
+            addCriterion("rcContent <>", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentGreaterThan(String value) {
+            addCriterion("rcContent >", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentGreaterThanOrEqualTo(String value) {
+            addCriterion("rcContent >=", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentLessThan(String value) {
+            addCriterion("rcContent <", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentLessThanOrEqualTo(String value) {
+            addCriterion("rcContent <=", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentLike(String value) {
+            addCriterion("rcContent like", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentNotLike(String value) {
+            addCriterion("rcContent not like", value, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentIn(List<String> values) {
+            addCriterion("rcContent in", values, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentNotIn(List<String> values) {
+            addCriterion("rcContent not in", values, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentBetween(String value1, String value2) {
+            addCriterion("rcContent between", value1, value2, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccontentNotBetween(String value1, String value2) {
+            addCriterion("rcContent not between", value1, value2, "rccontent");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableIsNull() {
+            addCriterion("rcEnable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableIsNotNull() {
+            addCriterion("rcEnable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableEqualTo(Integer value) {
+            addCriterion("rcEnable =", value, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableNotEqualTo(Integer value) {
+            addCriterion("rcEnable <>", value, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableGreaterThan(Integer value) {
+            addCriterion("rcEnable >", value, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rcEnable >=", value, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableLessThan(Integer value) {
+            addCriterion("rcEnable <", value, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableLessThanOrEqualTo(Integer value) {
+            addCriterion("rcEnable <=", value, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableIn(List<Integer> values) {
+            addCriterion("rcEnable in", values, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableNotIn(List<Integer> values) {
+            addCriterion("rcEnable not in", values, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableBetween(Integer value1, Integer value2) {
+            addCriterion("rcEnable between", value1, value2, "rcenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcenableNotBetween(Integer value1, Integer value2) {
+            addCriterion("rcEnable not between", value1, value2, "rcenable");
             return (Criteria) this;
         }
     }

@@ -19,7 +19,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">栏目名:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="cname" name="cname" placeholder="筛选栏目名(小于10个字符)"
+                            <input type="text" id="cname" name="cname" placeholder="筛选栏目名"
                                    autocomplete="off" class="layui-input">
                         </div>
                     </div>
@@ -28,7 +28,7 @@
             </div>
             <table class="layui-hide" id="table" lay-filter="table"></table>
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
         </div>
@@ -53,7 +53,7 @@
             ,url: '${pageContext.request.contextPath}/xk/super/resourceColumn'
             ,cols: [[
                 {field:'cid', title: 'ID', width:60}
-                ,{field:'cname', title: '栏目名', width:160,edit: 'text'}
+                ,{field:'cname', title: '栏目名(双击编辑)', width:160,edit: 'text'}
                 ,{field:'ccreatedate', title: '创建日期', width:150}
                 ,{field:'ccreater', title: '创建者账号', width:150}
                 ,{field:'right', title: '操作', width:170,toolbar:"#barDemo"}
@@ -86,7 +86,7 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
-                layer.confirm('确定删除ID为' + data.cid + '的行么', function(index){
+                layer.confirm('确定删除ID为' + data.cid + '的资源栏目么', function(index){
                     layer.close(index);
                     del(data.cid);
                 });

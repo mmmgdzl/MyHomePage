@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: mmmgdzl
@@ -62,10 +63,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tagline-message page-title text-center">
-                        <h3>Blog & News</h3>
+                        <h3>${pageBean.type}</h3>
                         <ul class="breadcrumb">
-                            <li><a href="javascript:void(0)">Edulogy</a></li>
-                            <li class="active">Blog</li>
+                            <li><a href="${pageContext.request.contextPath}/">星空の幻域</a></li>
+                            <li class="active">${pageBean.type}</li>
                         </ul>
                     </div>
                 </div><!-- end col -->
@@ -79,145 +80,99 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row blog-grid">
-                            <div class="col-md-6">
-                                <div class="course-box">
-                                    <div class="image-wrap entry">
-                                        <img src="${resourceServer }/base/blog_02.jpg" alt="" class="img-responsive">
-                                        <div class="magnifier">
-                                            <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
-                                        </div>
-                                    </div><!-- end image-wrap -->
-                                    <div class="course-details">
-                                        <h4>
-                                            <small>Language</small>
-                                            <a href="blog-single.html" title="">Learn English Online with our professional teachers</a>
-                                        </h4>
-                                        <p>Integer pellentesque justo vitae nisl sagittis, nec tristique erat tincidunt. Nunc varius euismod arcu ut volutpat. Praesent massa ex, sodales nullam. </p>
-                                    </div><!-- end details -->
-                                    <div class="course-footer clearfix">
-                                        <div class="pull-left">
-                                            <ul class="list-inline">
-                                                <li><a href="#"><i class="fa fa-user"></i> Amanda</a></li>
-                                                <li><a href="#"><i class="fa fa-clock-o"></i> 14 Jun</a></li>
-                                                <li><a href="#"><i class="fa fa-eye"></i> 455 Views</a></li>
-                                            </ul>
-                                        </div><!-- end left -->
-                                    </div><!-- end footer -->
-                                </div><!-- end box -->
-                            </div><!-- end col -->
-
-                            <div class="col-md-6">
-                                <div class="course-box">
-                                    <div class="image-wrap entry">
-                                        <a href="blog-single.html" title="">
-                                            <img src="${resourceServer }/base/blog_03.jpg" alt="" class="img-responsive">
-                                        </a>
-                                    </div><!-- end image-wrap -->
-                                    <div class="course-details">
-                                        <h4>
-                                            <small>Tips & Tricks</small>
-                                            <a href="blog-single.html" title="">Working with team members for new projects</a>
-                                        </h4>
-                                        <p>Duis id aliquam metus, et consectetur risus. Praesent dictum augue id velit mattis aliquet. Aliquam faucibus sollicitudin libero, sit amet massa nunc. </p>
-                                    </div><!-- end details -->
-                                    <div class="course-footer clearfix">
-                                        <div class="pull-left">
-                                            <ul class="list-inline">
-                                                <li><a href="#"><i class="fa fa-user"></i> Bob DOE</a></li>
-                                                <li><a href="#"><i class="fa fa-clock-o"></i> 13 Jun</a></li>
-                                                <li><a href="#"><i class="fa fa-eye"></i> 444 Views</a></li>
-                                            </ul>
-                                        </div><!-- end left -->
-                                    </div><!-- end footer -->
-                                </div><!-- end box -->
-                            </div><!-- end col -->
-
-                            <div class="col-md-6">
-                                <div class="course-box">
-                                    <div class="image-wrap entry">
-                                        <img src="${resourceServer }/base/blog_01.jpg" alt="" class="img-responsive">
-                                        <div class="magnifier">
-                                            <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
-                                        </div>
-                                    </div><!-- end image-wrap -->
-                                    <div class="course-details">
-                                        <h4>
-                                            <small>Tips & Tricks</small>
-                                            <a href="blog-single.html" title="">Buy a Macbook and learn code today like a pro</a>
-                                        </h4>
-                                        <p>Nulla nisl velit, lobortis vel luctus eu, rutrum ac elit. Donec nec condimentum libero. Maecenas rutrum sit amet mi vel hendrerit. Praesent tempor id. </p>
-                                    </div><!-- end details -->
-                                    <div class="course-footer clearfix">
-                                        <div class="pull-left">
-                                            <ul class="list-inline">
-                                                <li><a href="#"><i class="fa fa-user"></i> Edulogy</a></li>
-                                                <li><a href="#"><i class="fa fa-clock-o"></i> 12 Jun</a></li>
-                                                <li><a href="#"><i class="fa fa-eye"></i> 444 Views</a></li>
-                                            </ul>
-                                        </div><!-- end left -->
-                                    </div><!-- end footer -->
-                                </div><!-- end box -->
-                            </div><!-- end col -->
+                            <c:forEach items="${pageBean.data}" var="resource">
+                                <div class="col-md-6">
+                                    <div class="course-box">
+                                        <div class="image-wrap entry">
+                                            <a href="${pageContext.request.contextPath}/resourceInfo/${resource.rid}" title="">
+                                                <img src="${resourceServer }/my/resource/titleImages/${resource.rtitleimg}" style="width: 400px;height: 228px;cursor:pointer;" alt="" class="img-responsive">
+                                            </a>
+                                        </div><!-- end image-wrap -->
+                                        <div class="course-details" style="padding-bottom: 0;">
+                                            <h4>
+                                                <small>${resource.rcolumn}</small>
+                                                <a href="${pageContext.request.contextPath}/resourceInfo/${resource.rid}" title="">${resource.rtitle}</a>
+                                            </h4>
+                                        </div><!-- end details -->
+                                        <div class="course-footer clearfix">
+                                            <div class="pull-left">
+                                                <ul class="list-inline">
+                                                    <li><a href="javascript:void(0);"><i class="fa fa-user"></i> ${resource.rcreater}</a></li>
+                                                    <li><a href="javascript:void(0);"><i class="fa fa-clock-o"></i> ${resource.rupdatedate}</a></li>
+                                                    <li><a href="javascript:void(0);"><i class="fa fa-eye"></i> ${resource.rviews}Views</a></li>
+                                                </ul>
+                                            </div><!-- end left -->
+                                        </div><!-- end footer -->
+                                    </div><!-- end box -->
+                                </div><!-- end col -->
+                            </c:forEach>
                         </div><!-- end row -->
-
                         <hr class="invis">
-
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="pagination" style="margin: 0 auto;">
-                                    <li class="disabled"><a href="javascript:void(0)">&laquo;</a></li>
-                                    <li class="active"><a href="javascript:void(0)">1</a></li>
-                                    <li><a href="javascript:void(0)">2</a></li>
-                                    <li><a href="javascript:void(0)">3</a></li>
-                                    <li><a href="javascript:void(0)">...</a></li>
-                                    <li><a href="javascript:void(0)">&raquo;</a></li>
+                                    <!-- 上一页 -->
+                                    <c:if test="${pageBean.currentPage == 1}">
+                                        <li class='disabled'><a href="javascript:void(0)">&laquo;</a></li>
+                                    </c:if>
+                                    <c:if test="${pageBean.currentPage != 1}">
+                                        <li><a href="javascript:void(0)" onclick="toPage(1)">&laquo;</a></li>
+                                    </c:if>
+                                    <!--页数较少时 -->
+                                    <c:if test="${pageBean.totalPage<10}">
+                                        <c:forEach begin="1" end="${pageBean.totalPage}" var="num">
+                                            <c:if test="${pageBean.currentPage==num}">
+                                                <li class='active'><a href="javascript:void(0)">${num}</a></li>
+                                            </c:if>
+                                            <c:if test="${pageBean.currentPage!=num}">
+                                                <li><a href="javascript:void(0)" onclick='toPage(${num})'>${num}</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:if>
+                                    <!-- 页数较多时 -->
+                                    <c:if test="${pageBean.totalPage>=10}">
+                                        <c:forEach begin="${pageBean.currentPage-4>=1?(pageBean.currentPage+4<=pageBean.totalPage?pageBean.currentPage-4:pageBean.totalPage-8):1}"
+                                                   end="${pageBean.currentPage-4>=1?(pageBean.currentPage+4<=pageBean.totalPage?pageBean.currentPage+4:pageBean.totalPage):9}"
+                                                   var="num">
+                                            <c:if test="${pageBean.currentPage==num}">
+                                                <li class='active'><a href="javascript:void(0)">${num}</a></li>
+                                            </c:if>
+                                            <c:if test="${pageBean.currentPage!=num}">
+                                                <li><a href="javascript:void(0)" onclick='toPage(${num})'>${num}</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:if>
+                                    <!-- 下一页 -->
+                                    <c:if test="${pageBean.currentPage+1>pageBean.totalPage}">
+                                        <li class='disabled'><a href="javascript:void(0)">&raquo;</a></li>
+                                    </c:if>
+                                    <c:if test="${pageBean.currentPage+1<=pageBean.totalPage}">
+                                        <li><a href="javascript:void(0)" onclick="toPage(${pageBean.currentPage+1})">&raquo;</a></li>
+                                    </c:if>
                                 </ul>
                             </div><!-- end col -->
                         </div><!-- end row -->
                     </div><!-- end col -->
-
                     <div class="sidebar col-md-4">
                         <div class="widget clearfix">
-                            <h3 class="widget-title">Popular Posts</h3>
+                            <h3 class="widget-title">热度TOP5</h3>
                             <div class="post-widget">
-                                <div class="media">
-                                    <img src="${resourceServer }/base/blog_small_01.jpg" alt="" class="img-responsive alignleft img-rounded">
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="blog-single.html">Learning English Like a Pro..</a></h5>
-                                        <div class="blog-meta">
-                                            <ul class="list-inline">
-                                                <li>4 days ago</li>
-                                                <li><span>by</span> <a href="#">Edulogy Team</a></li>
-                                            </ul>
-                                        </div><!-- end blog-meta -->
+                                <c:forEach items="${hot}" var="hotR">
+                                    <div class="media">
+                                        <a href="${pageContext.request.contextPath}/resourceInfo/${hotR.rid}">
+                                            <img src="${resourceServer }/my/resource/titleImages/${hotR.rtitleimg}" style="max-width:80px; max-height: 80px;" alt="" class="img-responsive alignleft img-rounded">
+                                        </a>
+                                        <div class="media-body">
+                                            <h5 class="mt-0"><a href="${pageContext.request.contextPath}/resourceInfo/${hotR.rid}">${hotR.rtitle}</a></h5>
+                                            <div class="blog-meta">
+                                                <ul class="list-inline">
+                                                    <li>${hotR.rupdatedate}</li>
+                                                    <li><span>by</span> <a href="javascript:void(0);">${hotR.rcreater}(${hotR.rviews})</a></li>
+                                                </ul>
+                                            </div><!-- end blog-meta -->
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="media">
-                                    <img src="${resourceServer }/base/blog_small_02.jpg" alt="" class="img-responsive alignleft img-rounded">
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="blog-single.html">How to create a beautiful website with Bootstrap</a></h5>
-                                        <div class="blog-meta">
-                                            <ul class="list-inline">
-                                                <li>5 days ago</li>
-                                                <li><span>by</span> <a href="#">Boby DOE</a></li>
-                                            </ul>
-                                        </div><!-- end blog-meta -->
-                                    </div>
-                                </div>
-
-                                <div class="media">
-                                    <img src="${resourceServer }/base/blog_small_03.jpg" alt="" class="img-responsive alignleft img-rounded">
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="blog-single.html">Don't forget to update your Google web master tools</a></h5>
-                                        <div class="blog-meta">
-                                            <ul class="list-inline">
-                                                <li>6 days ago</li>
-                                                <li><span>by</span> <a href="#">Martin</a></li>
-                                            </ul>
-                                        </div><!-- end blog-meta -->
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </div><!-- end post-widget -->
                         </div><!-- end widget -->
                     </div><!-- end sidebar -->
@@ -225,56 +180,6 @@
             </div><!-- end boxed -->
         </div><!-- end container -->
     </section>
-
-    <footer class="section footer noover">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4">
-                    <div class="widget clearfix">
-                        <h3 class="widget-title">Join us today</h3>
-                        <p>Would you like to earn your profits by joining our team? Join us without losing time.</p>
-                        <a href="#" class="readmore">Became a Teacher</a>
-                    </div><!-- end widget -->
-                </div><!-- end col -->
-
-                <div class="col-lg-4 col-md-4">
-                    <div class="widget clearfix">
-                        <h3 class="widget-title">Popular Tags</h3>
-                        <div class="tags-widget">
-                            <ul class="list-inline">
-                                <li><a href="#">course</a></li>
-                                <li><a href="#">web design</a></li>
-                                <li><a href="#">development</a></li>
-                                <li><a href="#">language</a></li>
-                                <li><a href="#">teacher</a></li>
-                                <li><a href="#">speaking</a></li>
-                                <li><a href="#">material</a></li>
-                                <li><a href="#">css3</a></li>
-                                <li><a href="#">html</a></li>
-                                <li><a href="#">learning</a></li>
-                            </ul>
-                        </div><!-- end list-widget -->
-                    </div><!-- end widget -->
-                </div><!-- end col -->
-
-                <div class="col-lg-4 col-md-4">
-                    <div class="widget clearfix">
-                        <h3 class="widget-title">Support</h3>
-                        <div class="list-widget">
-                            <ul>
-                                <li><a href="#">Terms of Use</a></li>
-                                <li><a href="#">Copyrights</a></li>
-                                <li><a href="#">Create a Ticket</a></li>
-                                <li><a href="#">Pricing & Plans</a></li>
-                                <li><a href="#">Carrier</a></li>
-                                <li><a href="#">Trademark</a></li>
-                            </ul>
-                        </div><!-- end list-widget -->
-                    </div><!-- end widget -->
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </footer><!-- end footer -->
 
     <div class="copyrights">
         <div class="container">
@@ -303,6 +208,17 @@
 <script src="${pageContext.request.contextPath }/static/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath }/static/js/animate.js"></script>
 <script src="${pageContext.request.contextPath }/static/js/custom.js"></script>
+<script>
+    
+    function toPage(pageNum) {
+        var cuurentHref = location.href;
+        if(cuurentHref.indexOf("?") != -1) {
+            cuurentHref = cuurentHref.substring(0, cuurentHref.indexOf("?"));
+        }
+        location.href = cuurentHref+"?currentPage=" + pageNum;
+    }
+    
+</script>
 
 </body>
 </html>

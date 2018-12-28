@@ -111,22 +111,22 @@ layui.define(['code', 'element', 'table', 'util'], function(exports){
     
   });
 
-  ;!function(){
-    var elemComponentSelect = $(['<select lay-search lay-filter="component">'
-      ,'<option value="">搜索组件或模块</option>'
-      ,'<option value="element/layout.html">grid 栅格布局</option>'
-      
-    ,'</select>'].join(''));
-
-    $('.component').append(elemComponentSelect);
-    form.render('select', 'LAY-site-header-component');
-
-    //搜索组件
-    form.on('select(component)', function(data){
-      var value = data.value;
-      location.href = '/doc/'+ value;
-    });
-  }();
+  // ;!function(){
+  //   var elemComponentSelect = $(['<select lay-search lay-filter="component">'
+  //     ,'<option value="">搜索组件或模块</option>'
+  //     ,'<option value="element/layout.html">grid 栅格布局</option>'
+  //
+  //   ,'</select>'].join(''));
+  //
+  //   $('.component').append(elemComponentSelect);
+  //   form.render('select', 'LAY-site-header-component');
+  //
+  //   //搜索组件
+  //   form.on('select(component)', function(data){
+  //     var value = data.value;
+  //     location.href = '/doc/'+ value;
+  //   });
+  // }();
 
 
   //点击事件
