@@ -49,6 +49,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  
 <script src="${pageContext.request.contextPath }/static/admin/layui/layui.js"></script>
 <script type="text/javascript">
+    if(${empty visitFalse ? false : true}) {
+        location.href = "/xk";
+    }
+
     layui.use(['form','layer','jquery'], function () {
         // 操作对象
         var form = layui.form;
@@ -62,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success:function (data) {
                     if(data.code=="200") {
                         layer.msg("登陆成功");
-                    	setTimeout("location.href='${pageContext.request.contextPath}/xk/index'",500);
+                    	setTimeout("location.href='${pageContext.request.contextPath}/xk/protect/index'",500);
                     } else {
                     	layer.msg(data.msg);
                     	$(".layui-form")[0].reset();
@@ -89,7 +93,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      layer.msg("${activeResult}");
       }
 	};
-
 </script>
 </body>
 </html>

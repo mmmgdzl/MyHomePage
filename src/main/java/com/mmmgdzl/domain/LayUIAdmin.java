@@ -43,7 +43,7 @@ public class LayUIAdmin {
         } else {
             this.aactive = "ÊÇ";
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.acreatedate = sdf.format(admin.getAcreatedate());
         this.aname = admin.getAname();
         if(admin.getAgender() == 0) {

@@ -31,7 +31,7 @@ public class LayUIResource {
     public LayUIResource(Resource resource) {
         this.rid = resource.getRid();
         this.rtitle = resource.getRtitle();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.rcreatedate = sdf.format(resource.getRcreatedate());
         this.rupdatedate = sdf.format(resource.getRupdatedate());
         this.rviews = resource.getRviews();

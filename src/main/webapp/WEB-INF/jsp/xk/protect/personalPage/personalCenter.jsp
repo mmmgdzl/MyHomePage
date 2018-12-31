@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="layui-row" style="margin-top: 15px;">
-                <div class="layui-col-md8 layui-col-md-offset3">
+                <div class="layui-col-md6 layui-col-md-offset3">
                     <form id="tf" class="layui-form" action="">
                         <div class="layui-form-item">
                             <label class="layui-form-label">账号<sup style="color:red;font-size:15px;">*</sup></label>
@@ -47,13 +47,13 @@
                                 <input type="text" id="account"value="${sessionScope.admin.aaccount}" placeholder="请输入账号"
                                        autocomplete="off" class="layui-input" disabled>
                             </div>
-                        </div>
-                        <div class="layui-form-item">
                             <label class="layui-form-label">昵称</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="aname" name="aname" value="${sessionScope.admin.aname}" placeholder="请输入昵称(小于10个字符)" lay-verify="name"
                                        autocomplete="off" class="layui-input">
                             </div>
+                        </div>
+                        <div class="layui-form-item">
                             <label class="layui-form-label">性别</label>
                             <div class="layui-input-inline" style="width: 250px">
                                 <input type="radio" name="agender" value="0" title="男" ${sessionScope.admin.agender == 0?"checked":""}>
@@ -74,7 +74,15 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-col-md4 layui-col-md-offset2">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">个人简介</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入个人简介(不多于255个字符)" name="aintroduce" lay-verify=introduce" class="layui-textarea">${sessionScope.admin.aintroduce}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-md-offset3">
                                 <div class="layui-input-block">
                                     <button class="layui-btn" lay-submit lay-filter="demo1">编辑</button>
                                     <button class="layui-btn layui-btn-primary" onclick="loadPage(lastLoadPage)">重置</button>
@@ -157,6 +165,11 @@
                     if (!myreg.test(value)) {
                         return "请输入正确的手机号";
                     }
+                }
+            }
+            ,introduce: function (value) {
+                if(value.length > 255){
+                    return '个人简介不能超过255个字符';
                 }
             }
         });

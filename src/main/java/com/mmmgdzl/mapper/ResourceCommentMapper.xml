@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceComment" >
     <id column="rcId" property="rcid" jdbcType="INTEGER" />
     <result column="rcCount" property="rccount" jdbcType="INTEGER" />
-    <result column="rcCreateDate" property="rccreatedate" jdbcType="DATE" />
+    <result column="rcCreateDate" property="rccreatedate" jdbcType="TIMESTAMP" />
     <result column="rcCreater" property="rccreater" jdbcType="INTEGER" />
     <result column="rcResource" property="rcresource" jdbcType="INTEGER" />
     <result column="rcReply" property="rcreply" jdbcType="INTEGER" />
@@ -106,7 +106,7 @@
     insert into resource_comment (rcId, rcCount, rcCreateDate, 
       rcCreater, rcResource, rcReply, 
       rcContent, rcEnable)
-    values (#{rcid,jdbcType=INTEGER}, #{rccount,jdbcType=INTEGER}, #{rccreatedate,jdbcType=DATE}, 
+    values (#{rcid,jdbcType=INTEGER}, #{rccount,jdbcType=INTEGER}, #{rccreatedate,jdbcType=TIMESTAMP}, 
       #{rccreater,jdbcType=INTEGER}, #{rcresource,jdbcType=INTEGER}, #{rcreply,jdbcType=INTEGER}, 
       #{rccontent,jdbcType=VARCHAR}, #{rcenable,jdbcType=INTEGER})
   </insert>
@@ -146,7 +146,7 @@
         #{rccount,jdbcType=INTEGER},
       </if>
       <if test="rccreatedate != null" >
-        #{rccreatedate,jdbcType=DATE},
+        #{rccreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rccreater != null" >
         #{rccreater,jdbcType=INTEGER},
@@ -181,7 +181,7 @@
         rcCount = #{record.rccount,jdbcType=INTEGER},
       </if>
       <if test="record.rccreatedate != null" >
-        rcCreateDate = #{record.rccreatedate,jdbcType=DATE},
+        rcCreateDate = #{record.rccreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.rccreater != null" >
         rcCreater = #{record.rccreater,jdbcType=INTEGER},
@@ -207,7 +207,7 @@
     update resource_comment
     set rcId = #{record.rcid,jdbcType=INTEGER},
       rcCount = #{record.rccount,jdbcType=INTEGER},
-      rcCreateDate = #{record.rccreatedate,jdbcType=DATE},
+      rcCreateDate = #{record.rccreatedate,jdbcType=TIMESTAMP},
       rcCreater = #{record.rccreater,jdbcType=INTEGER},
       rcResource = #{record.rcresource,jdbcType=INTEGER},
       rcReply = #{record.rcreply,jdbcType=INTEGER},
@@ -224,7 +224,7 @@
         rcCount = #{rccount,jdbcType=INTEGER},
       </if>
       <if test="rccreatedate != null" >
-        rcCreateDate = #{rccreatedate,jdbcType=DATE},
+        rcCreateDate = #{rccreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rccreater != null" >
         rcCreater = #{rccreater,jdbcType=INTEGER},
@@ -247,7 +247,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.ResourceComment" >
     update resource_comment
     set rcCount = #{rccount,jdbcType=INTEGER},
-      rcCreateDate = #{rccreatedate,jdbcType=DATE},
+      rcCreateDate = #{rccreatedate,jdbcType=TIMESTAMP},
       rcCreater = #{rccreater,jdbcType=INTEGER},
       rcResource = #{rcresource,jdbcType=INTEGER},
       rcReply = #{rcreply,jdbcType=INTEGER},

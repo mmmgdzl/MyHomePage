@@ -87,12 +87,12 @@
                         <div class="content blog-list">
                             <div class="blog-wrapper clearfix">
                                 <div class="blog-meta">
-                                    <small><a href="javascript:void(0);">${resourceInfo.rcolumn}</a></small>
-                                    <h3>${resourceInfo.rtitle}</h3>
+                                    <small><a href="javascript:void(0);">${pageBean.data.rcolumn}</a></small>
+                                    <h3>${pageBean.data.rtitle}</h3>
                                     <ul class="list-inline">
-                                        <li><span>创建者:</span><a href="javascript:void(0);">${resourceInfo.rcreater}</a></li>
-                                        <li><span>创建日期:</span><a href="javascript:void(0);">${resourceInfo.rcreatedate}</a></li>
-                                        <li><span>最后修改:</span><a href="javascript:void(0);">${resourceInfo.rupdatedate}</a></li>
+                                        <li><span>创建者:</span><a href="javascript:void(0);">${pageBean.data.rcreater}</a></li>
+                                        <li><span>创建日期:</span><a href="javascript:void(0);">${pageBean.data.rcreatedate}</a></li>
+                                        <li><span>最后修改:</span><a href="javascript:void(0);">${pageBean.data.rupdatedate}</a></li>
                                     </ul>
                                 </div><!-- end blog-meta -->
 
@@ -101,22 +101,22 @@
                                 </div><!-- end media -->
 
                                 <div id="rcontentShow" class="blog-desc-big" style="overflow: hidden;">
-                                    ${resourceInfo.rcontent}
+                                    ${pageBean.data.rcontent}
                                     <hr class="invis">
                                 </div><!-- end desc -->
                             </div><!-- end blog -->
                         </div><!-- end content -->
                         <div class="authorbox">
                             <div class="site-publisher clearfix">
-                                <img src="${resourceServer}/my/headImages/${creater.aheadimg}" alt="" class="img-responsive img-circle">
-                                <a href="single-agency.html" title=""><h4><small>CREATER</small> <span>${creater.aname}</span></h4></a>
-                                <p>${creater.aintroduce}</p>
+                                <img src="${resourceServer}/my/headImages/${pageBean.creater.aheadimg}" alt="" class="img-responsive img-circle">
+                                <a href="single-agency.html" title=""><h4><small>CREATER</small> <span>${pageBean.creater.aname}</span></h4></a>
+                                <p>${pageBean.creater.aintroduce}</p>
                             </div><!-- end publisher -->
-                            <c:if test="${!empty updater}">
+                            <c:if test="${!empty pageBean.updater}">
                                 <div class="site-publisher clearfix">
-                                    <img src="${resourceServer}/my/headImages/${updater.aheadimg}" alt="" class="img-responsive img-circle">
-                                    <a href="single-agency.html" title=""><h4><small>LAST_UPDATER</small> <span>${updater.aname}</span></h4></a>
-                                    <p>${updater.aintroduce}</p>
+                                    <img src="${resourceServer}/my/headImages/${pageBean.updater.aheadimg}" alt="" class="img-responsive img-circle">
+                                    <a href="single-agency.html" title=""><h4><small>LAST_UPDATER</small> <span>${pageBean.updater.aname}</span></h4></a>
+                                    <p>${pageBean.updater.aintroduce}</p>
                                 </div><!-- end publisher -->
                             </c:if>
                         </div><!-- end details -->
@@ -125,7 +125,7 @@
                     <div class="sidebar col-md-4">
                         <div class="widget clearfix">
                             <div class="banner-widget">
-                                <img src="${resourceServer }/my/resource/titleImages/${resourceInfo.rtitleimg}" alt="" class="img-responsive img-rounded">
+                                <img src="${resourceServer }/my/resource/titleImages/${pageBean.data.rtitleimg}" alt="" class="img-responsive img-rounded">
                             </div>
                         </div>
                         <div class="widget clearfix">

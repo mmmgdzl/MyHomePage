@@ -6,9 +6,9 @@
     <result column="rTitle" property="rtitle" jdbcType="VARCHAR" />
     <result column="rTitleImg" property="rtitleimg" jdbcType="VARCHAR" />
     <result column="rColumn" property="rcolumn" jdbcType="INTEGER" />
-    <result column="rCreateDate" property="rcreatedate" jdbcType="DATE" />
+    <result column="rCreateDate" property="rcreatedate" jdbcType="TIMESTAMP" />
     <result column="rCreater" property="rcreater" jdbcType="INTEGER" />
-    <result column="rUpdateDate" property="rupdatedate" jdbcType="DATE" />
+    <result column="rUpdateDate" property="rupdatedate" jdbcType="TIMESTAMP" />
     <result column="rUpdater" property="rupdater" jdbcType="INTEGER" />
     <result column="rViews" property="rviews" jdbcType="INTEGER" />
     <result column="rEnable" property="renable" jdbcType="INTEGER" />
@@ -135,8 +135,8 @@
       rUpdateDate, rUpdater, rViews, 
       rEnable, rContent)
     values (#{rid,jdbcType=INTEGER}, #{rtitle,jdbcType=VARCHAR}, #{rtitleimg,jdbcType=VARCHAR}, 
-      #{rcolumn,jdbcType=INTEGER}, #{rcreatedate,jdbcType=DATE}, #{rcreater,jdbcType=INTEGER}, 
-      #{rupdatedate,jdbcType=DATE}, #{rupdater,jdbcType=INTEGER}, #{rviews,jdbcType=INTEGER}, 
+      #{rcolumn,jdbcType=INTEGER}, #{rcreatedate,jdbcType=TIMESTAMP}, #{rcreater,jdbcType=INTEGER}, 
+      #{rupdatedate,jdbcType=TIMESTAMP}, #{rupdater,jdbcType=INTEGER}, #{rviews,jdbcType=INTEGER}, 
       #{renable,jdbcType=INTEGER}, #{rcontent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.Resource" >
@@ -190,13 +190,13 @@
         #{rcolumn,jdbcType=INTEGER},
       </if>
       <if test="rcreatedate != null" >
-        #{rcreatedate,jdbcType=DATE},
+        #{rcreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rcreater != null" >
         #{rcreater,jdbcType=INTEGER},
       </if>
       <if test="rupdatedate != null" >
-        #{rupdatedate,jdbcType=DATE},
+        #{rupdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rupdater != null" >
         #{rupdater,jdbcType=INTEGER},
@@ -234,13 +234,13 @@
         rColumn = #{record.rcolumn,jdbcType=INTEGER},
       </if>
       <if test="record.rcreatedate != null" >
-        rCreateDate = #{record.rcreatedate,jdbcType=DATE},
+        rCreateDate = #{record.rcreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.rcreater != null" >
         rCreater = #{record.rcreater,jdbcType=INTEGER},
       </if>
       <if test="record.rupdatedate != null" >
-        rUpdateDate = #{record.rupdatedate,jdbcType=DATE},
+        rUpdateDate = #{record.rupdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.rupdater != null" >
         rUpdater = #{record.rupdater,jdbcType=INTEGER},
@@ -265,9 +265,9 @@
       rTitle = #{record.rtitle,jdbcType=VARCHAR},
       rTitleImg = #{record.rtitleimg,jdbcType=VARCHAR},
       rColumn = #{record.rcolumn,jdbcType=INTEGER},
-      rCreateDate = #{record.rcreatedate,jdbcType=DATE},
+      rCreateDate = #{record.rcreatedate,jdbcType=TIMESTAMP},
       rCreater = #{record.rcreater,jdbcType=INTEGER},
-      rUpdateDate = #{record.rupdatedate,jdbcType=DATE},
+      rUpdateDate = #{record.rupdatedate,jdbcType=TIMESTAMP},
       rUpdater = #{record.rupdater,jdbcType=INTEGER},
       rViews = #{record.rviews,jdbcType=INTEGER},
       rEnable = #{record.renable,jdbcType=INTEGER},
@@ -282,9 +282,9 @@
       rTitle = #{record.rtitle,jdbcType=VARCHAR},
       rTitleImg = #{record.rtitleimg,jdbcType=VARCHAR},
       rColumn = #{record.rcolumn,jdbcType=INTEGER},
-      rCreateDate = #{record.rcreatedate,jdbcType=DATE},
+      rCreateDate = #{record.rcreatedate,jdbcType=TIMESTAMP},
       rCreater = #{record.rcreater,jdbcType=INTEGER},
-      rUpdateDate = #{record.rupdatedate,jdbcType=DATE},
+      rUpdateDate = #{record.rupdatedate,jdbcType=TIMESTAMP},
       rUpdater = #{record.rupdater,jdbcType=INTEGER},
       rViews = #{record.rviews,jdbcType=INTEGER},
       rEnable = #{record.renable,jdbcType=INTEGER}
@@ -305,13 +305,13 @@
         rColumn = #{rcolumn,jdbcType=INTEGER},
       </if>
       <if test="rcreatedate != null" >
-        rCreateDate = #{rcreatedate,jdbcType=DATE},
+        rCreateDate = #{rcreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rcreater != null" >
         rCreater = #{rcreater,jdbcType=INTEGER},
       </if>
       <if test="rupdatedate != null" >
-        rUpdateDate = #{rupdatedate,jdbcType=DATE},
+        rUpdateDate = #{rupdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rupdater != null" >
         rUpdater = #{rupdater,jdbcType=INTEGER},
@@ -333,9 +333,9 @@
     set rTitle = #{rtitle,jdbcType=VARCHAR},
       rTitleImg = #{rtitleimg,jdbcType=VARCHAR},
       rColumn = #{rcolumn,jdbcType=INTEGER},
-      rCreateDate = #{rcreatedate,jdbcType=DATE},
+      rCreateDate = #{rcreatedate,jdbcType=TIMESTAMP},
       rCreater = #{rcreater,jdbcType=INTEGER},
-      rUpdateDate = #{rupdatedate,jdbcType=DATE},
+      rUpdateDate = #{rupdatedate,jdbcType=TIMESTAMP},
       rUpdater = #{rupdater,jdbcType=INTEGER},
       rViews = #{rviews,jdbcType=INTEGER},
       rEnable = #{renable,jdbcType=INTEGER},
@@ -347,9 +347,9 @@
     set rTitle = #{rtitle,jdbcType=VARCHAR},
       rTitleImg = #{rtitleimg,jdbcType=VARCHAR},
       rColumn = #{rcolumn,jdbcType=INTEGER},
-      rCreateDate = #{rcreatedate,jdbcType=DATE},
+      rCreateDate = #{rcreatedate,jdbcType=TIMESTAMP},
       rCreater = #{rcreater,jdbcType=INTEGER},
-      rUpdateDate = #{rupdatedate,jdbcType=DATE},
+      rUpdateDate = #{rupdatedate,jdbcType=TIMESTAMP},
       rUpdater = #{rupdater,jdbcType=INTEGER},
       rViews = #{rviews,jdbcType=INTEGER},
       rEnable = #{renable,jdbcType=INTEGER}

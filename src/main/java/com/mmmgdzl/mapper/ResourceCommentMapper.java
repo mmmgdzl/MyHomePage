@@ -1,9 +1,9 @@
 package com.mmmgdzl.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 import com.mmmgdzl.pojo.ResourceComment;
 import com.mmmgdzl.pojo.ResourceCommentExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface ResourceCommentMapper {
     int countByExample(ResourceCommentExample example);

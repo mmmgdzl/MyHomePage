@@ -2,6 +2,7 @@ package com.mmmgdzl.controller;
 
 import java.util.List;
 
+import com.mmmgdzl.domain.ResourceInfoPageBean;
 import com.mmmgdzl.domain.ResourceListPageBean;
 import com.mmmgdzl.pojo.Admin;
 import com.mmmgdzl.pojo.GameWebsiteCat;
@@ -10,7 +11,6 @@ import com.mmmgdzl.service.ResourceColumnService;
 import com.mmmgdzl.service.ResourceService;
 import com.mmmgdzl.service.SuperService;
 import com.mmmgdzl.domain.LayUIResource;
-import com.mmmgdzl.domain.PageBean;
 import com.mmmgdzl.service.ResourceListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,26 +85,28 @@ public class PageController {
 	 */
 	@RequestMapping("/resourceInfo/{rid}")
 	public String toResourceInfoPage(@PathVariable Integer rid, Model model) {
+		//创建资源详情页面对象
+        ResourceInfoPageBean<LayUIResource> resourceInfoPageBean = new ResourceInfoPageBean<>();
 		//获取资源数据
 		Resource resource = resourceListService.getResourceInfo(rid);
 		//获取创建者数据
 		Admin creater = superService.selectAdminById(resource.getRcreater());
 		//渲染创建者个人介绍
 		superService.renderAdminIntroduce(creater);
+		resourceInfoPageBean.setCreater(creater);
 		//如果修改者与创建者不一致
 		if(resource.getRcreater() != resource.getRupdater()) {
 			Admin updater = superService.selectAdminById(resource.getRupdater());
 			//渲染修改者个人介绍
 			superService.renderAdminIntroduce(creater);
-			model.addAttribute("updater", updater);
+			resourceInfoPageBean.setUpdater(updater);
 		}
 		//将资源数据进行渲染
 		LayUIResource resourceInfo = resourceService.renderResourceForLayUI(resource);
+		resourceInfoPageBean.setData(resourceInfo);
 
 		//将数据放入model中
-		model.addAttribute("resourceInfo", resourceInfo);
-		model.addAttribute("creater", creater);
-
+		model.addAttribute("pageBean", resourceInfoPageBean);
 
 		//获取前5热门数据
 		List<LayUIResource> hot = resourceListService.getHot(5);

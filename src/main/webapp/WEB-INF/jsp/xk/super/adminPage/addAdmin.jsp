@@ -66,6 +66,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">个人简介</label>
+                        <div class="layui-input-block">
+                            <textarea style="max-width: 400px;" placeholder="请输入个人简介(不多于255个字符)" name="aintroduce" lay-verify=introduce" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit lay-filter="demo1">添加</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -136,7 +144,11 @@
                     }
                 }
             }
-
+            ,introduce: function (value) {
+                if(value.length > 255){
+                    return '个人简介不能超过255个字符';
+                }
+            }
         });
         //在页面完成加载后再次渲染
         form.render();

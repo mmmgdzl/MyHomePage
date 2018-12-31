@@ -85,6 +85,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">个人简介</label>
+                        <div class="layui-input-block">
+                            <textarea style="max-width: 400px;" placeholder="请输入个人简介(不多于255个字符)" name="aintroduce" lay-verify=introduce" class="layui-textarea">${editAdmin.aintroduce}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit lay-filter="demo1">编辑</button>
                         <button class="layui-btn layui-btn-primary" onclick="loadPage(lastLoadPage)">重置</button>
@@ -156,6 +164,11 @@
                     if (!myreg.test(value)) {
                         return "请输入正确的手机号";
                     }
+                }
+            }
+            ,introduce: function (value) {
+                if(value.length > 255){
+                    return '个人简介不能超过255个字符';
                 }
             }
 

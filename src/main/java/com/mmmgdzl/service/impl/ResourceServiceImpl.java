@@ -74,6 +74,7 @@ public class ResourceServiceImpl implements ResourceService {
         if(currentAdmin != null && currentAdmin.getAlevel() >= 2) {
             criteria.andRcreaterEqualTo(currentAdmin.getAid());
         }
+
         //返回查询模板对象
         return resourceExample;
     }

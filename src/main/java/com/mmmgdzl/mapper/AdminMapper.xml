@@ -9,7 +9,7 @@
     <result column="aEnable" property="aenable" jdbcType="INTEGER" />
     <result column="aActive" property="aactive" jdbcType="INTEGER" />
     <result column="aActiveCode" property="aactivecode" jdbcType="VARCHAR" />
-    <result column="aCreateDate" property="acreatedate" jdbcType="DATE" />
+    <result column="aCreateDate" property="acreatedate" jdbcType="TIMESTAMP" />
     <result column="aName" property="aname" jdbcType="VARCHAR" />
     <result column="aGender" property="agender" jdbcType="INTEGER" />
     <result column="aMail" property="amail" jdbcType="VARCHAR" />
@@ -117,7 +117,7 @@
       aHeadImg, aIntroduce)
     values (#{aid,jdbcType=INTEGER}, #{aaccount,jdbcType=VARCHAR}, #{apassword,jdbcType=VARCHAR}, 
       #{alevel,jdbcType=INTEGER}, #{aenable,jdbcType=INTEGER}, #{aactive,jdbcType=INTEGER}, 
-      #{aactivecode,jdbcType=VARCHAR}, #{acreatedate,jdbcType=DATE}, #{aname,jdbcType=VARCHAR}, 
+      #{aactivecode,jdbcType=VARCHAR}, #{acreatedate,jdbcType=TIMESTAMP}, #{aname,jdbcType=VARCHAR}, 
       #{agender,jdbcType=INTEGER}, #{amail,jdbcType=VARCHAR}, #{aphone,jdbcType=VARCHAR}, 
       #{aheadimg,jdbcType=VARCHAR}, #{aintroduce,jdbcType=VARCHAR})
   </insert>
@@ -190,7 +190,7 @@
         #{aactivecode,jdbcType=VARCHAR},
       </if>
       <if test="acreatedate != null" >
-        #{acreatedate,jdbcType=DATE},
+        #{acreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="aname != null" >
         #{aname,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
         aActiveCode = #{record.aactivecode,jdbcType=VARCHAR},
       </if>
       <if test="record.acreatedate != null" >
-        aCreateDate = #{record.acreatedate,jdbcType=DATE},
+        aCreateDate = #{record.acreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.aname != null" >
         aName = #{record.aname,jdbcType=VARCHAR},
@@ -277,7 +277,7 @@
       aEnable = #{record.aenable,jdbcType=INTEGER},
       aActive = #{record.aactive,jdbcType=INTEGER},
       aActiveCode = #{record.aactivecode,jdbcType=VARCHAR},
-      aCreateDate = #{record.acreatedate,jdbcType=DATE},
+      aCreateDate = #{record.acreatedate,jdbcType=TIMESTAMP},
       aName = #{record.aname,jdbcType=VARCHAR},
       aGender = #{record.agender,jdbcType=INTEGER},
       aMail = #{record.amail,jdbcType=VARCHAR},
@@ -310,7 +310,7 @@
         aActiveCode = #{aactivecode,jdbcType=VARCHAR},
       </if>
       <if test="acreatedate != null" >
-        aCreateDate = #{acreatedate,jdbcType=DATE},
+        aCreateDate = #{acreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="aname != null" >
         aName = #{aname,jdbcType=VARCHAR},
@@ -341,7 +341,7 @@
       aEnable = #{aenable,jdbcType=INTEGER},
       aActive = #{aactive,jdbcType=INTEGER},
       aActiveCode = #{aactivecode,jdbcType=VARCHAR},
-      aCreateDate = #{acreatedate,jdbcType=DATE},
+      aCreateDate = #{acreatedate,jdbcType=TIMESTAMP},
       aName = #{aname,jdbcType=VARCHAR},
       aGender = #{agender,jdbcType=INTEGER},
       aMail = #{amail,jdbcType=VARCHAR},

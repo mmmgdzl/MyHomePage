@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceColumn" >
     <id column="cId" property="cid" jdbcType="INTEGER" />
     <result column="cName" property="cname" jdbcType="VARCHAR" />
-    <result column="cCreateDate" property="ccreatedate" jdbcType="DATE" />
+    <result column="cCreateDate" property="ccreatedate" jdbcType="TIMESTAMP" />
     <result column="cCreater" property="ccreater" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -101,7 +101,7 @@
   <insert id="insert" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
     insert into resource_column (cId, cName, cCreateDate, 
       cCreater)
-    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccreatedate,jdbcType=DATE}, 
+    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccreatedate,jdbcType=TIMESTAMP}, 
       #{ccreater,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
@@ -128,7 +128,7 @@
         #{cname,jdbcType=VARCHAR},
       </if>
       <if test="ccreatedate != null" >
-        #{ccreatedate,jdbcType=DATE},
+        #{ccreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="ccreater != null" >
         #{ccreater,jdbcType=INTEGER},
@@ -151,7 +151,7 @@
         cName = #{record.cname,jdbcType=VARCHAR},
       </if>
       <if test="record.ccreatedate != null" >
-        cCreateDate = #{record.ccreatedate,jdbcType=DATE},
+        cCreateDate = #{record.ccreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.ccreater != null" >
         cCreater = #{record.ccreater,jdbcType=INTEGER},
@@ -165,7 +165,7 @@
     update resource_column
     set cId = #{record.cid,jdbcType=INTEGER},
       cName = #{record.cname,jdbcType=VARCHAR},
-      cCreateDate = #{record.ccreatedate,jdbcType=DATE},
+      cCreateDate = #{record.ccreatedate,jdbcType=TIMESTAMP},
       cCreater = #{record.ccreater,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +178,7 @@
         cName = #{cname,jdbcType=VARCHAR},
       </if>
       <if test="ccreatedate != null" >
-        cCreateDate = #{ccreatedate,jdbcType=DATE},
+        cCreateDate = #{ccreatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="ccreater != null" >
         cCreater = #{ccreater,jdbcType=INTEGER},
@@ -189,7 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
     update resource_column
     set cName = #{cname,jdbcType=VARCHAR},
-      cCreateDate = #{ccreatedate,jdbcType=DATE},
+      cCreateDate = #{ccreatedate,jdbcType=TIMESTAMP},
       cCreater = #{ccreater,jdbcType=INTEGER}
     where cId = #{cid,jdbcType=INTEGER}
   </update>

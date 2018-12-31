@@ -1,13 +1,22 @@
 package com.mmmgdzl.service.impl;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.github.pagehelper.PageHelper;
+import com.mmmgdzl.domain.LayUIAdminLoginInfo;
+import com.mmmgdzl.mapper.AdminLoginInfoMapper;
+import com.mmmgdzl.pojo.AdminLoginInfo;
+import com.mmmgdzl.pojo.AdminLoginInfoExample;
 import com.mmmgdzl.service.SuperService;
 import com.mmmgdzl.exception.XKException;
 import com.mmmgdzl.utils.ClearBlankUtil;
 import com.mmmgdzl.utils.SendMailQQ;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,6 +37,8 @@ public class AdminServiceImpl implements AdminService {
 	private AdminMapper adminMapper;
 	@Autowired
 	private SuperService superService;
+	@Autowired
+	private AdminLoginInfoMapper adminLoginInfoMapper;
 	@Value("${ACTIVE_MAIL_WEB_SITE}")
 	private String ACTIVE_MAIL_WEB_SITE;
 
@@ -176,4 +187,98 @@ public class AdminServiceImpl implements AdminService {
 		//返回成功结果
 		return Result.OK();
 	}
+
+	@Override
+	public Result saveAdminLoginInfo(Integer aId, String alIP, String alAddress) {
+		//创建管理员登陆信息对象
+		AdminLoginInfo adminLoginInfo = new AdminLoginInfo();
+		//设置属性
+		adminLoginInfo.setAlid(0);
+		adminLoginInfo.setAid(aId);
+		adminLoginInfo.setAlip(alIP);
+		adminLoginInfo.setAladdress(alAddress);
+		adminLoginInfo.setAldate(new Date());
+		//执行插入
+		adminLoginInfoMapper.insert(adminLoginInfo);
+
+		return Result.OK();
+	}
+
+    @Override
+    public AdminLoginInfoExample transformAdminLoginInfoToAdminLoginInfoExample(AdminLoginInfo adminLoginInfo, Admin currentAdmin) {
+	    //清除空数据
+        ClearBlankUtil.clearStringBlank(adminLoginInfo);
+
+        //创建查询模板对象
+        AdminLoginInfoExample adminLoginInfoExample = new AdminLoginInfoExample();
+        AdminLoginInfoExample.Criteria criteria = adminLoginInfoExample.createCriteria();
+
+        //添加查询条件
+        if(adminLoginInfo != null) {
+            if(adminLoginInfo.getAid() != null) {
+                criteria.andAidEqualTo(adminLoginInfo.getAid());
+            }
+            if(adminLoginInfo.getAlip() != null) {
+                criteria.andAlipLike("%" + adminLoginInfo.getAlip() + "%");
+            }
+            if(adminLoginInfo.getAladdress() != null) {
+                criteria.andAladdressLike("%" + adminLoginInfo.getAladdress() + "%");
+            }
+        }
+
+        //如果当前登录者不为超级管理员则只能查询自己的登陆记录
+        if(currentAdmin.getAlevel() > 0) {
+            criteria.andAidEqualTo(currentAdmin.getAid());
+        }
+
+        //返回查询模板对象
+        return adminLoginInfoExample;
+    }
+
+    @Override
+    public List<AdminLoginInfo> selectAdminLoginInfos(AdminLoginInfo adminLoginInfo, Integer currentPage, Integer pageSize, Admin currentAdmin) {
+	    //将adminLoginInfo对象转换为查询模板对象
+        AdminLoginInfoExample adminLoginInfoExample = this.transformAdminLoginInfoToAdminLoginInfoExample(adminLoginInfo, currentAdmin);
+        //执行查询
+        return selectAdminLoginInfos(adminLoginInfoExample, currentPage, pageSize);
+    }
+
+    @Override
+    public List<AdminLoginInfo> selectAdminLoginInfos(AdminLoginInfoExample adminLoginInfoExample, Integer currentPage, Integer pageSize) {
+	    //设置分页
+        if(currentPage != null && pageSize != null) {
+            PageHelper.startPage(currentPage, pageSize);
+        }
+        //执行查询并返回
+        return adminLoginInfoMapper.selectByExample(adminLoginInfoExample);
+    }
+
+    @Override
+    public Integer countAdminLoginInfo(AdminLoginInfo adminLoginInfo, Admin currentAdmin) {
+	    //将adminLoginInfo对象转换为查询模板对象
+        AdminLoginInfoExample adminLoginInfoExample = this.transformAdminLoginInfoToAdminLoginInfoExample(adminLoginInfo, currentAdmin);
+        //执行统计并返回
+        return countAdminLoginInfo(adminLoginInfoExample);
+    }
+
+    @Override
+    public Integer countAdminLoginInfo(AdminLoginInfoExample adminLoginInfoExample) {
+        return adminLoginInfoMapper.countByExample(adminLoginInfoExample);
+    }
+
+    @Override
+    public LayUIAdminLoginInfo renderAdminLoginInfoForLayUI(AdminLoginInfo adminLoginInfo) {
+        LayUIAdminLoginInfo layUIAdminLoginInfo = new LayUIAdminLoginInfo(adminLoginInfo);
+        layUIAdminLoginInfo.setAaccount(adminMapper.selectByPrimaryKey(adminLoginInfo.getAid()).getAaccount());
+        return layUIAdminLoginInfo;
+    }
+
+    @Override
+    public List<LayUIAdminLoginInfo> renderAdminLoginInfosForLayUI(List<AdminLoginInfo> adminLoginInfos) {
+	    List<LayUIAdminLoginInfo> layUIAdminLoginInfoList = new ArrayList<>();
+	    for(AdminLoginInfo adminLoginInfo : adminLoginInfos) {
+            layUIAdminLoginInfoList.add(renderAdminLoginInfoForLayUI(adminLoginInfo));
+        }
+        return layUIAdminLoginInfoList;
+    }
 }

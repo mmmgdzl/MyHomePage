@@ -19,7 +19,7 @@ public class LayUIResourceColumn {
         //÷¥––‰÷»æ
         this.cid = resourceColumn.getCid();
         this.cname = resourceColumn.getCname();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.ccreatedate = sdf.format(resourceColumn.getCcreatedate());
     }
 

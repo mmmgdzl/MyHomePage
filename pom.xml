@@ -48,6 +48,18 @@
             <artifactId>javassist</artifactId>
             <version>3.17.1-GA</version>
         </dependency>
+        <!-- 引入request地点查询依赖 -->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>2.8.1</version>
+        </dependency>
+        <!-- 引入配置文件操作依赖 -->
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.10</version>
+        </dependency>
         <!-- 引入邮件依赖 -->
         <dependency>
             <groupId>javax.mail</groupId>
@@ -128,24 +140,24 @@
             <version>1.2.17</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+            <version>0.1.1</version>
         </dependency>
         <!-- 引入数据库连接相关依赖 -->
         <dependency>
@@ -231,22 +243,6 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- 引入springsecurity相关依赖(核心包由依赖自动引入) -->
-        <!--<dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${springsecurity.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${springsecurity.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>${springsecurity.version}</version>
-        </dependency>-->
         <!-- 引入Mybatis相关依赖 -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -286,4 +282,22 @@
             </resource>
         </resources>
     </build>
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <!-- 以下配置properties中用到一些变量，如数据库连接参数、日志打印等 -->
+            <properties>
+                <!-- 日志参数 -->
+                <log.moduleName>myhomepage</log.moduleName>
+                <log.base>logs</log.base>
+                <log.other.level>INFO</log.other.level>
+                <log.root.level>INFO</log.root.level>
+                <log.stdout.ref><![CDATA[<appender-ref ref="stdout" />]]></log.stdout.ref>
+            </properties>
+        </profile>
+    </profiles>
 </project>

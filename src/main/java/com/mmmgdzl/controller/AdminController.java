@@ -1,5 +1,9 @@
 package com.mmmgdzl.controller;
 
+import com.mmmgdzl.domain.LayUIAdminLoginInfo;
+import com.mmmgdzl.domain.LayUIResult;
+import com.mmmgdzl.pojo.AdminLoginInfo;
+import com.mmmgdzl.pojo.AdminLoginInfoExample;
 import com.mmmgdzl.service.AdminService;
 import com.mmmgdzl.service.SuperService;
 import com.mmmgdzl.service.FileService;
@@ -7,6 +11,7 @@ import com.mmmgdzl.utils.ConstantValueUtil;
 import com.mmmgdzl.domain.Result;
 import com.mmmgdzl.exception.XKException;
 import com.mmmgdzl.pojo.Admin;
+import com.mmmgdzl.utils.RequestAnalyseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 该Controller用于提供后台管理员操作的前端访问接口
@@ -37,12 +44,21 @@ public class AdminController {
      */
     @RequestMapping("/xk/adminLogin")
     @ResponseBody
-    public Result adminLogin(String account, String password, HttpSession session) {
+    public Result adminLogin(String account, String password, HttpServletRequest request, HttpSession session) {
         try{
             //校对账号密码
             Admin admin = adminService.adminLogin(account, password);
+
+            //根据request获取IP地址
+            String IP = RequestAnalyseUtils.getIpAdrress(request);
+            //根据IP地址获取登陆地点
+            String address = RequestAnalyseUtils.getCityAddress(IP);
+            //记录登陆信息
+            adminService.saveAdminLoginInfo(admin.getAid(), IP, address);
+
             //将登陆的管理员信息放入session中
             session.setAttribute(ConstantValueUtil.ADMIN, admin);
+
             return Result.OK();
         } catch (XKException e) {
             return Result.build(500, e.getMessage());
@@ -170,6 +186,29 @@ public class AdminController {
     }
 
     /**
+     * 用户查询登录记录
+     */
+    @RequestMapping("/xk/protect/getAdminLoginInfo")
+    @ResponseBody
+    public LayUIResult<LayUIAdminLoginInfo> getAdminLoginInfo(AdminLoginInfo adminLoginInfo, HttpSession session,
+                                                              @RequestParam(defaultValue = "1") Integer page,
+                                                              @RequestParam(defaultValue = "10")Integer limit) {
+        //从session中获取当前登录用户
+        Admin currentAdmin = (Admin) session.getAttribute(ConstantValueUtil.ADMIN);
+        //将用户登录记录对象转换为查询模板对象
+        AdminLoginInfoExample adminLoginInfoExample = adminService.transformAdminLoginInfoToAdminLoginInfoExample(adminLoginInfo, currentAdmin);
+        //统计用户记录条数
+        Integer count = adminService.countAdminLoginInfo(adminLoginInfoExample);
+        //查询用户登录记录 设置时间倒序
+        adminLoginInfoExample.setOrderByClause("alId desc");
+        List<AdminLoginInfo> adminLoginInfoList = adminService.selectAdminLoginInfos(adminLoginInfoExample, page, limit);
+        //渲染用户登录记录
+        List<LayUIAdminLoginInfo> layUIAdminLoginInfoList = adminService.renderAdminLoginInfosForLayUI(adminLoginInfoList);
+        //返回用户登录记录
+        return new LayUIResult<>(0, count, layUIAdminLoginInfoList);
+    }
+
+    /**
      * 页面定向
      */
     @RequestMapping("/xk")
@@ -182,9 +221,9 @@ public class AdminController {
         return "xk/" + path;
     }
 
-    @RequestMapping("/xk/index")
+    @RequestMapping("/xk/protect/index")
     public String toStartPage() {
-        return "xk/outside";
+        return "xk/protect/outside";
     }
 
     @RequestMapping("/xk/protect/personalPage/{page}")

@@ -2,7 +2,6 @@ package com.mmmgdzl.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class AdminExample {
@@ -104,32 +103,6 @@ public class AdminExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andAidIsNull() {
@@ -593,52 +566,52 @@ public class AdminExample {
         }
 
         public Criteria andAcreatedateEqualTo(Date value) {
-            addCriterionForJDBCDate("aCreateDate =", value, "acreatedate");
+            addCriterion("aCreateDate =", value, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("aCreateDate <>", value, "acreatedate");
+            addCriterion("aCreateDate <>", value, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateGreaterThan(Date value) {
-            addCriterionForJDBCDate("aCreateDate >", value, "acreatedate");
+            addCriterion("aCreateDate >", value, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("aCreateDate >=", value, "acreatedate");
+            addCriterion("aCreateDate >=", value, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateLessThan(Date value) {
-            addCriterionForJDBCDate("aCreateDate <", value, "acreatedate");
+            addCriterion("aCreateDate <", value, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("aCreateDate <=", value, "acreatedate");
+            addCriterion("aCreateDate <=", value, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateIn(List<Date> values) {
-            addCriterionForJDBCDate("aCreateDate in", values, "acreatedate");
+            addCriterion("aCreateDate in", values, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("aCreateDate not in", values, "acreatedate");
+            addCriterion("aCreateDate not in", values, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("aCreateDate between", value1, value2, "acreatedate");
+            addCriterion("aCreateDate between", value1, value2, "acreatedate");
             return (Criteria) this;
         }
 
         public Criteria andAcreatedateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("aCreateDate not between", value1, value2, "acreatedate");
+            addCriterion("aCreateDate not between", value1, value2, "acreatedate");
             return (Criteria) this;
         }
 

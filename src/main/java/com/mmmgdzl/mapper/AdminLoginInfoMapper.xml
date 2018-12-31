@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmmgdzl.mapper.AdminLoginInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.AdminLoginInfo" >
+    <id column="alId" property="alid" jdbcType="INTEGER" />
+    <result column="aId" property="aid" jdbcType="INTEGER" />
+    <result column="alIP" property="alip" jdbcType="VARCHAR" />
+    <result column="alAddress" property="aladdress" jdbcType="VARCHAR" />
+    <result column="alDate" property="aldate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    alId, aId, alIP, alAddress, alDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.AdminLoginInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from admin_login_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_login_info
+    where alId = #{alid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin_login_info
+    where alId = #{alid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mmmgdzl.pojo.AdminLoginInfoExample" >
+    delete from admin_login_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mmmgdzl.pojo.AdminLoginInfo" >
+    insert into admin_login_info (alId, aId, alIP, 
+      alAddress, alDate)
+    values (#{alid,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER}, #{alip,jdbcType=VARCHAR}, 
+      #{aladdress,jdbcType=VARCHAR}, #{aldate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.AdminLoginInfo" >
+    insert into admin_login_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alid != null" >
+        alId,
+      </if>
+      <if test="aid != null" >
+        aId,
+      </if>
+      <if test="alip != null" >
+        alIP,
+      </if>
+      <if test="aladdress != null" >
+        alAddress,
+      </if>
+      <if test="aldate != null" >
+        alDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alid != null" >
+        #{alid,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="alip != null" >
+        #{alip,jdbcType=VARCHAR},
+      </if>
+      <if test="aladdress != null" >
+        #{aladdress,jdbcType=VARCHAR},
+      </if>
+      <if test="aldate != null" >
+        #{aldate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mmmgdzl.pojo.AdminLoginInfoExample" resultType="java.lang.Integer" >
+    select count(*) from admin_login_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin_login_info
+    <set >
+      <if test="record.alid != null" >
+        alId = #{record.alid,jdbcType=INTEGER},
+      </if>
+      <if test="record.aid != null" >
+        aId = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.alip != null" >
+        alIP = #{record.alip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aladdress != null" >
+        alAddress = #{record.aladdress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aldate != null" >
+        alDate = #{record.aldate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin_login_info
+    set alId = #{record.alid,jdbcType=INTEGER},
+      aId = #{record.aid,jdbcType=INTEGER},
+      alIP = #{record.alip,jdbcType=VARCHAR},
+      alAddress = #{record.aladdress,jdbcType=VARCHAR},
+      alDate = #{record.aldate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmmgdzl.pojo.AdminLoginInfo" >
+    update admin_login_info
+    <set >
+      <if test="aid != null" >
+        aId = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="alip != null" >
+        alIP = #{alip,jdbcType=VARCHAR},
+      </if>
+      <if test="aladdress != null" >
+        alAddress = #{aladdress,jdbcType=VARCHAR},
+      </if>
+      <if test="aldate != null" >
+        alDate = #{aldate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where alId = #{alid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.AdminLoginInfo" >
+    update admin_login_info
+    set aId = #{aid,jdbcType=INTEGER},
+      alIP = #{alip,jdbcType=VARCHAR},
+      alAddress = #{aladdress,jdbcType=VARCHAR},
+      alDate = #{aldate,jdbcType=TIMESTAMP}
+    where alId = #{alid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -32,8 +32,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">创建者:</label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" id="aid" name="aid">
+                            <input type="text" id="aaccount" placeholder="筛选创建者"
+                                   autocomplete="off" class="layui-input" disabled>
+                        </div>
+                        <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择创建者</button>
+                        <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
+                        <button type="button" class="layui-btn" data-type="reload">筛选</button>
+                    </div>
                 </form>
-                <button class="layui-btn" data-type="reload" style="position:relative;top:-8px;">筛选</button>
+
             </div>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -69,12 +80,12 @@
             ,url: '${pageContext.request.contextPath}/xk/protect/resource'
             ,toolbar: '#toolbarDemo'
             ,cols: [[
-                {checkbox: true}
-                ,{field:'rid', title: 'ID', width:60}
+                {checkbox: true},
+                {field:'rid', title: 'ID', width:60}
                 ,{field:'rtitle', title: '标题', width:200}
                 ,{field:'rcolumn', title: '所属栏目', width:100}
                 <c:if test="${sessionScope.admin.alevel<2}">
-                ,{field:'rupdater', title: '创建用户', width:100}
+                ,{field:'rcreater', title: '创建用户', width:100}
                 </c:if>
                 ,{field:'rcreatedate', title: '创建日期', width:120}
                 ,{field:'rupdater', title: '修改用户', width:100}
@@ -95,6 +106,7 @@
                     where: {
                         rtitle: $('#rtitle').val()
                         ,rcolumn: $('#rcolumn').val()
+                        ,rcreater: $("#aid").val()
                     }
                 });
             }
@@ -192,6 +204,18 @@
                 });
             });
         }
+    }
+
+    //弹出选择创建者窗口
+    function doSelectRcreater() {
+        layer.open({
+            type: 2,
+            title: '选择创建者',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['1200px', '600px'],
+            content: '${pageContext.request.contextPath}/xk/super/adminPage/adminControl?select=select'
+        });
     }
 
 </script>
