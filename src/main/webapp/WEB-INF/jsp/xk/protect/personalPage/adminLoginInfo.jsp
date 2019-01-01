@@ -29,16 +29,18 @@
                         </div>
                         <button type="button" class="layui-btn" data-type="reload">筛选</button>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">创建者:</label>
-                        <div class="layui-input-inline">
-                            <input type="hidden" id="aid" name="aid">
-                            <input type="text" id="aaccount" placeholder="筛选创建者"
-                                   autocomplete="off" class="layui-input" disabled>
+                    <c:if test="${sessionScope.admin.alevel <= 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户:</label>
+                            <div class="layui-input-inline">
+                                <input type="hidden" id="aid" name="aid">
+                                <input type="text" id="aaccount" placeholder="筛选用户"
+                                       autocomplete="off" class="layui-input" disabled>
+                            </div>
+                            <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择用户</button>
+                            <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
                         </div>
-                        <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择用户</button>
-                        <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
-                    </div>
+                    </c:if>
                 </form>
             </div>
             <table class="layui-hide" id="table" lay-filter="table"></table>

@@ -35,7 +35,6 @@ public class AdminInterceptor implements HandlerInterceptor {
     //访问失败的处理
     private void visitFalse(ModelAndView modelAndView) {
         //设置访问失败的登录页面跳转标志
-        modelAndView.addObject("visitFalse", false);
-        modelAndView.setViewName("redirect:/xk/login");
+        modelAndView.setViewName("redirect:/xk/login?visitFalse=true");
     }
 }

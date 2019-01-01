@@ -100,6 +100,13 @@ public class SuperServiceImpl implements SuperService {
                 criteria.andAmailLike("%" + admin.getAmail() + "%");
             if(admin.getAphone() != null)
                 criteria.andAphoneLike("%" + admin.getAphone() + "%");
+            if(admin.getAactive() != null)
+                criteria.andAactiveEqualTo(admin.getAactive());
+            //如果查询不指定显示删除状态数据则不显示
+            if(admin.getAenable() != null)
+                criteria.andAenableEqualTo(admin.getAenable());
+            else
+                criteria.andAenableNotEqualTo(2);
         }
         //返回查询模板对象
         return ae;
@@ -200,12 +207,15 @@ public class SuperServiceImpl implements SuperService {
 
     @Override
     public Result deleteAdminsByIds(List<Integer> idList) {
+        Admin deleteAdmin = new Admin();
+        deleteAdmin.setAenable(2);
         if(idList != null) {
             for (Integer id : idList) {
                 //删除头像文件
                 fileService.deletePreHeadImg(id);
-                //删除管理员
-                adminMapper.deleteByPrimaryKey(id);
+                //删除用户(将用户状态设置为2)
+                deleteAdmin.setAid(id);
+                adminMapper.updateByPrimaryKeySelective(deleteAdmin);
             }
         }
         return Result.OK();

@@ -65,9 +65,28 @@
                         <div class="layui-input-inline">
                             <input type="tel" id="aphone" name="aphone" value="${editAdmin.aphone}" placeholder="筛选联系电话" autocomplete="off" class="layui-input">
                         </div>
+                        <button type="button" class="layui-btn" data-type="reload">筛选</button>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户状态:</label>
+                        <div class="layui-input-inline">
+                            <select id="aenable" name="aenable">
+                                <option value="">--所有有效--</option>
+                                <option value="1">可用</option>
+                                <option value="0">不可用</option>
+                                <option value="2">删除</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label">激活状态:</label>
+                        <div class="layui-input-inline">
+                            <select id="aactive" name="aactive">
+                                <option value="">--所有--</option>
+                                <option value="1">已激活</option>
+                                <option value="0">未激活</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
-                <button class="layui-btn" data-type="reload" onsubmit="return false;">筛选</button>
             </div>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -114,14 +133,14 @@
                 {field:'aid', title: 'ID', width:45}
                 ,{field:'aaccount', title: '账号', width:100}
                 ,{field:'alevel', title: '等级', width:100}
-                ,{field:'aactive', title: '是否激活', width:100}
-                ,{field:'aenable', title: '是否可用', width:100}
-                ,{field:'acreatedate', title: '创建日期', width:150}
+                ,{field:'aactive', title: '激活状态', width:100}
+                ,{field:'aenable', title: '用户状态', width:100}
+                ,{field:'acreatedate', title: '创建日期', width:200}
                 ,{field:'aname', title: '昵称', width:100}
                 ,{field:'agender', title: '性别', width:60}
                 ,{field:'amail', title: '邮箱', width:170}
                 ,{field:'aphone', title: '联系电话', width:150}
-                ,{field:'right', title: '操作', width:170,toolbar:"#barDemo"}
+                ,{field:'right', title: '操作', width:120,toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
             ,page: {
@@ -139,6 +158,8 @@
                         ,agender: $('#agender').val()
                         ,amail: $('#amail').val()
                         ,aphone: $('#aphone').val()
+                        ,aactive: $("#aactive").val()
+                        ,aenable: $("#aenable").val()
                     }
                 });
             }
@@ -169,11 +190,19 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
+                if(data.aenable == "删除") {
+                    layer.msg("已删除的数据无法操作!");
+                    return;
+                }
                 layer.confirm('确定删除ID为' + data.aid + '的用户么', function(index){
                     layer.close(index);
                     del(data.aid);
                 });
             } else if(obj.event === 'edit'){
+                if(data.aenable == "删除") {
+                    layer.msg("已删除的数据无法操作!");
+                    return;
+                }
                 //跳转至目标页面
                loadPage("${pageContext.request.contextPath}/xk/super/admin/" + data.aid);
             } else if(obj.event === "select") {
@@ -216,6 +245,8 @@
     function delSelect(data) {
         if(data.length == 0) {
             layer.msg("未选中行!");
+        } else if(data[0].aenable == "删除") {
+            layer.msg("已删除的数据无法操作!");
         } else {
             layer.confirm('确定删除已选中的' + data.length + '行么?', function(index){
                 layer.close(index);

@@ -31,17 +31,28 @@
                                 </c:forEach>
                             </select>
                         </div>
+                        <button type="button" class="layui-btn" data-type="reload">筛选</button>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">创建者:</label>
+                        <label class="layui-form-label">资源状态:</label>
                         <div class="layui-input-inline">
-                            <input type="hidden" id="aid" name="aid">
-                            <input type="text" id="aaccount" placeholder="筛选创建者"
-                                   autocomplete="off" class="layui-input" disabled>
+                            <select id="renable" name="renable">
+                                <option value="">--所有有效--</option>
+                                <option value="1">可用</option>
+                                <option value="0">不可用</option>
+                                <option value="2">删除</option>
+                            </select>
                         </div>
-                        <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择创建者</button>
-                        <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
-                        <button type="button" class="layui-btn" data-type="reload">筛选</button>
+                        <c:if test="${sessionScope.admin.alevel <= 0}">
+                            <label class="layui-form-label">创建用户:</label>
+                            <div class="layui-input-inline">
+                                <input type="hidden" id="aid" name="aid">
+                                <input type="text" id="aaccount" placeholder="筛选创建用户"
+                                       autocomplete="off" class="layui-input" disabled>
+                            </div>
+                            <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择创建用户</button>
+                            <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
+                        </c:if>
                     </div>
                 </form>
 
@@ -91,7 +102,7 @@
                 ,{field:'rupdater', title: '修改用户', width:100}
                 ,{field:'rupdatedate', title: '修改日期', width:120}
                 ,{field:'rviews', title: '浏览量', width:100}
-                ,{field:'renable', title: '是否可用', width:100}
+                ,{field:'renable', title: '资源状态', width:100}
                 ,{field:'right', title: '操作', width:170,toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
@@ -107,6 +118,7 @@
                         rtitle: $('#rtitle').val()
                         ,rcolumn: $('#rcolumn').val()
                         ,rcreater: $("#aid").val()
+                        ,renable: $("#renable").val()
                     }
                 });
             }
@@ -137,11 +149,19 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
+                if(data.renable == "删除") {
+                    layer.msg("已删除的数据无法操作!");
+                    return;
+                }
                 layer.confirm('确定删除ID为' + data.rid + '的资源么', function(index){
                     layer.close(index);
                     del(data.rid);
                 });
             } else if(obj.event === 'edit'){
+                if(data.renable == "删除") {
+                    layer.msg("已删除的数据无法操作!");
+                    return;
+                }
                 //跳转至目标页面
                loadPage("${pageContext.request.contextPath}/xk/protect/resource/" + data.rid);
             }
@@ -178,6 +198,8 @@
     function delSelect(data) {
         if(data.length == 0) {
             layer.msg("未选中行!");
+        } else if(data[0].renable == "删除") {
+            layer.msg("已删除的数据无法操作!");
         } else {
             layer.confirm('确定删除已选中的' + data.length + '行么?', function(index){
                 layer.close(index);

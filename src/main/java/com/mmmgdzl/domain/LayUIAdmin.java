@@ -34,14 +34,16 @@ public class LayUIAdmin {
         this.aid = admin.getAid();
         this.aaccount = admin.getAaccount();
         if(admin.getAenable() == 0) {
-            this.aenable = "否";
-        } else {
-            this.aenable = "是";
+            this.aenable = "不可用";
+        } else if(admin.getAenable() == 1) {
+            this.aenable = "可用";
+        } else if(admin.getAenable() == 2){
+            this.aenable = "删除";
         }
         if(admin.getAactive() == 0) {
-            this.aactive = "否";
+            this.aactive = "未激活";
         } else {
-            this.aactive = "是";
+            this.aactive = "已激活";
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.acreatedate = sdf.format(admin.getAcreatedate());

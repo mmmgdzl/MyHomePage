@@ -90,7 +90,6 @@ public class RequestAnalyseUtils {
             //组装城市名并返回
             return countryName + "-" + provinceName + "-" + cityName;
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("读取城市信息失败:" + e.getMessage());
             return "未知地点";
         }

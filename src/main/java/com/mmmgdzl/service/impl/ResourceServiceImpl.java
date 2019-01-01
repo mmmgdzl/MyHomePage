@@ -67,8 +67,11 @@ public class ResourceServiceImpl implements ResourceService {
                 criteria.andRcolumnEqualTo(resource.getRcolumn());
             if(resource.getRcreater() != null)
                 criteria.andRcreaterEqualTo(resource.getRcreater());
+            //若没有指定资源状态则设置只显示可见资源
             if(resource.getRenable() != null)
                 criteria.andRenableEqualTo(resource.getRenable());
+            else
+                criteria.andRenableNotEqualTo(2);
         }
         //如果当前用户不为管理员级别则只能看到自己的资源
         if(currentAdmin != null && currentAdmin.getAlevel() >= 2) {
@@ -148,11 +151,14 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Result deleteResourcesByIds(List<Integer> idList) {
+        Resource deleteResource = new Resource();
+        deleteResource.setRenable(2);
         for(Integer id : idList) {
             //删除资源对应的标题图片
             fileService.deleteResourceTitleImg(id);
-            //删除资源
-            resourceMapper.deleteByPrimaryKey(id);
+            //删除资源(逻辑删除)
+            deleteResource.setRid(id);
+            resourceMapper.updateByPrimaryKeySelective(deleteResource);
         }
         return Result.OK();
     }
