@@ -10,17 +10,28 @@ public interface FileService {
     Result updateHeadImage(MultipartFile headImage, Integer aid);
 
     /**
-     * 上传资源标题图
-     */
-    Result uploadRtitleimg(MultipartFile rtitleimg);
-
-    /**
      * 根据管理员aid删除原头像
      */
     Result deletePreHeadImg(Integer aid);
 
     /**
+     * 上传资源标题图
+     */
+    Result uploadRtitleimg(MultipartFile rtitleimg);
+
+
+    /**
      * 根据资源rid删除标题图
      */
     Result deleteResourceTitleImg(Integer rid);
+
+    /**
+     * 上传资源栏目网站logo
+     */
+    Result uploadRcwlogo(MultipartFile rcwlogo);
+
+    /**
+     * 根据资源栏目网站rcwid删除资源栏目网站logo
+     */
+    Result deleteResourceColumnWebsiteLogo(Integer rcwid);
 }

@@ -2,91 +2,63 @@
 <%--
   Created by IntelliJ IDEA.
   User: mmmgdzl
-  Date: 2018/11/28
-  Time: 0:51
+  Date: 2019/1/3
+  Time: 0:32
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:if test="${!empty param.select}">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/layui.css?t=1542630986927" media="all">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/global.css?t=1542630986927-6" media="all">
-    <script src="${pageContext.request.contextPath}/static/js/jquery-1.4.4.min.js"></script>
-    <script async src="${pageContext.request.contextPath}/static/admin/layui/fromOtherWebSite/adsbygoogle.js"></script>
-    <script src="${pageContext.request.contextPath}/static/admin/layui/layui.js?t=1542630986927" charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/static/js/jquery-form.js" charset="utf-8"></script>
-</c:if>
 <!-- 内容主体区域 -->
 <div class="layui-tab-item layui-show">
     <div class="layui-main">
         <div id="LAY_preview">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>管理员管理</legend>
+                <legend>资源栏目网站管理</legend>
             </fieldset>
             <div class="demoTable">
                 <form class="layui-form layui-inline">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">账号:</label>
+                        <label class="layui-form-label">网站名称:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="aaccount" name="aaccount" placeholder="筛选账号"
+                            <input type="text" id="rcwname" name="rcwname" placeholder="筛选网站名称"
                                    autocomplete="off" class="layui-input">
                         </div>
-                        <label class="layui-form-label">管理员等级:</label>
+                        <label class="layui-form-label">链接地址:</label>
                         <div class="layui-input-inline">
-                            <select id="alevel" name="alevel">
-                                <option value="">--所有--</option>
-                                <option value="0">超级管理员</option>
-                                <option value="1">管理员</option>
-                                <option value="2">普通用户</option>
-                            </select>
+                            <input type="text" id="rcwhref" name="rcwhref" placeholder="筛选链接地址"
+                                   autocomplete="off" class="layui-input">
                         </div>
-                        <label class="layui-form-label">性别:</label>
+                        <label class="layui-form-label">所属栏目:</label>
                         <div class="layui-input-inline">
-                            <select id="agender" name="agender">
+                            <select id="rcwcid" name="rcwcid">
                                 <option value="">--所有--</option>
-                                <option value="0">男</option>
-                                <option value="1">女</option>
-                                <option value="2">保密</option>
+                                <c:forEach items="${resourceColumnList}" var="resourceColumn" varStatus="vs">
+                                    <option value="${resourceColumn.cid}">${resourceColumn.cname}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">昵称:</label>
+                        <label class="layui-form-label">网站链<br>接状态:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="aname" name="aname" placeholder="筛选昵称"
-                                   autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">邮箱:</label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="amail" name="amail" value="${editAdmin.amail}" placeholder="筛选邮箱" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <label class="layui-form-label">联系电话:</label>
-                        <div class="layui-input-inline">
-                            <input type="tel" id="aphone" name="aphone" value="${editAdmin.aphone}" placeholder="筛选联系电话" autocomplete="off" class="layui-input">
-                        </div>
-                        <button type="button" class="layui-btn" data-type="reload">筛选</button>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户状态:</label>
-                        <div class="layui-input-inline">
-                            <select id="aenable" name="aenable">
+                            <select id="rcwenable" name="rcwenable">
                                 <option value="">--所有有效--</option>
                                 <option value="1">可用</option>
                                 <option value="0">不可用</option>
                                 <option value="2">删除</option>
                             </select>
                         </div>
-                        <label class="layui-form-label">激活状态:</label>
+                        <label class="layui-form-label">创建用户:</label>
                         <div class="layui-input-inline">
-                            <select id="aactive" name="aactive">
-                                <option value="">--所有--</option>
-                                <option value="1">已激活</option>
-                                <option value="0">未激活</option>
-                            </select>
+                            <input type="hidden" id="aid" name="aid">
+                            <input type="text" id="aaccount" placeholder="筛选创建用户"
+                                   autocomplete="off" class="layui-input" disabled>
                         </div>
+                        <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择创建用户</button>
+                        <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
+                        <button type="button" class="layui-btn" data-type="reload">筛选</button>
                     </div>
                 </form>
+
             </div>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -97,17 +69,15 @@
             <table class="layui-hide" id="table" lay-filter="table"></table>
 
             <script type="text/html" id="barDemo">
-                <c:if test="${empty param.select}">
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                </c:if>
-                <c:if test="${!empty param.select}">
-                    <a class="layui-btn layui-btn-xs" lay-event="select">选择</a>
-                </c:if>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
         </div>
     </div>
 </div>
+<script type="text/html" id="websiteA">
+    <a href="javascript:void(0);" lay-event="a">{{d.rcwhref}}</a>
+</script>
 <script>
     var _hmt = _hmt || [];
     (function() {
@@ -124,22 +94,17 @@
         //方法级渲染
         table.render({
             elem: '#table'
-            ,url: '${pageContext.request.contextPath}/xk/super/admin'
+            ,url: '${pageContext.request.contextPath}/xk/super/resourceColumnWebsite'
             ,toolbar: '#toolbarDemo'
             ,cols: [[
-                <c:if test="${empty param.select}">
-                    {checkbox: true},
-                </c:if>
-                {field:'aid', title: 'ID'}
-                ,{field:'aaccount', title: '账号'}
-                ,{field:'alevel', title: '等级'}
-                ,{field:'aactive', title: '激活状态'}
-                ,{field:'aenable', title: '用户状态'}
-                ,{field:'acreatedate', title: '创建日期'}
-                ,{field:'aname', title: '昵称'}
-                ,{field:'agender', title: '性别'}
-                ,{field:'amail', title: '邮箱'}
-                ,{field:'aphone', title: '联系电话'}
+                {checkbox: true}
+                ,{field:'rcwid', title: 'ID'}
+                ,{field:'rcwname', title: '网站名称'}
+                ,{field:'rcwhref', title: '链接地址(点击跳转)', templet: '#websiteA', unresize: true}
+                ,{field:'rcwcreater', title: '创建用户'}
+                ,{field:'rcwcreatedate', title: '创建日期'}
+                ,{field:'rcwcid', title: '所属栏目'}
+                ,{field:'rcwenable', title: '资源状态'}
                 ,{field:'right', title: '操作',toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
@@ -152,14 +117,11 @@
             reload: function(){
                 table.reload('testReload', {
                     where: {
-                        aaccount: $('#aaccount').val()
-                        ,alevel: $('#alevel').val()
-                        ,aname: $('#aname').val()
-                        ,agender: $('#agender').val()
-                        ,amail: $('#amail').val()
-                        ,aphone: $('#aphone').val()
-                        ,aactive: $("#aactive").val()
-                        ,aenable: $("#aenable").val()
+                        rcwname: $('#rcwname').val()
+                        ,rcwhref: $('#rcwhref').val()
+                        ,rcwcid: $('#rcwcid').val()
+                        ,rcwcreater: $("#aid").val()
+                        ,rcwenable: $("#rcwenable").val()
                     }
                 });
             }
@@ -190,27 +152,30 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
-                if(data.aenable == "删除") {
+                if(data.rcwenable == "删除") {
                     layer.msg("已删除的数据无法操作!");
                     return;
                 }
-                layer.confirm('确定删除ID为' + data.aid + '的用户么', function(index){
+                layer.confirm('确定删除ID为' + data.rcwid + '的资源栏目网站么', function(index){
                     layer.close(index);
-                    del(data.aid);
+                    del(data.rcwid);
                 });
             } else if(obj.event === 'edit'){
-                if(data.aenable == "删除") {
+                if(data.rcwenable == "删除") {
                     layer.msg("已删除的数据无法操作!");
                     return;
                 }
                 //跳转至目标页面
-               loadPage("${pageContext.request.contextPath}/xk/super/admin/" + data.aid);
-            } else if(obj.event === "select") {
-                //将选择的数据传输至父页面
-                parent.$("#aid").val(data.aid);
-                parent.$("#aaccount").val(data.aaccount);
-                var index1 = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                parent.layer.close(index1);//关闭窗口
+               loadPage("${pageContext.request.contextPath}/xk/super/resourceColumnWebsite/" + data.rcwid);
+            } else if(obj.event === 'a'){
+                if(data.rcwenable == "删除") {
+                    layer.msg("已删除的数据无法查看!");
+                    return false;
+                } else if(data.rcwenable == "不可用") {
+                    layer.msg("不可用的数据无法查看!");
+                    return false;
+                }
+                window.open(data.rcwhref, "_blank");
             }
         });
         //在页面完成加载后再次渲染
@@ -223,7 +188,7 @@
         idArray[0] = id;
         //ajax请求删除数据
         $.ajax({
-            url:'${pageContext.request.contextPath}/xk/super/admin'
+            url:'${pageContext.request.contextPath}/xk/super/resourceColumnWebsite'
             ,type:'DELETE'
             ,dataType:'json'
             ,data:{ids:JSON.stringify(idArray)}
@@ -236,7 +201,7 @@
                     layer.msg("删除失败:" + data.msg);
                 }
                 //成功与否都刷新页面
-                setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/adminPage/adminControl')", 500);
+                setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/resourceColumnWebsitePage/resourceColumnWebsiteControl')", 500);
             }
         });
     }
@@ -245,18 +210,18 @@
     function delSelect(data) {
         if(data.length == 0) {
             layer.msg("未选中行!");
-        } else if(data[0].aenable == "删除") {
+        } else if(data[0].rcwenable == "删除") {
             layer.msg("已删除的数据无法操作!");
         } else {
             layer.confirm('确定删除已选中的' + data.length + '行么?', function(index){
                 layer.close(index);
                 var idArray = new Array();
                 for(var i=0; i<data.length; i++) {
-                    idArray[i] = data[i].aid;
+                    idArray[i] = data[i].rcwid;
                 }
                 //执行删除
                 $.ajax({
-                    url:'${pageContext.request.contextPath}/xk/super/admin'
+                    url:'${pageContext.request.contextPath}/xk/super/resourceColumnWebsite'
                     ,type:'DELETE'
                     ,dataType:'json'
                     ,data:{ids:JSON.stringify(idArray)}
@@ -268,11 +233,23 @@
                         } else {
                             layer.msg("删除失败:" + data1.msg);
                         }
-                        setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/adminPage/adminControl')", 500);
+                        setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/resourceColumnWebsitePage/resourceColumnWebsiteControl')", 500);
                     }
                 });
             });
         }
+    }
+
+    //弹出选择创建者窗口
+    function doSelectRcreater() {
+        layer.open({
+            type: 2,
+            title: '选择创建者',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['1200px', '600px'],
+            content: '${pageContext.request.contextPath}/xk/super/adminPage/adminControl?select=select'
+        });
     }
 
 </script>

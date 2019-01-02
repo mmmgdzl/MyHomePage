@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletContext;
 
 @Component
-public class WhiteVisitCountToSQLAndLogTask {
+public class WhiteVisitCountToLogTask {
 
     @Autowired
     private ServletContext servletContext;
 
-    private Logger logger = LoggerFactory.getLogger(WhiteVisitCountToSQLAndLogTask.class);
+    private Logger logger = LoggerFactory.getLogger(WhiteVisitCountToLogTask.class);
 
     @Scheduled(cron = "0 * * * * ?")
-    public void whiteVisitorCountToSQLTask() {
+    public void whiteVisitorCountToLogTask() {
         try {
             //获取配置文件路径
             String profilepath = InitApplicationContextListener.class.getResource("/").getPath()+"conf/resource.properties";
@@ -36,9 +36,9 @@ public class WhiteVisitCountToSQLAndLogTask {
             config.setProperty("TOTAL_REQUEST", totalRequest);
             //写入访问人数
             config.setProperty("TOTAL_VISITOR", totalVisitor);
-            logger.info("更新站点访问数据至数据库以及配置文件成功!");
+            logger.info("更新站点访问数据至配置文件成功!");
         } catch (Exception e) {
-            logger.error("更新站点访问数据至数据库以及配置文件失败!");
+            logger.error("更新站点访问数据至配置文件失败!");
             e.printStackTrace();
         }
     }

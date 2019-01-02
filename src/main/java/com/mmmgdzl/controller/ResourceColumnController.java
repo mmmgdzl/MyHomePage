@@ -104,9 +104,6 @@ public class ResourceColumnController {
             return Result.build(500, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            if(e instanceof DataIntegrityViolationException) {
-                return Result.build(500, "存在与此资源栏目相关的资源");
-            }
             return Result.build(500, "未知错误");
         }
     }

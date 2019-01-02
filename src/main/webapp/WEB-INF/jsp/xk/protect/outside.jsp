@@ -82,13 +82,19 @@
                 </li>
                 <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
-                        <a class="javascript:;" href="javascript:;">栏目管理</a>
+                        <a class="javascript:;" href="javascript:;">资源栏目管理</a>
                         <dl class="layui-nav-child">
                             <dd id="oAddResourceColumn" style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/resourceColumnPage/addResourceColumn">资源栏目添加</a>
                             </dd>
                             <dd id="oResourceColumnControl" style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/resourceColumnPage/resourceColumnControl">资源栏目管理</a>
+                            </dd>
+                            <dd id="oAddResourceColumnWebsite" style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/resourceColumnWebsitePage/addResourceColumnWebsite">资源栏目网站添加</a>
+                            </dd>
+                            <dd id="oResourceColumnWebsiteControl" style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/resourceColumnWebsitePage/resourceColumnWebsiteControl">资源栏目网站管理</a>
                             </dd>
                         </dl>
                     </li>

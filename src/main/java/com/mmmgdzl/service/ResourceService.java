@@ -44,12 +44,12 @@ public interface ResourceService {
     /**
      * 将资源渲染为LayUI资源
      */
-    LayUIResource renderResourceForLayUI(Resource resource);
+    LayUIResource renderResourceForLayUI(Resource resource, boolean isAname);
 
     /**
      * 将一组资源渲染为LayUI资源
      */
-    List<LayUIResource> renderResourcesForLayUI(List<Resource> resources);
+    List<LayUIResource> renderResourcesForLayUI(List<Resource> resources, boolean isAname);
 
     /**
      * 更新资源

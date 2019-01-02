@@ -1,7 +1,6 @@
 package com.mmmgdzl.web.listener;
 
 import com.mmmgdzl.utils.ConstantValueUtil;
-import com.mmmgdzl.web.task.WhiteVisitCountToSQLAndLogTask;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ import javax.servlet.ServletContextListener;
  */
 public class InitApplicationContextListener implements ServletContextListener {
 
-    private Logger logger = LoggerFactory.getLogger(WhiteVisitCountToSQLAndLogTask.class);
+    private Logger logger = LoggerFactory.getLogger(InitApplicationContextListener.class);
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {}

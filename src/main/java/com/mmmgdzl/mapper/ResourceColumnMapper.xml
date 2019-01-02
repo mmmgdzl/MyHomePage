@@ -6,6 +6,8 @@
     <result column="cName" property="cname" jdbcType="VARCHAR" />
     <result column="cCreateDate" property="ccreatedate" jdbcType="TIMESTAMP" />
     <result column="cCreater" property="ccreater" jdbcType="INTEGER" />
+    <result column="cShowInHeader" property="cshowinheader" jdbcType="INTEGER" />
+    <result column="cEnable" property="cenable" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    cId, cName, cCreateDate, cCreater
+    cId, cName, cCreateDate, cCreater, cShowInHeader, cEnable
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.ResourceColumnExample" >
     select
@@ -100,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
     insert into resource_column (cId, cName, cCreateDate, 
-      cCreater)
+      cCreater, cShowInHeader, cEnable
+      )
     values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccreatedate,jdbcType=TIMESTAMP}, 
-      #{ccreater,jdbcType=INTEGER})
+      #{ccreater,jdbcType=INTEGER}, #{cshowinheader,jdbcType=INTEGER}, #{cenable,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.ResourceColumn" >
     insert into resource_column
@@ -119,6 +123,12 @@
       <if test="ccreater != null" >
         cCreater,
       </if>
+      <if test="cshowinheader != null" >
+        cShowInHeader,
+      </if>
+      <if test="cenable != null" >
+        cEnable,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cid != null" >
@@ -132,6 +142,12 @@
       </if>
       <if test="ccreater != null" >
         #{ccreater,jdbcType=INTEGER},
+      </if>
+      <if test="cshowinheader != null" >
+        #{cshowinheader,jdbcType=INTEGER},
+      </if>
+      <if test="cenable != null" >
+        #{cenable,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -156,6 +172,12 @@
       <if test="record.ccreater != null" >
         cCreater = #{record.ccreater,jdbcType=INTEGER},
       </if>
+      <if test="record.cshowinheader != null" >
+        cShowInHeader = #{record.cshowinheader,jdbcType=INTEGER},
+      </if>
+      <if test="record.cenable != null" >
+        cEnable = #{record.cenable,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +188,9 @@
     set cId = #{record.cid,jdbcType=INTEGER},
       cName = #{record.cname,jdbcType=VARCHAR},
       cCreateDate = #{record.ccreatedate,jdbcType=TIMESTAMP},
-      cCreater = #{record.ccreater,jdbcType=INTEGER}
+      cCreater = #{record.ccreater,jdbcType=INTEGER},
+      cShowInHeader = #{record.cshowinheader,jdbcType=INTEGER},
+      cEnable = #{record.cenable,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +207,12 @@
       <if test="ccreater != null" >
         cCreater = #{ccreater,jdbcType=INTEGER},
       </if>
+      <if test="cshowinheader != null" >
+        cShowInHeader = #{cshowinheader,jdbcType=INTEGER},
+      </if>
+      <if test="cenable != null" >
+        cEnable = #{cenable,jdbcType=INTEGER},
+      </if>
     </set>
     where cId = #{cid,jdbcType=INTEGER}
   </update>
@@ -190,7 +220,9 @@
     update resource_column
     set cName = #{cname,jdbcType=VARCHAR},
       cCreateDate = #{ccreatedate,jdbcType=TIMESTAMP},
-      cCreater = #{ccreater,jdbcType=INTEGER}
+      cCreater = #{ccreater,jdbcType=INTEGER},
+      cShowInHeader = #{cshowinheader,jdbcType=INTEGER},
+      cEnable = #{cenable,jdbcType=INTEGER}
     where cId = #{cid,jdbcType=INTEGER}
   </update>
 </mapper>

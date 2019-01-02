@@ -1,6 +1,6 @@
 package com.mmmgdzl.controller;
 
-import com.mmmgdzl.pojo.ResourceExample;
+import com.mmmgdzl.pojo.*;
 import com.mmmgdzl.service.ResourceColumnService;
 import com.mmmgdzl.service.ResourceService;
 import com.mmmgdzl.service.FileService;
@@ -8,9 +8,6 @@ import com.mmmgdzl.domain.LayUIResource;
 import com.mmmgdzl.domain.LayUIResult;
 import com.mmmgdzl.domain.Result;
 import com.mmmgdzl.exception.XKException;
-import com.mmmgdzl.pojo.Admin;
-import com.mmmgdzl.pojo.Resource;
-import com.mmmgdzl.pojo.ResourceColumn;
 import com.mmmgdzl.utils.ConstantValueUtil;
 import com.mmmgdzl.utils.DeleteParameterSplitUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +68,10 @@ public class ResourceController {
      */
     @GetMapping("/xk/protect/resource")
     @ResponseBody
-    public LayUIResult<LayUIResource> selectResourcesLikeAccount(Resource resource,
-                                                              @RequestParam(defaultValue = "1") Integer page,
-                                                              @RequestParam(defaultValue = "10")Integer limit,
-                                                              HttpSession session) {
+    public LayUIResult<LayUIResource> selectResources(Resource resource,
+                                                          @RequestParam(defaultValue = "1") Integer page,
+                                                          @RequestParam(defaultValue = "10")Integer limit,
+                                                          HttpSession session) {
         //获取当前用户
         Admin admin = (Admin) session.getAttribute(ConstantValueUtil.ADMIN);
         //将资源对象转换为查询模板对象
@@ -86,7 +83,7 @@ public class ResourceController {
         //查询资源列表
         List<Resource> resourceList = resourceService.selectResources(resourceExample, page, limit);
         //渲染资源列表
-        List<LayUIResource> layUIResourceList = resourceService.renderResourcesForLayUI(resourceList);
+        List<LayUIResource> layUIResourceList = resourceService.renderResourcesForLayUI(resourceList, false);
         //返回查询结果
         return new LayUIResult<>(0, count, layUIResourceList);
     }
@@ -100,8 +97,11 @@ public class ResourceController {
         Resource resource = resourceService.selectResourceByIdBlob(id);
         //将资源信息放入model中
         model.addAttribute("editResource", resource);
-        //获取所有栏目信息
-        List<ResourceColumn> resourceColumns = resourceColumnService.selectResourceColumns(new ResourceColumn(), null, null);
+        //获取所有可用栏目信息
+        ResourceColumn resourceColumn = new ResourceColumn();
+        resourceColumn.setCenable(1);
+        ResourceColumnExample resourceColumnExample = resourceColumnService.transformResourceColumnToResourceColumnExample(resourceColumn);
+        List<ResourceColumn> resourceColumns = resourceColumnService.selectResourceColumns(resourceColumnExample, null, null);
         //将栏目信息放入model中
         model.addAttribute("resourceColumnList", resourceColumns);
 
@@ -173,9 +173,12 @@ public class ResourceController {
      * 页面定向
      */
     @RequestMapping("/xk/protect/resourcePage/{page}")
-    public String toAdminPage(@PathVariable String page,Model model) {
-        //获取所有栏目信息
-        List<ResourceColumn> resourceColumns = resourceColumnService.selectResourceColumns(new ResourceColumn(), null, null);
+    public String toResourcePage(@PathVariable String page,Model model) {
+        //获取可用栏目列表
+        ResourceColumn resourceColumn = new ResourceColumn();
+        resourceColumn.setCenable(1);
+        ResourceColumnExample resourceColumnExample = resourceColumnService.transformResourceColumnToResourceColumnExample(resourceColumn);
+        List<ResourceColumn> resourceColumns = resourceColumnService.selectResourceColumns(resourceColumnExample, null, null);
         //将栏目信息放入model中
         model.addAttribute("resourceColumnList", resourceColumns);
         return "xk/protect/resourcePage/" + page;

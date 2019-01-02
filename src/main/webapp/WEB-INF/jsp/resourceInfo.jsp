@@ -109,13 +109,13 @@
                         <div class="authorbox">
                             <div class="site-publisher clearfix">
                                 <img src="${resourceServer}/my/headImages/${pageBean.creater.aheadimg}" alt="" class="img-responsive img-circle">
-                                <a href="single-agency.html" title=""><h4><small>CREATER</small> <span>${pageBean.creater.aname}</span></h4></a>
+                                <a href="javascript:void(0);" title=""><h4><small>CREATER</small> <span>${pageBean.creater.aname}</span></h4></a>
                                 <p>${pageBean.creater.aintroduce}</p>
                             </div><!-- end publisher -->
                             <c:if test="${!empty pageBean.updater}">
                                 <div class="site-publisher clearfix">
                                     <img src="${resourceServer}/my/headImages/${pageBean.updater.aheadimg}" alt="" class="img-responsive img-circle">
-                                    <a href="single-agency.html" title=""><h4><small>LAST_UPDATER</small> <span>${pageBean.updater.aname}</span></h4></a>
+                                    <a href="javascript:void(0);" title=""><h4><small>LAST_UPDATER</small> <span>${pageBean.updater.aname}</span></h4></a>
                                     <p>${pageBean.updater.aintroduce}</p>
                                 </div><!-- end publisher -->
                             </c:if>

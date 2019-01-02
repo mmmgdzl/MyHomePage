@@ -38,6 +38,8 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
         //填充属性
         resourceColumn.setCid(0);
         resourceColumn.setCcreatedate(new Date());
+        resourceColumn.setCenable(1);
+        resourceColumn.setCshowinheader(0);
         //执行插入
         resourceColumnMapper.insert(resourceColumn);
         //返回成功结果
@@ -56,6 +58,13 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
             criteria.andCnameLike("%" + resourceColumn.getCname() + "%");
         if(resourceColumn.getCcreater() != null)
             criteria.andCcreaterEqualTo(resourceColumn.getCcreater());
+        //如果没有指定状态则不显示删除的数据
+        if(resourceColumn.getCenable() != null)
+            criteria.andCenableEqualTo(resourceColumn.getCenable());
+        else
+            criteria.andCenableNotEqualTo(2);
+        if(resourceColumn.getCshowinheader() != null)
+            criteria.andCshowinheaderEqualTo(resourceColumn.getCshowinheader());
         //返回查询模板对象
         return resourceColumnExample;
     }
@@ -115,18 +124,7 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
 
     @Override
     public ResourceColumn selectResourceColumnByCid(Integer cid) {
-        //创建查询模板
-        ResourceColumnExample resourceColumnExample = new ResourceColumnExample();
-        ResourceColumnExample.Criteria criteria = resourceColumnExample.createCriteria();
-        //添加查询条件
-        criteria.andCidEqualTo(cid);
-        //执行查询
-        List<ResourceColumn> resourceColumns = resourceColumnMapper.selectByExample(resourceColumnExample);
-        if(resourceColumns.size() == 0) {
-            return null;
-        } else {
-            return resourceColumns.get(0);
-        }
+        return resourceColumnMapper.selectByPrimaryKey(cid);
     }
 
     @Override
@@ -136,6 +134,8 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
         ResourceColumnExample.Criteria criteria = resourceColumnExample.createCriteria();
         //添加查询条件
         criteria.andCnameEqualTo(cname);
+        //查询未删除数据
+        criteria.andCenableNotEqualTo(2);
         //执行查询
         List<ResourceColumn> resourceColumns = resourceColumnMapper.selectByExample(resourceColumnExample);
         if(resourceColumns.size() == 0) {
@@ -150,13 +150,9 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
         //清除空白数据
         ClearBlankUtil.clearStringBlank(resourceColumn);
         //检查资源栏目名是否重复
-        ResourceColumn checkResourceColumn = selectResourceColumnByCname(resourceColumn.getCname());
-        if(checkResourceColumn != null) {
-            if(checkResourceColumn.getCid() == resourceColumn.getCid()) {
-                throw new XKException("与原栏目名一致,无需修改");
-            } else {
+        ResourceColumn checkResourceColumn = this.selectResourceColumnByCname(resourceColumn.getCname());
+        if(checkResourceColumn != null && checkResourceColumn.getCid() != resourceColumn.getCid()) {
                 throw new XKException("该栏目名已存在");
-            }
         }
         //执行修改
         resourceColumnMapper.updateByPrimaryKeySelective(resourceColumn);
@@ -166,8 +162,23 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
 
     @Override
     public Result deleteResourceColumnById(Integer id) {
-        resourceColumnMapper.deleteByPrimaryKey(id);
+        //逻辑删除
+        ResourceColumn resourceColumn = new ResourceColumn();
+        resourceColumn.setCenable(2);
+        resourceColumn.setCid(id);
+        resourceColumnMapper.updateByPrimaryKeySelective(resourceColumn);
         return Result.OK();
     }
 
+    @Override
+    public List<ResourceColumn> getHeaderResourceColumns() {
+        //设置查询条件
+        ResourceColumnExample resourceColumnExample = new ResourceColumnExample();
+        ResourceColumnExample.Criteria criteria = resourceColumnExample.createCriteria();
+        criteria.andCshowinheaderEqualTo(1);
+        criteria.andCenableEqualTo(1);
+
+        //执行查询
+        return this.selectResourceColumns(resourceColumnExample, null, null);
+    }
 }

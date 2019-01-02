@@ -1,24 +1,20 @@
 package com.mmmgdzl.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mmmgdzl.domain.ResourceInfoPageBean;
 import com.mmmgdzl.domain.ResourceListPageBean;
-import com.mmmgdzl.pojo.Admin;
-import com.mmmgdzl.pojo.GameWebsiteCat;
-import com.mmmgdzl.pojo.Resource;
-import com.mmmgdzl.service.ResourceColumnService;
-import com.mmmgdzl.service.ResourceService;
-import com.mmmgdzl.service.SuperService;
+import com.mmmgdzl.pojo.*;
+import com.mmmgdzl.service.*;
 import com.mmmgdzl.domain.LayUIResource;
-import com.mmmgdzl.service.ResourceListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.mmmgdzl.service.GameService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -28,6 +24,8 @@ public class PageController {
 	private ResourceListService resourceListService;
 	@Autowired
 	private ResourceColumnService resourceColumnService;
+	@Autowired
+	private ResourceColumnWebsiteServcie resourceColumnWebsiteServcie;
 	@Autowired
 	private GameService gameService;
 	@Autowired
@@ -102,7 +100,7 @@ public class PageController {
 			resourceInfoPageBean.setUpdater(updater);
 		}
 		//将资源数据进行渲染
-		LayUIResource resourceInfo = resourceService.renderResourceForLayUI(resource);
+		LayUIResource resourceInfo = resourceService.renderResourceForLayUI(resource, true);
 		resourceInfoPageBean.setData(resourceInfo);
 
 		//将数据放入model中
@@ -123,9 +121,16 @@ public class PageController {
 	 * 设置头部信息
 	 */
 	private void setHeadAttribute(Model model) {
-		//获取游戏预览列表
-		List<GameWebsiteCat> gameWebSiteCatList = gameService.getGameWebSiteCatList();
+
+		//获取头部资源栏目列表
+		List<ResourceColumn> headerResourceColumnList = resourceColumnService.getHeaderResourceColumns();
+		//获取资源栏目网站列表
+		Map<Integer, List<ResourceColumnWebsite>> resourceColumnWebsiteMap = new HashMap<>();
+		for(ResourceColumn resourceColumn : headerResourceColumnList) {
+			resourceColumnWebsiteMap.put(resourceColumn.getCid(), resourceColumnWebsiteServcie.getResourceColumnWebsiteByCid(resourceColumn.getCid()));
+		}
 		//将参数放入模型中
-		model.addAttribute("gameWebSiteCatList", gameWebSiteCatList);
+		model.addAttribute("headerResourceColumnList", headerResourceColumnList);
+		model.addAttribute("resourceColumnWebsiteMap", resourceColumnWebsiteMap);
 	}
 }

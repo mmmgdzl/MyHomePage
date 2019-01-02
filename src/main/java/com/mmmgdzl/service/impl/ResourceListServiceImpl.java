@@ -57,7 +57,12 @@ public class ResourceListServiceImpl implements ResourceListService {
         pageBean.setTotalNum((int)pageInfo.getTotal());
 
         //执行数据渲染
-        List<LayUIResource> resourceList = resourceService.renderResourcesForLayUI(resources);
+        List<LayUIResource> resourceList = resourceService.renderResourcesForLayUI(resources, true);
+
+        //剪切渲染后的时间
+        for(LayUIResource layUIResource : resourceList) {
+            layUIResource.setRupdatedate(layUIResource.getRupdatedate().split(" ")[0]);
+        }
 
         //将列表放入PageBean
         pageBean.setData(resourceList);
@@ -79,7 +84,11 @@ public class ResourceListServiceImpl implements ResourceListService {
         //执行查询
         List<Resource> resources = resourceMapper.selectByExample(resourceExample);
         //执行数据渲染
-        List<LayUIResource> resourceList = resourceService.renderResourcesForLayUI(resources);
+        List<LayUIResource> resourceList = resourceService.renderResourcesForLayUI(resources, true);
+        //剪切渲染后的时间
+        for(LayUIResource layUIResource : resourceList) {
+            layUIResource.setRupdatedate(layUIResource.getRupdatedate().split(" ")[0]);
+        }
         return resourceList;
     }
 

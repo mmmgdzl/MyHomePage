@@ -72,4 +72,9 @@ public interface ResourceColumnService {
      */
     Result deleteResourceColumnById(Integer id);
 
+    /**
+     * 获取头部资源栏目数据
+     */
+    List<ResourceColumn> getHeaderResourceColumns();
+
 }

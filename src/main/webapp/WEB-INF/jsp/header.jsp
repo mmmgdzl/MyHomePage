@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${pageContext.request.contextPath }/">主页</a></li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/1" class="dropdown-toggle" xkfilter="flag">游戏 <b class="fa fa-angle-down"></b></a>
+                    <%--<li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/1" class="dropdown-toggle" xkfilter="flag">游戏 <b class="fa fa-angle-down"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="yamm-content clearfix">
@@ -93,25 +93,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </div>
                             </li>
                         </ul>
-                    </li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/2" class="dropdown-toggle" xkfilter="flag">视频 <b class="fa fa-angle-down"></b></a>
-                        <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
-                            <li>
-                                <div class="yamm-content clearfix">
-                                    <h4 style="margin:0; padding:0;text-align:center;">暂未开放</h4>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/3" class="dropdown-toggle" xkfilter="flag">音乐 <b class="fa fa-angle-down"></b></a>
-                         <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
-                            <li>
-                                <div class="yamm-content clearfix">
-                                    <h4 style="margin:0; padding:0;text-align:center;">暂未开放</h4>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                    </li>--%>
+                    <c:forEach items="${headerResourceColumnList}" var="headerResourceColumn">
+                        <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/${headerResourceColumn.cid}" class="dropdown-toggle" xkfilter="flag">${headerResourceColumn.cname} <b class="fa fa-angle-down"></b></a>
+                            <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
+                                <c:if test="${resourceColumnWebsiteMap[headerResourceColumn.cid].size() == 0}">
+                                    <li>
+                                        <div class="yamm-content clearfix">
+                                            <h4 style="margin:0; padding:0;text-align:center;">暂无资源网站数据</h4>
+                                        </div>
+                                    </li>
+                                </c:if>
+                                <c:if test="${resourceColumnWebsiteMap[headerResourceColumn.cid].size() != 0}">
+                                    <li>
+                                        <div class="yamm-content clearfix">
+                                            <div class="row-fluid">
+                                                <div class="col-md-5 col-sm-5">
+                                                    <h4>${headerResourceColumn.cname}资源站</h4>
+                                                    <ul>
+                                                        <c:forEach items="${resourceColumnWebsiteMap[headerResourceColumn.cid] }" var="resourceColumnWebsite">
+                                                            <li><a href="${resourceColumnWebsite.rcwhref }" logo="${resourceColumnWebsite.rcwlogo }" target="_blank" onmouseover="websiteChange(this, ${headerResourceColumn.cid})">${resourceColumnWebsite.rcwname }</a></li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-7 col-sm-7">
+                                                    <div class="menu-widget text-center">
+                                                        <a id="${headerResourceColumn.cid}-websiteHref1" href="${resourceColumnWebsiteMap[headerResourceColumn.cid][0].rcwhref }" target="_blank">
+                                                            <div style="width:170px;height:170px;line-height:170px;border:1px dotted #ff0000;background-color: #f0f0f0">
+                                                                <img id="${headerResourceColumn.cid}-websiteLogo" src="${resourceServer }/my/resourceColumnWebsiteLogo/${resourceColumnWebsiteMap[headerResourceColumn.cid][0].rcwlogo }" alt="" class="img-responsive" style="padding:0; margin:0;display: inline-block; vertical-align: middle;" >
+                                                            </div><!-- end image-wrap -->
+                                                        </a>
+                                                        <h5 id="${headerResourceColumn.cid}-websiteLabel" style="width:170px;margin:0 auto">${resourceColumnWebsiteMap[headerResourceColumn.cid][0].rcwname }</h5>
+                                                        <div style="width:170px;">
+                                                            <a id="${headerResourceColumn.cid}-websiteHref2" style="margin:0 auto;" href="${resourceColumnWebsiteMap[headerResourceColumn.cid][0].rcwhref }" class="menu-button" target="_blank">前往</a>
+                                                        </div >
+                                                    </div><!-- end widget -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </li>
+                    </c:forEach>
                     <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/xk" target="_blank" class="dropdown-toggle">资源分享<b class="fa fa-angle-down"></b></a>
                         <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
                             <li>
@@ -142,15 +166,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div><!-- end container -->
 </header>
 <script type="text/javascript">
-    function gameChange(obj) {
+    function websiteChange(obj, columnId) {
         var href=$(obj).attr("href");
         var logo=$(obj).attr("logo");
         var label=$(obj).html();
 
-        $("#gameHref1").attr("href", href);
-        $("#gameHref2").attr("href", href);
-        $("#gameLogo").attr("src", "${resourceServer }/my/game/" + logo);
-        $("#gameLabel").html(label);
+        $("#" + columnId + "-websiteHref1").attr("href", href);
+        $("#" + columnId + "-websiteHref2").attr("href", href);
+        $("#" + columnId + "-websiteLogo").attr("src", "${resourceServer }/my/resourceColumnWebsiteLogo/" + logo);
+        $("#" + columnId + "-websiteLabel").html(label);
     }
 
 

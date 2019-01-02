@@ -72,6 +72,9 @@
         </div>
     </div>
 </div>
+<script type="text/html" id="resourceInfoA">
+    <a href="javascript:void(0);" lay-event="a">{{d.rtitle}}</a>
+</script>
 <script>
     var _hmt = _hmt || [];
     (function() {
@@ -92,18 +95,18 @@
             ,toolbar: '#toolbarDemo'
             ,cols: [[
                 {checkbox: true},
-                {field:'rid', title: 'ID', width:60}
-                ,{field:'rtitle', title: '标题', width:200}
-                ,{field:'rcolumn', title: '所属栏目', width:100}
+                {field:'rid', title: 'ID'}
+                ,{field:'rtitle', title: '标题(点击跳转)', templet: '#resourceInfoA', unresize: true}
+                ,{field:'rcolumn', title: '所属栏目'}
                 <c:if test="${sessionScope.admin.alevel<2}">
-                ,{field:'rcreater', title: '创建用户', width:100}
+                ,{field:'rcreater', title: '创建用户'}
                 </c:if>
-                ,{field:'rcreatedate', title: '创建日期', width:120}
-                ,{field:'rupdater', title: '修改用户', width:100}
-                ,{field:'rupdatedate', title: '修改日期', width:120}
-                ,{field:'rviews', title: '浏览量', width:100}
-                ,{field:'renable', title: '资源状态', width:100}
-                ,{field:'right', title: '操作', width:170,toolbar:"#barDemo"}
+                ,{field:'rcreatedate', title: '创建日期'}
+                ,{field:'rupdater', title: '修改用户'}
+                ,{field:'rupdatedate', title: '修改日期'}
+                ,{field:'rviews', title: '浏览量'}
+                ,{field:'renable', title: '资源状态'}
+                ,{field:'right', title: '操作',toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
             ,page: {
@@ -164,6 +167,15 @@
                 }
                 //跳转至目标页面
                loadPage("${pageContext.request.contextPath}/xk/protect/resource/" + data.rid);
+            } else if(obj.event === 'a'){
+                if(data.renable == "删除") {
+                    layer.msg("已删除的数据无法查看!");
+                    return false;
+                } else if(data.renable == "不可用") {
+                    layer.msg("不可用的数据无法查看!");
+                    return false;
+                }
+                window.open("${pageContext.request.contextPath}/resourceInfo/" + data.rid, "_blank");
             }
         });
         //在页面完成加载后再次渲染

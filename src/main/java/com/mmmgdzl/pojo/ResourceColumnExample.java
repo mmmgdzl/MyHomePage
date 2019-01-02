@@ -354,6 +354,126 @@ public class ResourceColumnExample {
             addCriterion("cCreater not between", value1, value2, "ccreater");
             return (Criteria) this;
         }
+
+        public Criteria andCshowinheaderIsNull() {
+            addCriterion("cShowInHeader is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderIsNotNull() {
+            addCriterion("cShowInHeader is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderEqualTo(Integer value) {
+            addCriterion("cShowInHeader =", value, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderNotEqualTo(Integer value) {
+            addCriterion("cShowInHeader <>", value, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderGreaterThan(Integer value) {
+            addCriterion("cShowInHeader >", value, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderGreaterThanOrEqualTo(Integer value) {
+            addCriterion("cShowInHeader >=", value, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderLessThan(Integer value) {
+            addCriterion("cShowInHeader <", value, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderLessThanOrEqualTo(Integer value) {
+            addCriterion("cShowInHeader <=", value, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderIn(List<Integer> values) {
+            addCriterion("cShowInHeader in", values, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderNotIn(List<Integer> values) {
+            addCriterion("cShowInHeader not in", values, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderBetween(Integer value1, Integer value2) {
+            addCriterion("cShowInHeader between", value1, value2, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCshowinheaderNotBetween(Integer value1, Integer value2) {
+            addCriterion("cShowInHeader not between", value1, value2, "cshowinheader");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableIsNull() {
+            addCriterion("cEnable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableIsNotNull() {
+            addCriterion("cEnable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableEqualTo(Integer value) {
+            addCriterion("cEnable =", value, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableNotEqualTo(Integer value) {
+            addCriterion("cEnable <>", value, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableGreaterThan(Integer value) {
+            addCriterion("cEnable >", value, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableGreaterThanOrEqualTo(Integer value) {
+            addCriterion("cEnable >=", value, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableLessThan(Integer value) {
+            addCriterion("cEnable <", value, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableLessThanOrEqualTo(Integer value) {
+            addCriterion("cEnable <=", value, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableIn(List<Integer> values) {
+            addCriterion("cEnable in", values, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableNotIn(List<Integer> values) {
+            addCriterion("cEnable not in", values, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableBetween(Integer value1, Integer value2) {
+            addCriterion("cEnable between", value1, value2, "cenable");
+            return (Criteria) this;
+        }
+
+        public Criteria andCenableNotBetween(Integer value1, Integer value2) {
+            addCriterion("cEnable not between", value1, value2, "cenable");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

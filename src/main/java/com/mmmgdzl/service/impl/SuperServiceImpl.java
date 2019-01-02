@@ -33,7 +33,7 @@ public class SuperServiceImpl implements SuperService {
     @Override
     public Result addAdmin(Admin admin, Admin currentAdmin) {
         //查询用户账号是否已经存在
-        Admin a = selectAdminByAccount(admin.getAaccount());
+        Admin a = this.selectAdminByAccount(admin.getAaccount());
         if(a != null) {
             if(a.getAactive() == 0) {
                 //若已经存在但未激活则删除原记录
@@ -44,7 +44,7 @@ public class SuperServiceImpl implements SuperService {
             }
         }
         //验证邮箱是否已经存在
-        a = selectAdminByMail(admin.getAmail());
+        a = this.selectAdminByMail(admin.getAmail());
         if(a != null) {
             if(a.getAactive() == 0) {
                 //若已经存在但未激活则删除原记录
@@ -209,6 +209,7 @@ public class SuperServiceImpl implements SuperService {
     public Result deleteAdminsByIds(List<Integer> idList) {
         Admin deleteAdmin = new Admin();
         deleteAdmin.setAenable(2);
+        deleteAdmin.setAheadimg("default.jpg");
         if(idList != null) {
             for (Integer id : idList) {
                 //删除头像文件
@@ -237,6 +238,8 @@ public class SuperServiceImpl implements SuperService {
 
         //设置查询条件
         criteria.andAaccountEqualTo(account);
+        //查询未删除数据
+        criteria.andAenableNotEqualTo(2);
         //执行查询
         List<Admin> admins = adminMapper.selectByExample(adminExample);
         if(admins.size() == 0) {
@@ -258,6 +261,8 @@ public class SuperServiceImpl implements SuperService {
         AdminExample.Criteria criteria = adminExample.createCriteria();
         //设置查询条件
         criteria.andAmailEqualTo(mail);
+        //查询未删除数据
+        criteria.andAenableNotEqualTo(2);
         //执行查询
         List<Admin> admins = adminMapper.selectByExample(adminExample);
         if(admins.size() == 0) {

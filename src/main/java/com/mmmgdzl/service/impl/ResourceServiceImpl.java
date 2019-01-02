@@ -115,24 +115,27 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public LayUIResource renderResourceForLayUI(Resource resource) {
+    public LayUIResource renderResourceForLayUI(Resource resource, boolean isAname) {
         LayUIResource layUIResource = new LayUIResource(resource);
         //渲染创建人和修改人
-        layUIResource.setRcreater(superService.selectAdminById(resource.getRcreater()).getAname());
-        layUIResource.setRupdater(superService.selectAdminById(resource.getRupdater()).getAname());
+        if(isAname) {
+            layUIResource.setRcreater(superService.selectAdminById(resource.getRcreater()).getAname());
+            layUIResource.setRupdater(superService.selectAdminById(resource.getRupdater()).getAname());
+        } else {
+            layUIResource.setRcreater(superService.selectAdminById(resource.getRcreater()).getAaccount());
+            layUIResource.setRupdater(superService.selectAdminById(resource.getRupdater()).getAaccount());
+        }
         //渲染栏目名
         layUIResource.setRcolumn(resourceColumnService.selectResourceColumnByCid(resource.getRcolumn()).getCname());
         return layUIResource;
     }
 
     @Override
-    public List<LayUIResource> renderResourcesForLayUI(List<Resource> resources) {
+    public List<LayUIResource> renderResourcesForLayUI(List<Resource> resources, boolean isAname) {
         //执行数据渲染
         List<LayUIResource> resourceList = new ArrayList<>();
         for(Resource resource : resources) {
-            LayUIResource layUIResource = this.renderResourceForLayUI(resource);
-            //添加到列表
-            resourceList.add(layUIResource);
+            resourceList.add(this.renderResourceForLayUI(resource,isAname));
         }
         return resourceList;
     }
