@@ -7,9 +7,13 @@ public class ResourceComment {
 
     private Integer rccount;
 
+    private Integer rccreater;
+
     private Date rccreatedate;
 
-    private Integer rccreater;
+    private Integer rcupdater;
+
+    private Date rcupdatedate;
 
     private Integer rcresource;
 
@@ -35,6 +39,14 @@ public class ResourceComment {
         this.rccount = rccount;
     }
 
+    public Integer getRccreater() {
+        return rccreater;
+    }
+
+    public void setRccreater(Integer rccreater) {
+        this.rccreater = rccreater;
+    }
+
     public Date getRccreatedate() {
         return rccreatedate;
     }
@@ -43,12 +55,20 @@ public class ResourceComment {
         this.rccreatedate = rccreatedate;
     }
 
-    public Integer getRccreater() {
-        return rccreater;
+    public Integer getRcupdater() {
+        return rcupdater;
     }
 
-    public void setRccreater(Integer rccreater) {
-        this.rccreater = rccreater;
+    public void setRcupdater(Integer rcupdater) {
+        this.rcupdater = rcupdater;
+    }
+
+    public Date getRcupdatedate() {
+        return rcupdatedate;
+    }
+
+    public void setRcupdatedate(Date rcupdatedate) {
+        this.rcupdatedate = rcupdatedate;
     }
 
     public Integer getRcresource() {

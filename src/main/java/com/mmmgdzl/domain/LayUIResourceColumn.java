@@ -19,25 +19,6 @@ public class LayUIResourceColumn {
     private String cenable;
 
     public LayUIResourceColumn() {};
-    public LayUIResourceColumn(ResourceColumn resourceColumn) {
-        //执行渲染
-        this.cid = resourceColumn.getCid();
-        this.cname = resourceColumn.getCname();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.ccreatedate = sdf.format(resourceColumn.getCcreatedate());
-        if(resourceColumn.getCenable() == 0) {
-            this.cenable = "不可用";
-        } else if(resourceColumn.getCenable() == 1) {
-            this.cenable = "可用";
-        } else if(resourceColumn.getCenable() == 2) {
-            this.cenable = "删除";
-        }
-        if(resourceColumn.getCshowinheader() == 0) {
-            this.cshowinheader = "否";
-        } else {
-            this.cshowinheader = "是";
-        }
-    }
 
     public Integer getCid() {
         return cid;

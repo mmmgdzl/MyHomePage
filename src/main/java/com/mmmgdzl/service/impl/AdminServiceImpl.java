@@ -206,15 +206,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminLoginInfoExample transformAdminLoginInfoToAdminLoginInfoExample(AdminLoginInfo adminLoginInfo, Admin currentAdmin) {
-	    //清除空数据
-        ClearBlankUtil.clearStringBlank(adminLoginInfo);
-
         //创建查询模板对象
         AdminLoginInfoExample adminLoginInfoExample = new AdminLoginInfoExample();
         AdminLoginInfoExample.Criteria criteria = adminLoginInfoExample.createCriteria();
 
         //添加查询条件
         if(adminLoginInfo != null) {
+			//清除空数据
+			ClearBlankUtil.clearStringBlank(adminLoginInfo);
+
             if(adminLoginInfo.getAid() != null) {
                 criteria.andAidEqualTo(adminLoginInfo.getAid());
             }
@@ -268,7 +268,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public LayUIAdminLoginInfo renderAdminLoginInfoForLayUI(AdminLoginInfo adminLoginInfo) {
-        LayUIAdminLoginInfo layUIAdminLoginInfo = new LayUIAdminLoginInfo(adminLoginInfo);
+        LayUIAdminLoginInfo layUIAdminLoginInfo = new LayUIAdminLoginInfo();
+        //执行渲染
+		layUIAdminLoginInfo.setAlid(adminLoginInfo.getAlid());
+		layUIAdminLoginInfo.setAlip(adminLoginInfo.getAlip());
+		layUIAdminLoginInfo.setAladdress(adminLoginInfo.getAladdress());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		layUIAdminLoginInfo.setAldate(sdf.format(adminLoginInfo.getAldate()));
+        //渲染用户账号
         layUIAdminLoginInfo.setAaccount(adminMapper.selectByPrimaryKey(adminLoginInfo.getAid()).getAaccount());
         return layUIAdminLoginInfo;
     }

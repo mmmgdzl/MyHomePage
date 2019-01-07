@@ -26,19 +26,7 @@ public class LayUIResourceColumnWebsite {
     public LayUIResourceColumnWebsite() {}
 
     public LayUIResourceColumnWebsite(ResourceColumnWebsite resourceColumnWebsite) {
-        this.rcwid = resourceColumnWebsite.getRcwid();
-        this.rcwname = resourceColumnWebsite.getRcwname();
-        this.rcwhref = resourceColumnWebsite.getRcwhref();
-        this.rcwlogo = resourceColumnWebsite.getRcwlogo();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.rcwcreatedate = sdf.format(resourceColumnWebsite.getRcwcreatedate());
-        if(resourceColumnWebsite.getRcwenable() == 0) {
-            this.rcwenable = "不可用";
-        } else if(resourceColumnWebsite.getRcwenable() == 1) {
-            this.rcwenable = "可用";
-        } else if(resourceColumnWebsite.getRcwenable() == 2) {
-            this.rcwenable = "删除";
-        }
+
     }
 
     public Integer getRcwid() {

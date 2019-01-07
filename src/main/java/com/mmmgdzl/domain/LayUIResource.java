@@ -28,23 +28,6 @@ public class LayUIResource {
     private String rtitleimg;
 
     public LayUIResource(){};
-    public LayUIResource(Resource resource) {
-        this.rid = resource.getRid();
-        this.rtitle = resource.getRtitle();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.rcreatedate = sdf.format(resource.getRcreatedate());
-        this.rupdatedate = sdf.format(resource.getRupdatedate());
-        this.rviews = resource.getRviews();
-        if(resource.getRenable() == 0) {
-            this.renable = "不可用";
-        } else if(resource.getRenable() == 1) {
-            this.renable = "可用";
-        } else if(resource.getRenable() == 2) {
-            this.renable = "删除";
-        }
-        this.rcontent = resource.getRcontent();
-        this.rtitleimg = resource.getRtitleimg();
-    }
 
     public String getRtitleimg() {
         return rtitleimg;

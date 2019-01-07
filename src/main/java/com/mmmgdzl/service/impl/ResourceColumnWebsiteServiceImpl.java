@@ -14,6 +14,7 @@ import com.mmmgdzl.utils.ClearBlankUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,15 +46,14 @@ public class ResourceColumnWebsiteServiceImpl implements ResourceColumnWebsiteSe
 
     @Override
     public ResourceColumnWebsiteExample transformResourceColumnWebsiteToResourceColumnWebsiteExample(ResourceColumnWebsite resourceColumnWebsite) {
-        //清除空数据
-        ClearBlankUtil.clearStringBlank(resourceColumnWebsite);
-
         //创建查询模板对象
         ResourceColumnWebsiteExample resourceColumnWebsiteExample = new ResourceColumnWebsiteExample();
         ResourceColumnWebsiteExample.Criteria criteria = resourceColumnWebsiteExample.createCriteria();
 
         //添加查询对象
         if(resourceColumnWebsite != null) {
+            //清除空数据
+            ClearBlankUtil.clearStringBlank(resourceColumnWebsite);
             if(resourceColumnWebsite.getRcwname() != null)
                 criteria.andRcwnameLike("%" + resourceColumnWebsite.getRcwname() + "%");
             if(resourceColumnWebsite.getRcwhref() != null)
@@ -104,6 +104,20 @@ public class ResourceColumnWebsiteServiceImpl implements ResourceColumnWebsiteSe
     @Override
     public LayUIResourceColumnWebsite renderResourceColumnWebsiteForLayUI(ResourceColumnWebsite resourceColumnWebsite) {
         LayUIResourceColumnWebsite layUIResourceColumnWebsite = new LayUIResourceColumnWebsite(resourceColumnWebsite);
+        //执行渲染
+        layUIResourceColumnWebsite.setRcwid(resourceColumnWebsite.getRcwid());
+        layUIResourceColumnWebsite.setRcwname(resourceColumnWebsite.getRcwname());
+        layUIResourceColumnWebsite.setRcwhref(resourceColumnWebsite.getRcwhref());
+        layUIResourceColumnWebsite.setRcwlogo(resourceColumnWebsite.getRcwlogo());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        layUIResourceColumnWebsite.setRcwcreatedate(sdf.format(resourceColumnWebsite.getRcwcreatedate()));
+        if(resourceColumnWebsite.getRcwenable() == 0) {
+            layUIResourceColumnWebsite.setRcwenable("不可用");
+        } else if(resourceColumnWebsite.getRcwenable() == 1) {
+            layUIResourceColumnWebsite.setRcwenable("可用");
+        } else if(resourceColumnWebsite.getRcwenable() == 2) {
+            layUIResourceColumnWebsite.setRcwenable("删除");
+        }
         //渲染栏目名
         layUIResourceColumnWebsite.setRcwcid(resourceColumnService.selectResourceColumnByCid(resourceColumnWebsite.getRcwcid()).getCname());
         //渲染创建者账号

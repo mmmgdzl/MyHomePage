@@ -73,10 +73,10 @@
                     <a class="javascript:;" href="javascript:;">评论管理</a>
                     <dl class="layui-nav-child">
                         <dd id="oResourceCommon" style="text-align: center;">
-                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourcePage/addResource">评论管理</a>
+                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourceCommentPage/resourceCommentControl">评论管理</a>
                         </dd>
                         <dd id="oMyResourceCommon" style="text-align: center;">
-                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourcePage/resourceControl">我的评论</a>
+                            <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/resourceCommentPage/myResourceCommentControl">我的评论</a>
                         </dd>
                     </dl>
                 </li>

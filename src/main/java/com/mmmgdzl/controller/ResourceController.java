@@ -77,7 +77,7 @@ public class ResourceController {
         //将资源对象转换为查询模板对象
         ResourceExample resourceExample = resourceService.transformResourceToResourceExample(resource, admin);
         //设置 修改时间倒序 id倒序查询
-        resourceExample.setOrderByClause("rupdatedate desc, rid desc");
+        resourceExample.setOrderByClause("rupdatedate desc");
         //查询总条数
         Integer count = resourceService.count(resourceExample);
         //查询资源列表

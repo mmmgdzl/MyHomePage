@@ -34,13 +34,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </p>
                 </div><!-- end left -->
                 <div class="col-md-6 col-sm-6 hidden-xs text-right">
-                    <div class="social">
-                        <a class="facebook" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="这些"><i class="fa fa-facebook"></i></a>              
+                        <%--<a class="facebook" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="这些"><i class="fa fa-facebook"></i></a>
                         <a class="twitter" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="是拿来"><i class="fa fa-twitter"></i></a>
                         <a class="google" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="装饰(逼)的"><i class="fa fa-google-plus"></i></a>
                         <a class="linkedin" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="就别想着"><i class="fa fa-linkedin"></i></a>
-                        <a class="pinterest" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="点啦"><i class="fa fa-pinterest"></i></a>
-                    </div><!-- end social -->
+                        <a class="pinterest" href="javascript:void(0);" data-tooltip="tooltip" data-placement="bottom" title="点啦"><i class="fa fa-pinterest"></i></a>--%>
+                        <c:if test="${empty sessionScope.admin}">
+                            <a href="javascript:void(0);" title="登录" onclick="doLogin()">登录</a>&nbsp;&nbsp;|&nbsp;
+                            <a href="javascript:void(0);" title="注册" onclick="doRegister()">注册</a>
+                        </c:if>
+                        <c:if test="${!empty sessionScope.admin}">
+                            <img id="outsideHeadImage" src="${resourceServer}/my/headImages/${sessionScope.admin.aheadimg}" style="width:30px;height:30px;border-radius:30px;"/>
+                            &nbsp;
+                            <ul class="navbar-nav navbar-right" style="margin: 0;padding: 0;list-style-type:none">
+                                <li class="dropdown yamm-fw yamm-half"><a href="javascript:void(0);" class="dropdown-toggle" xkfilter="flag">${sessionScope.admin.aname} <b class="fa fa-angle-down"></b></a>
+                                    <ul class="dropdown-menu" style="min-width: 120px;margin: 10px 0; padding:5px 0;">
+                                        <li>
+                                            <div class="yamm-content clearfix" style="cursor: pointer;" onmouseover="$(this).css('background', '#f0f0f0');" onmouseleave="$(this).css('background', '#ffffff');" onclick="doLogout();">
+                                                <h5 style="text-align:center;font-size: 15px;">退出登录</h5>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </c:if>
                 </div><!-- end left -->
             </div><!-- end row -->
         </div><!-- end container -->
@@ -63,37 +80,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${pageContext.request.contextPath }/">主页</a></li>
-                    <%--<li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/1" class="dropdown-toggle" xkfilter="flag">游戏 <b class="fa fa-angle-down"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="yamm-content clearfix">
-                                    <div class="row-fluid">
-                                        <div class="col-md-5 col-sm-5">
-                                            <h4>游戏资源站</h4>
-                                            <ul>
-                                            	<c:forEach items="${gameWebSiteCatList }" var="item">
-                                                	<li><a href="${item.url }" logo="${item.image }" target="_blank" onmouseover="gameChange(this)">${item.name }</a></li>
-                                            	</c:forEach>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-7 col-sm-7">
-                                            <div class="menu-widget text-center">
-                                                <a id="gameHref1" href="${gameWebSiteCatList[0].url }" target="_blank">
-                                               		 <div style="width:170px;height:170px;line-height:170px;border:1px dotted #ff0000;background-color: #f0f0f0">
-                                                    	<img id="gameLogo" src="${resourceServer }/my/game/${gameWebSiteCatList[0].image }" alt="" class="img-responsive" style="padding:0; margin:0;display: inline-block; vertical-align: middle;" >
-                                                	</div><!-- end image-wrap -->
-                                                </a>
-                                                <h5 id="gameLabel" style="width:170px;margin:0 auto">${gameWebSiteCatList[0].name }</h5>
-                                                <div style="width:170px;">
-                                               	 <a id="gameHref2" style="margin:0 auto;" href="${gameWebSiteCatList[0].url }" class="menu-button" target="_blank">前往</a>
-                                            	</div >
-                                            </div><!-- end widget -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>--%>
                     <c:forEach items="${headerResourceColumnList}" var="headerResourceColumn">
                         <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/resourceList/${headerResourceColumn.cid}" class="dropdown-toggle" xkfilter="flag">${headerResourceColumn.cname} <b class="fa fa-angle-down"></b></a>
                             <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
@@ -136,7 +122,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </ul>
                         </li>
                     </c:forEach>
-                    <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath }/xk" target="_blank" class="dropdown-toggle">资源分享<b class="fa fa-angle-down"></b></a>
+                    <c:if test="${empty sessionScope.admin}">
+                        <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath}/xk" target="_blank" class="dropdown-toggle">资源分享<b class="fa fa-angle-down"></b></a>
+                    </c:if>
+                    <c:if test="${!empty sessionScope.admin}">
+                        <li class="dropdown yamm-fw yamm-half"><a href="${pageContext.request.contextPath}/xk/protect/index" target="_blank" class="dropdown-toggle">资源分享<b class="fa fa-angle-down"></b></a>
+                    </c:if>
                         <ul class="dropdown-menu" style="min-width: 120px;margin: 5px 10px; padding:5px 10px;">
                             <li>
                                 <div class="yamm-content clearfix">
@@ -165,7 +156,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </nav><!-- end navbar -->
     </div><!-- end container -->
 </header>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath }/static/admin/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/static/admin/layui/lay/modules/layer.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/modules/layer/default/layer.css">
 <script type="text/javascript">
+    //改变网站显示数据
     function websiteChange(obj, columnId) {
         var href=$(obj).attr("href");
         var logo=$(obj).attr("logo");
@@ -175,6 +170,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $("#" + columnId + "-websiteHref2").attr("href", href);
         $("#" + columnId + "-websiteLogo").attr("src", "${resourceServer }/my/resourceColumnWebsiteLogo/" + logo);
         $("#" + columnId + "-websiteLabel").html(label);
+    }
+
+    //弹出注册窗口
+    function doRegister() {
+        layer.open({
+            type: 2,
+            title: '注册用户',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['350px', '400px'],
+            content: '${pageContext.request.contextPath}/register'
+        });
+    }
+    //弹出登录窗口
+    function doLogin() {
+        layer.open({
+            type: 2,
+            title: '登录',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['350px', '280px'],
+            content: '${pageContext.request.contextPath}/login'
+        });
+    }
+
+    //执行登出
+    function doLogout() {
+        $.ajax({
+            url:"/xk/protect/adminLogout",
+            dataType:"json",
+            success:function(data) {
+                layer.msg("退出登录成功!");
+                setTimeout("window.location.reload()", 500);
+            }
+        })
     }
 
 

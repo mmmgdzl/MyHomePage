@@ -110,7 +110,7 @@
                         <hr class="invis">
                         <div class="row">
                             <div class="col-md-12">
-                                <ul class="pagination" style="margin: 0 auto;">
+                                <ul class="pagination">
                                     <!-- 上一页 -->
                                     <c:if test="${pageBean.currentPage == 1}">
                                         <li class='disabled'><a href="javascript:void(0)">&laquo;</a></li>
@@ -194,7 +194,12 @@
                     <div class="footer-links">
                         <ul class="list-inline">
                             <li>执行 : <a href="javascript:void(0);">MMMGDZL</a></li>
-                            <li>资源共享入口 : <a href="${pageContext.request.contextPath}/xk" target="_blank" title="星空の聚合">星空の聚合</a></li>
+                            <c:if test="${empty sessionScope.admin}">
+                                <li>资源共享入口 : <a href="${pageContext.request.contextPath}/xk" target="_blank" title="星空の聚合">星空の聚合</a></li>
+                            </c:if>
+                            <c:if test="${!empty sessionScope.admin}">
+                                <li>资源共享入口 : <a href="${pageContext.request.contextPath}/xk/protect/index" target="_blank" title="星空の聚合">星空の聚合</a></li>
+                            </c:if>
                         </ul>
                     </div>
                 </div>

@@ -82,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             type: 2,
             title: '注册用户',
             shadeClose: true,
-            shade: false,
+            shade: 0.8,
             area: ['350px', '400px'],
             content: '${pageContext.request.contextPath}/xk/register'
         });

@@ -16,6 +16,7 @@ import com.mmmgdzl.service.ResourceService;
 import com.mmmgdzl.service.SuperService;
 import com.mmmgdzl.service.FileService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -116,7 +117,23 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public LayUIResource renderResourceForLayUI(Resource resource, boolean isAname) {
-        LayUIResource layUIResource = new LayUIResource(resource);
+        LayUIResource layUIResource = new LayUIResource();
+        //执行渲染
+        layUIResource.setRid(resource.getRid());
+        layUIResource.setRtitle(resource.getRtitle());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        layUIResource.setRcreatedate(sdf.format(resource.getRcreatedate()));
+        layUIResource.setRupdatedate(sdf.format(resource.getRupdatedate()));
+        layUIResource.setRviews(resource.getRviews());
+        if(resource.getRenable() == 0) {
+            layUIResource.setRenable("不可用");
+        } else if(resource.getRenable() == 1) {
+            layUIResource.setRenable("可用");
+        } else if(resource.getRenable() == 2) {
+            layUIResource.setRenable("删除");
+        }
+        layUIResource.setRcontent(resource.getRcontent());
+        layUIResource.setRtitleimg(resource.getRtitleimg());
         //渲染创建人和修改人
         if(isAname) {
             layUIResource.setRcreater(superService.selectAdminById(resource.getRcreater()).getAname());
@@ -179,5 +196,10 @@ public class ResourceServiceImpl implements ResourceService {
             return null;
         else
             return resources.get(0);
+    }
+
+    @Override
+    public Resource selectResourceById(Integer id) {
+        return resourceMapper.selectByPrimaryKey(id);
     }
 }

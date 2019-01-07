@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmmgdzl.mapper.XKResourceCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceComment" >
+    <id column="rcId" property="rcid" jdbcType="INTEGER" />
+    <result column="rcCount" property="rccount" jdbcType="INTEGER" />
+    <result column="rcCreater" property="rccreater" jdbcType="INTEGER" />
+    <result column="rcCreateDate" property="rccreatedate" jdbcType="TIMESTAMP" />
+    <result column="rcUpdater" property="rcupdater" jdbcType="INTEGER" />
+    <result column="rcUpdateDate" property="rcupdatedate" jdbcType="TIMESTAMP" />
+    <result column="rcResource" property="rcresource" jdbcType="INTEGER" />
+    <result column="rcReply" property="rcreply" jdbcType="INTEGER" />
+    <result column="rcContent" property="rccontent" jdbcType="VARCHAR" />
+    <result column="rcEnable" property="rcenable" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="XKExample_Where_Clause" >
+      <foreach collection="param1.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+  </sql>
+
+  <sql id="Base_Column_List" >
+    rcId, rcCount, rcCreater, rcCreateDate, rcUpdater, rcUpdateDate, rcResource, rcReply, 
+    rcContent, rcEnable
+  </sql>
+  <select id="selectAdminResourceCommentsByExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from resource_comment rc, resource r
+    where rc.rcResource=r.rid and r.rcreater=#{param2}
+    <if test="param1 != null" >
+      and
+      <include refid="XKExample_Where_Clause" />
+    </if>
+    <if test="param1.orderByClause != null" >
+      order by ${param1.orderByClause}
+    </if>
+  </select>
+  <select id="countAdminResourceCommentsByExample" resultType="java.lang.Integer" >
+    select count(*) from resource_comment rc, resource r
+    where rc.rcResource=r.rid and r.rcreater=#{param2}
+    <if test="param1 != null" >
+      and
+      <include refid="XKExample_Where_Clause" />
+    </if>
+  </select>
+  <select id="getMaxRccount" resultType="java.lang.Integer" >
+    select max(rcCount) from resource_comment
+    where rcResource=#{rid}
+  </select>
+</mapper>

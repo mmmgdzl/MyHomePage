@@ -30,35 +30,6 @@ public class LayUIAdmin {
 
 
     public LayUIAdmin(){};
-    public LayUIAdmin(Admin admin) {
-        this.aid = admin.getAid();
-        this.aaccount = admin.getAaccount();
-        if(admin.getAenable() == 0) {
-            this.aenable = "不可用";
-        } else if(admin.getAenable() == 1) {
-            this.aenable = "可用";
-        } else if(admin.getAenable() == 2){
-            this.aenable = "删除";
-        }
-        if(admin.getAactive() == 0) {
-            this.aactive = "未激活";
-        } else {
-            this.aactive = "已激活";
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.acreatedate = sdf.format(admin.getAcreatedate());
-        this.aname = admin.getAname();
-        if(admin.getAgender() == 0) {
-            this.agender = "男";
-        } else if(admin.getAgender() == 1) {
-            this.agender = "女";
-        } else {
-            this.agender = "保密";
-        }
-        this.amail = admin.getAmail();
-        this.aphone = admin.getAphone();
-        this.aintroduce = admin.getAintroduce();
-    }
 
     public Integer getAid() {
         return aid;

@@ -33,12 +33,12 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">用户:</label>
                             <div class="layui-input-inline">
-                                <input type="hidden" id="aid" name="aid">
-                                <input type="text" id="aaccount" placeholder="筛选用户"
+                                <input type="hidden" id="aidSelect" name="aid">
+                                <input type="text" id="aaccountSelect" placeholder="筛选用户"
                                        autocomplete="off" class="layui-input" disabled>
                             </div>
                             <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择用户</button>
-                            <button type="button" class="layui-btn" onclick="$('#aid').val('');$('#aaccount').val('');">清除选择</button>
+                            <button type="button" class="layui-btn" onclick="$('#aidSelect').val('');$('#aaccountSelect').val('');">清除选择</button>
                         </div>
                     </c:if>
                 </form>
@@ -88,7 +88,7 @@
                     where: {
                         alip: $('#alip').val()
                         ,aladdress: $('#aladdress').val()
-                        ,aid:$("#aid").val()
+                        ,aid:$("#aidSelect").val()
                     }
                 });
             }

@@ -225,6 +225,66 @@ public class ResourceCommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andRccreaterIsNull() {
+            addCriterion("rcCreater is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterIsNotNull() {
+            addCriterion("rcCreater is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterEqualTo(Integer value) {
+            addCriterion("rcCreater =", value, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterNotEqualTo(Integer value) {
+            addCriterion("rcCreater <>", value, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterGreaterThan(Integer value) {
+            addCriterion("rcCreater >", value, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rcCreater >=", value, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterLessThan(Integer value) {
+            addCriterion("rcCreater <", value, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterLessThanOrEqualTo(Integer value) {
+            addCriterion("rcCreater <=", value, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterIn(List<Integer> values) {
+            addCriterion("rcCreater in", values, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterNotIn(List<Integer> values) {
+            addCriterion("rcCreater not in", values, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterBetween(Integer value1, Integer value2) {
+            addCriterion("rcCreater between", value1, value2, "rccreater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRccreaterNotBetween(Integer value1, Integer value2) {
+            addCriterion("rcCreater not between", value1, value2, "rccreater");
+            return (Criteria) this;
+        }
+
         public Criteria andRccreatedateIsNull() {
             addCriterion("rcCreateDate is null");
             return (Criteria) this;
@@ -285,63 +345,123 @@ public class ResourceCommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterIsNull() {
-            addCriterion("rcCreater is null");
+        public Criteria andRcupdaterIsNull() {
+            addCriterion("rcUpdater is null");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterIsNotNull() {
-            addCriterion("rcCreater is not null");
+        public Criteria andRcupdaterIsNotNull() {
+            addCriterion("rcUpdater is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterEqualTo(Integer value) {
-            addCriterion("rcCreater =", value, "rccreater");
+        public Criteria andRcupdaterEqualTo(Integer value) {
+            addCriterion("rcUpdater =", value, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterNotEqualTo(Integer value) {
-            addCriterion("rcCreater <>", value, "rccreater");
+        public Criteria andRcupdaterNotEqualTo(Integer value) {
+            addCriterion("rcUpdater <>", value, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterGreaterThan(Integer value) {
-            addCriterion("rcCreater >", value, "rccreater");
+        public Criteria andRcupdaterGreaterThan(Integer value) {
+            addCriterion("rcUpdater >", value, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterGreaterThanOrEqualTo(Integer value) {
-            addCriterion("rcCreater >=", value, "rccreater");
+        public Criteria andRcupdaterGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rcUpdater >=", value, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterLessThan(Integer value) {
-            addCriterion("rcCreater <", value, "rccreater");
+        public Criteria andRcupdaterLessThan(Integer value) {
+            addCriterion("rcUpdater <", value, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterLessThanOrEqualTo(Integer value) {
-            addCriterion("rcCreater <=", value, "rccreater");
+        public Criteria andRcupdaterLessThanOrEqualTo(Integer value) {
+            addCriterion("rcUpdater <=", value, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterIn(List<Integer> values) {
-            addCriterion("rcCreater in", values, "rccreater");
+        public Criteria andRcupdaterIn(List<Integer> values) {
+            addCriterion("rcUpdater in", values, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterNotIn(List<Integer> values) {
-            addCriterion("rcCreater not in", values, "rccreater");
+        public Criteria andRcupdaterNotIn(List<Integer> values) {
+            addCriterion("rcUpdater not in", values, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterBetween(Integer value1, Integer value2) {
-            addCriterion("rcCreater between", value1, value2, "rccreater");
+        public Criteria andRcupdaterBetween(Integer value1, Integer value2) {
+            addCriterion("rcUpdater between", value1, value2, "rcupdater");
             return (Criteria) this;
         }
 
-        public Criteria andRccreaterNotBetween(Integer value1, Integer value2) {
-            addCriterion("rcCreater not between", value1, value2, "rccreater");
+        public Criteria andRcupdaterNotBetween(Integer value1, Integer value2) {
+            addCriterion("rcUpdater not between", value1, value2, "rcupdater");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateIsNull() {
+            addCriterion("rcUpdateDate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateIsNotNull() {
+            addCriterion("rcUpdateDate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateEqualTo(Date value) {
+            addCriterion("rcUpdateDate =", value, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateNotEqualTo(Date value) {
+            addCriterion("rcUpdateDate <>", value, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateGreaterThan(Date value) {
+            addCriterion("rcUpdateDate >", value, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateGreaterThanOrEqualTo(Date value) {
+            addCriterion("rcUpdateDate >=", value, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateLessThan(Date value) {
+            addCriterion("rcUpdateDate <", value, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateLessThanOrEqualTo(Date value) {
+            addCriterion("rcUpdateDate <=", value, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateIn(List<Date> values) {
+            addCriterion("rcUpdateDate in", values, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateNotIn(List<Date> values) {
+            addCriterion("rcUpdateDate not in", values, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateBetween(Date value1, Date value2) {
+            addCriterion("rcUpdateDate between", value1, value2, "rcupdatedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcupdatedateNotBetween(Date value1, Date value2) {
+            addCriterion("rcUpdateDate not between", value1, value2, "rcupdatedate");
             return (Criteria) this;
         }
 

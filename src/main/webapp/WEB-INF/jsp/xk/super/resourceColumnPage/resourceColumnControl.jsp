@@ -12,7 +12,7 @@
     <div class="layui-main">
         <div id="LAY_preview">
             <blockquote class="layui-elem-quote layui-text">
-                点击修改会修改当前行,其他行的数据会还原
+                点击修改修改当前行后其他行的数据会还原
             </blockquote>
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>资源栏目管理</legend>

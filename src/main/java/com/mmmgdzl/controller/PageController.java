@@ -4,11 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.mmmgdzl.domain.ResourceInfoPageBean;
-import com.mmmgdzl.domain.ResourceListPageBean;
+import com.github.pagehelper.PageInfo;
+import com.mmmgdzl.domain.*;
 import com.mmmgdzl.pojo.*;
 import com.mmmgdzl.service.*;
-import com.mmmgdzl.domain.LayUIResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PageController {
@@ -25,9 +25,9 @@ public class PageController {
 	@Autowired
 	private ResourceColumnService resourceColumnService;
 	@Autowired
-	private ResourceColumnWebsiteServcie resourceColumnWebsiteServcie;
+	private ResourceCommentService resourceCommentService;
 	@Autowired
-	private GameService gameService;
+	private ResourceColumnWebsiteServcie resourceColumnWebsiteServcie;
 	@Autowired
 	private ResourceService resourceService;
 	@Autowired
@@ -87,6 +87,7 @@ public class PageController {
         ResourceInfoPageBean<LayUIResource> resourceInfoPageBean = new ResourceInfoPageBean<>();
 		//获取资源数据
 		Resource resource = resourceListService.getResourceInfo(rid);
+		resourceInfoPageBean.setResourceColumn(resource.getRcolumn());
 		//获取创建者数据
 		Admin creater = superService.selectAdminById(resource.getRcreater());
 		//渲染创建者个人介绍
@@ -103,7 +104,7 @@ public class PageController {
 		LayUIResource resourceInfo = resourceService.renderResourceForLayUI(resource, true);
 		resourceInfoPageBean.setData(resourceInfo);
 
-		//将数据放入model中
+        //将数据放入model中
 		model.addAttribute("pageBean", resourceInfoPageBean);
 
 		//获取前5热门数据
@@ -116,6 +117,41 @@ public class PageController {
 
 		return "resourceInfo";
 	}
+
+    /**
+     * 获取资源详情评论数据
+     */
+    @RequestMapping("/resourceInfo/resourceComments")
+    @ResponseBody
+    public ResourceCommentPageBean getResourceComments(Integer rid, Model model,
+                                                       @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+                                                       @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+        ResourceCommentPageBean resourceCommentPageBean = new ResourceCommentPageBean();
+        //获取资源评论数据
+        ResourceComment resourceComment = new ResourceComment();
+        resourceComment.setRcresource(rid);
+        resourceComment.setRcenable(1);
+        ResourceCommentExample resourceCommentExample = resourceCommentService.transformResourceCommentToTesourceCommentExample(resourceComment);
+        //设置时间倒序
+        resourceCommentExample.setOrderByClause("rccreatedate desc");
+        //获取资源评论页数据
+        List<ResourceComment> resourceCommentList = resourceCommentService.selectResourceComments(resourceCommentExample, currentPage, pageSize, null);
+        PageInfo<ResourceComment> pageInfo = new PageInfo<>(resourceCommentList);
+        resourceCommentPageBean.setRcCount((int) pageInfo.getTotal());
+        resourceCommentPageBean.setRcTotalPage(pageInfo.getPages());
+        resourceCommentPageBean.setRcCurrentPage(currentPage);
+        resourceCommentPageBean.setRcPageSize(pageSize);
+        //获取资源评论用户数据
+        for(ResourceComment rc : resourceCommentList) {
+            resourceCommentPageBean.getResourceCommentAdminMap().put(rc.getRcid(), superService.selectAdminById(rc.getRccreater()));
+        }
+        //渲染资源评论
+        List<LayUIResourceComment> layUIResourceCommentList = resourceCommentService.renderResourceCommentsForLayUI(resourceCommentList, false);
+        resourceCommentPageBean.setResourceCommentList(layUIResourceCommentList);
+
+        return resourceCommentPageBean;
+    }
+
 
 	/**
 	 * 设置头部信息

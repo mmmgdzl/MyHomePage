@@ -4,8 +4,10 @@
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.ResourceComment" >
     <id column="rcId" property="rcid" jdbcType="INTEGER" />
     <result column="rcCount" property="rccount" jdbcType="INTEGER" />
-    <result column="rcCreateDate" property="rccreatedate" jdbcType="TIMESTAMP" />
     <result column="rcCreater" property="rccreater" jdbcType="INTEGER" />
+    <result column="rcCreateDate" property="rccreatedate" jdbcType="TIMESTAMP" />
+    <result column="rcUpdater" property="rcupdater" jdbcType="INTEGER" />
+    <result column="rcUpdateDate" property="rcupdatedate" jdbcType="TIMESTAMP" />
     <result column="rcResource" property="rcresource" jdbcType="INTEGER" />
     <result column="rcReply" property="rcreply" jdbcType="INTEGER" />
     <result column="rcContent" property="rccontent" jdbcType="VARCHAR" />
@@ -70,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    rcId, rcCount, rcCreateDate, rcCreater, rcResource, rcReply, rcContent, rcEnable
+    rcId, rcCount, rcCreater, rcCreateDate, rcUpdater, rcUpdateDate, rcResource, rcReply, 
+    rcContent, rcEnable
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.ResourceCommentExample" >
     select
@@ -103,12 +106,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mmmgdzl.pojo.ResourceComment" >
-    insert into resource_comment (rcId, rcCount, rcCreateDate, 
-      rcCreater, rcResource, rcReply, 
-      rcContent, rcEnable)
-    values (#{rcid,jdbcType=INTEGER}, #{rccount,jdbcType=INTEGER}, #{rccreatedate,jdbcType=TIMESTAMP}, 
-      #{rccreater,jdbcType=INTEGER}, #{rcresource,jdbcType=INTEGER}, #{rcreply,jdbcType=INTEGER}, 
-      #{rccontent,jdbcType=VARCHAR}, #{rcenable,jdbcType=INTEGER})
+    insert into resource_comment (rcId, rcCount, rcCreater, 
+      rcCreateDate, rcUpdater, rcUpdateDate, 
+      rcResource, rcReply, rcContent, 
+      rcEnable)
+    values (#{rcid,jdbcType=INTEGER}, #{rccount,jdbcType=INTEGER}, #{rccreater,jdbcType=INTEGER}, 
+      #{rccreatedate,jdbcType=TIMESTAMP}, #{rcupdater,jdbcType=INTEGER}, #{rcupdatedate,jdbcType=TIMESTAMP}, 
+      #{rcresource,jdbcType=INTEGER}, #{rcreply,jdbcType=INTEGER}, #{rccontent,jdbcType=VARCHAR}, 
+      #{rcenable,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.ResourceComment" >
     insert into resource_comment
@@ -119,11 +124,17 @@
       <if test="rccount != null" >
         rcCount,
       </if>
+      <if test="rccreater != null" >
+        rcCreater,
+      </if>
       <if test="rccreatedate != null" >
         rcCreateDate,
       </if>
-      <if test="rccreater != null" >
-        rcCreater,
+      <if test="rcupdater != null" >
+        rcUpdater,
+      </if>
+      <if test="rcupdatedate != null" >
+        rcUpdateDate,
       </if>
       <if test="rcresource != null" >
         rcResource,
@@ -145,11 +156,17 @@
       <if test="rccount != null" >
         #{rccount,jdbcType=INTEGER},
       </if>
+      <if test="rccreater != null" >
+        #{rccreater,jdbcType=INTEGER},
+      </if>
       <if test="rccreatedate != null" >
         #{rccreatedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="rccreater != null" >
-        #{rccreater,jdbcType=INTEGER},
+      <if test="rcupdater != null" >
+        #{rcupdater,jdbcType=INTEGER},
+      </if>
+      <if test="rcupdatedate != null" >
+        #{rcupdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rcresource != null" >
         #{rcresource,jdbcType=INTEGER},
@@ -180,11 +197,17 @@
       <if test="record.rccount != null" >
         rcCount = #{record.rccount,jdbcType=INTEGER},
       </if>
+      <if test="record.rccreater != null" >
+        rcCreater = #{record.rccreater,jdbcType=INTEGER},
+      </if>
       <if test="record.rccreatedate != null" >
         rcCreateDate = #{record.rccreatedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.rccreater != null" >
-        rcCreater = #{record.rccreater,jdbcType=INTEGER},
+      <if test="record.rcupdater != null" >
+        rcUpdater = #{record.rcupdater,jdbcType=INTEGER},
+      </if>
+      <if test="record.rcupdatedate != null" >
+        rcUpdateDate = #{record.rcupdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.rcresource != null" >
         rcResource = #{record.rcresource,jdbcType=INTEGER},
@@ -207,8 +230,10 @@
     update resource_comment
     set rcId = #{record.rcid,jdbcType=INTEGER},
       rcCount = #{record.rccount,jdbcType=INTEGER},
-      rcCreateDate = #{record.rccreatedate,jdbcType=TIMESTAMP},
       rcCreater = #{record.rccreater,jdbcType=INTEGER},
+      rcCreateDate = #{record.rccreatedate,jdbcType=TIMESTAMP},
+      rcUpdater = #{record.rcupdater,jdbcType=INTEGER},
+      rcUpdateDate = #{record.rcupdatedate,jdbcType=TIMESTAMP},
       rcResource = #{record.rcresource,jdbcType=INTEGER},
       rcReply = #{record.rcreply,jdbcType=INTEGER},
       rcContent = #{record.rccontent,jdbcType=VARCHAR},
@@ -223,11 +248,17 @@
       <if test="rccount != null" >
         rcCount = #{rccount,jdbcType=INTEGER},
       </if>
+      <if test="rccreater != null" >
+        rcCreater = #{rccreater,jdbcType=INTEGER},
+      </if>
       <if test="rccreatedate != null" >
         rcCreateDate = #{rccreatedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="rccreater != null" >
-        rcCreater = #{rccreater,jdbcType=INTEGER},
+      <if test="rcupdater != null" >
+        rcUpdater = #{rcupdater,jdbcType=INTEGER},
+      </if>
+      <if test="rcupdatedate != null" >
+        rcUpdateDate = #{rcupdatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="rcresource != null" >
         rcResource = #{rcresource,jdbcType=INTEGER},
@@ -247,8 +278,10 @@
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.ResourceComment" >
     update resource_comment
     set rcCount = #{rccount,jdbcType=INTEGER},
-      rcCreateDate = #{rccreatedate,jdbcType=TIMESTAMP},
       rcCreater = #{rccreater,jdbcType=INTEGER},
+      rcCreateDate = #{rccreatedate,jdbcType=TIMESTAMP},
+      rcUpdater = #{rcupdater,jdbcType=INTEGER},
+      rcUpdateDate = #{rcupdatedate,jdbcType=TIMESTAMP},
       rcResource = #{rcresource,jdbcType=INTEGER},
       rcReply = #{rcreply,jdbcType=INTEGER},
       rcContent = #{rccontent,jdbcType=VARCHAR},

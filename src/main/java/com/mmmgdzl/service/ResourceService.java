@@ -65,4 +65,9 @@ public interface ResourceService {
      * 根据id查询资源(带大型数据)
      */
     Resource selectResourceByIdBlob(Integer id);
+
+    /**
+     * 根据id查询资源
+     */
+    Resource selectResourceById(Integer id);
 }

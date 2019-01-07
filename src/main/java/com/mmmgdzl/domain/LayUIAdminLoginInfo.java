@@ -16,13 +16,6 @@ public class LayUIAdminLoginInfo {
     private String aldate;
 
     public LayUIAdminLoginInfo() {};
-    public LayUIAdminLoginInfo(AdminLoginInfo adminLoginInfo) {
-        this.alid = adminLoginInfo.getAlid();
-        this.alip = adminLoginInfo.getAlip();
-        this.aladdress = adminLoginInfo.getAladdress();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.aldate = sdf.format(adminLoginInfo.getAldate());
-    }
 
     public Integer getAlid() {
         return alid;

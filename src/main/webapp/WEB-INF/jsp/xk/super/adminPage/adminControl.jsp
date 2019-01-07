@@ -206,9 +206,13 @@
                 //跳转至目标页面
                loadPage("${pageContext.request.contextPath}/xk/super/admin/" + data.aid);
             } else if(obj.event === "select") {
+                // if(data.aenable == "删除") {
+                //     layer.msg("已删除的数据无法选择!");
+                //     return;
+                // }
                 //将选择的数据传输至父页面
-                parent.$("#aid").val(data.aid);
-                parent.$("#aaccount").val(data.aaccount);
+                parent.$("#aidSelect").val(data.aid);
+                parent.$("#aaccountSelect").val(data.aaccount);
                 var index1 = parent.layer.getFrameIndex(window.name); //获取窗口索引
                 parent.layer.close(index1);//关闭窗口
             }

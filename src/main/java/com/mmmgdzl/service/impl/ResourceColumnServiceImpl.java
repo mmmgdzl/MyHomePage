@@ -13,6 +13,7 @@ import com.mmmgdzl.utils.ClearBlankUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,23 +49,26 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
 
     @Override
     public ResourceColumnExample transformResourceColumnToResourceColumnExample(ResourceColumn resourceColumn) {
-        //清除空白项
-        ClearBlankUtil.clearStringBlank(resourceColumn);
         //创建查询模板
         ResourceColumnExample resourceColumnExample = new ResourceColumnExample();
         ResourceColumnExample.Criteria criteria = resourceColumnExample.createCriteria();
-        //添加查询条件
-        if(resourceColumn.getCname() != null)
-            criteria.andCnameLike("%" + resourceColumn.getCname() + "%");
-        if(resourceColumn.getCcreater() != null)
-            criteria.andCcreaterEqualTo(resourceColumn.getCcreater());
-        //如果没有指定状态则不显示删除的数据
-        if(resourceColumn.getCenable() != null)
-            criteria.andCenableEqualTo(resourceColumn.getCenable());
-        else
-            criteria.andCenableNotEqualTo(2);
-        if(resourceColumn.getCshowinheader() != null)
-            criteria.andCshowinheaderEqualTo(resourceColumn.getCshowinheader());
+        if(resourceColumn != null) {
+            //清除空白项
+            ClearBlankUtil.clearStringBlank(resourceColumn);
+            //添加查询条件
+            if(resourceColumn.getCname() != null)
+                criteria.andCnameLike("%" + resourceColumn.getCname() + "%");
+            if(resourceColumn.getCcreater() != null)
+                criteria.andCcreaterEqualTo(resourceColumn.getCcreater());
+            //如果没有指定状态则不显示删除的数据
+            if(resourceColumn.getCenable() != null)
+                criteria.andCenableEqualTo(resourceColumn.getCenable());
+            else
+                criteria.andCenableNotEqualTo(2);
+            if(resourceColumn.getCshowinheader() != null)
+                criteria.andCshowinheaderEqualTo(resourceColumn.getCshowinheader());
+        }
+
         //返回查询模板对象
         return resourceColumnExample;
     }
@@ -103,8 +107,25 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
 
     @Override
     public LayUIResourceColumn renderResourceColumnForLayUI(ResourceColumn resourceColumn) {
-        LayUIResourceColumn layUIResourceColumn = new LayUIResourceColumn(resourceColumn);
-        //填充创建者账号
+        LayUIResourceColumn layUIResourceColumn = new LayUIResourceColumn();
+        //执行渲染
+        layUIResourceColumn.setCid(resourceColumn.getCid());
+        layUIResourceColumn.setCname(resourceColumn.getCname());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        layUIResourceColumn.setCcreatedate(sdf.format(resourceColumn.getCcreatedate()));
+        if(resourceColumn.getCenable() == 0) {
+            layUIResourceColumn.setCenable("不可用");
+        } else if(resourceColumn.getCenable() == 1) {
+            layUIResourceColumn.setCenable("可用");
+        } else if(resourceColumn.getCenable() == 2) {
+            layUIResourceColumn.setCenable("删除");
+        }
+        if(resourceColumn.getCshowinheader() == 0) {
+            layUIResourceColumn.setCshowinheader("否");
+        } else {
+            layUIResourceColumn.setCshowinheader("是");
+        }
+        //渲染创建者账号
         layUIResourceColumn.setCcreater(superService.selectAdminById(resourceColumn.getCcreater()).getAaccount());
         //返回渲染结果
         return layUIResourceColumn;

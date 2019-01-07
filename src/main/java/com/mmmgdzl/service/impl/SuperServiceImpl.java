@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import com.mmmgdzl.domain.Result;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,8 +79,6 @@ public class SuperServiceImpl implements SuperService {
 
     @Override
     public AdminExample transformAdminToAdminExample(Admin admin) {
-        //清除空白项
-        ClearBlankUtil.clearStringBlank(admin);
         //创建查询模板对象
         AdminExample ae = new AdminExample();
         AdminExample.Criteria criteria = ae.createCriteria();
@@ -151,7 +150,35 @@ public class SuperServiceImpl implements SuperService {
 
     @Override
     public LayUIAdmin renderAdminForLayUI(Admin admin) {
-        LayUIAdmin layUIAdmin = new LayUIAdmin(admin);
+        LayUIAdmin layUIAdmin = new LayUIAdmin();
+        //执行渲染
+        layUIAdmin.setAid(admin.getAid());
+        layUIAdmin.setAaccount(admin.getAaccount());
+        if(admin.getAenable() == 0) {
+            layUIAdmin.setAenable("不可用");
+        } else if(admin.getAenable() == 1) {
+            layUIAdmin.setAenable("可用");
+        } else if(admin.getAenable() == 2){
+            layUIAdmin.setAenable("删除");
+        }
+        if(admin.getAactive() == 0) {
+            layUIAdmin.setAactive("未激活");
+        } else {
+            layUIAdmin.setAactive("已激活");
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        layUIAdmin.setAcreatedate(sdf.format(admin.getAcreatedate()));
+        layUIAdmin.setAname(admin.getAname());
+        if(admin.getAgender() == 0) {
+            layUIAdmin.setAgender("男");
+        } else if(admin.getAgender() == 1) {
+            layUIAdmin.setAgender("女");
+        } else if(admin.getAgender() == 2) {
+            layUIAdmin.setAgender("保密");
+        }
+        layUIAdmin.setAmail(admin.getAmail());
+        layUIAdmin.setAphone(admin.getAphone());
+        layUIAdmin.setAintroduce(admin.getAintroduce());
         //渲染用户等级名称
         layUIAdmin.setAlevel(adminLevelMapper.selectByPrimaryKey(admin.getAlevel()).getLname());
         //返回渲染结果
