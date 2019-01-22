@@ -32,7 +32,7 @@ public class ResourceColumnServiceImpl implements ResourceColumnService {
         ClearBlankUtil.clearStringBlank(resourceColumn);
         //检查资源栏目名是否重复
         ResourceColumn checkResourceColumn = this.selectResourceColumnByCname(resourceColumn.getCname());
-        if(checkResourceColumn != null && checkResourceColumn.getCid() != resourceColumn.getCid()) {
+        if(checkResourceColumn != null) {
             //如果资源栏目名重复且不是与自己重复则抛出异常
             throw new XKException("资源栏目名已存在");
         }

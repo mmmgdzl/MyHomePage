@@ -62,8 +62,9 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
             //添加查询条件
             if(resourceComment.getRccount() != null)
                 criteria.andRccountEqualTo(resourceComment.getRccount());
+            //这里应该填充reply在对应的楼层数的rcid集合中
             if(resourceComment.getRcreply() != null)
-                criteria.andRcreplyEqualTo(resourceComment.getRcreply());
+                criteria.andRcreplyIn(xkResourceCommentMapper.selectRcidsByRccount(resourceComment.getRcreply()));
             if(resourceComment.getRccreater() != null)
                 criteria.andRccreaterEqualTo(resourceComment.getRccreater());
             if(resourceComment.getRcupdater() != null)

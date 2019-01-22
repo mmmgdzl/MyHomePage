@@ -200,7 +200,7 @@
                 title: '回复评论#'+rccount,
                 shadeClose: true,
                 shade: 0.8,
-                area: ['450px', '400px'],
+                area: ['400px', '380px'],
                 content: '${pageContext.request.contextPath}/xk/protect/resourceCommentPage/addResourceComment'
             });
         } else {
@@ -210,7 +210,7 @@
                 title: '添加评论',
                 shadeClose: true,
                 shade: 0.8,
-                area: ['450px', '250px'],
+                area: ['400px', '260px'],
                 content: '${pageContext.request.contextPath}/xk/protect/resourceCommentPage/addResourceComment'
             });
         }

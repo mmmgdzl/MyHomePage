@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmmgdzl.mapper.SystemResourceColumnMapper" >
+  <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.SystemResourceColumn" >
+    <id column="srcId" property="srcid" jdbcType="INTEGER" />
+    <result column="srcName" property="srcname" jdbcType="VARCHAR" />
+    <result column="srcEnable" property="srcenable" jdbcType="INTEGER" />
+    <result column="srcCreater" property="srccreater" jdbcType="INTEGER" />
+    <result column="srcCreateDate" property="srccreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    srcId, srcName, srcEnable, srcCreater, srcCreateDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.SystemResourceColumnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_resource_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_resource_column
+    where srcId = #{srcid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from system_resource_column
+    where srcId = #{srcid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mmmgdzl.pojo.SystemResourceColumnExample" >
+    delete from system_resource_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mmmgdzl.pojo.SystemResourceColumn" >
+    insert into system_resource_column (srcId, srcName, srcEnable, 
+      srcCreater, srcCreateDate)
+    values (#{srcid,jdbcType=INTEGER}, #{srcname,jdbcType=VARCHAR}, #{srcenable,jdbcType=INTEGER}, 
+      #{srccreater,jdbcType=INTEGER}, #{srccreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.SystemResourceColumn" >
+    insert into system_resource_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="srcid != null" >
+        srcId,
+      </if>
+      <if test="srcname != null" >
+        srcName,
+      </if>
+      <if test="srcenable != null" >
+        srcEnable,
+      </if>
+      <if test="srccreater != null" >
+        srcCreater,
+      </if>
+      <if test="srccreatedate != null" >
+        srcCreateDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="srcid != null" >
+        #{srcid,jdbcType=INTEGER},
+      </if>
+      <if test="srcname != null" >
+        #{srcname,jdbcType=VARCHAR},
+      </if>
+      <if test="srcenable != null" >
+        #{srcenable,jdbcType=INTEGER},
+      </if>
+      <if test="srccreater != null" >
+        #{srccreater,jdbcType=INTEGER},
+      </if>
+      <if test="srccreatedate != null" >
+        #{srccreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mmmgdzl.pojo.SystemResourceColumnExample" resultType="java.lang.Integer" >
+    select count(*) from system_resource_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update system_resource_column
+    <set >
+      <if test="record.srcid != null" >
+        srcId = #{record.srcid,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcname != null" >
+        srcName = #{record.srcname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srcenable != null" >
+        srcEnable = #{record.srcenable,jdbcType=INTEGER},
+      </if>
+      <if test="record.srccreater != null" >
+        srcCreater = #{record.srccreater,jdbcType=INTEGER},
+      </if>
+      <if test="record.srccreatedate != null" >
+        srcCreateDate = #{record.srccreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update system_resource_column
+    set srcId = #{record.srcid,jdbcType=INTEGER},
+      srcName = #{record.srcname,jdbcType=VARCHAR},
+      srcEnable = #{record.srcenable,jdbcType=INTEGER},
+      srcCreater = #{record.srccreater,jdbcType=INTEGER},
+      srcCreateDate = #{record.srccreatedate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmmgdzl.pojo.SystemResourceColumn" >
+    update system_resource_column
+    <set >
+      <if test="srcname != null" >
+        srcName = #{srcname,jdbcType=VARCHAR},
+      </if>
+      <if test="srcenable != null" >
+        srcEnable = #{srcenable,jdbcType=INTEGER},
+      </if>
+      <if test="srccreater != null" >
+        srcCreater = #{srccreater,jdbcType=INTEGER},
+      </if>
+      <if test="srccreatedate != null" >
+        srcCreateDate = #{srccreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where srcId = #{srcid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.SystemResourceColumn" >
+    update system_resource_column
+    set srcName = #{srcname,jdbcType=VARCHAR},
+      srcEnable = #{srcenable,jdbcType=INTEGER},
+      srcCreater = #{srccreater,jdbcType=INTEGER},
+      srcCreateDate = #{srccreatedate,jdbcType=TIMESTAMP}
+    where srcId = #{srcid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -8,6 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="layui-footer footer footer-demo">
     <div class="layui-main">
-        <p>&copy; 2018-2019 <a href="javascript:void(0);">www.mmmgdzl.cn</a></p>
+        <p>&copy; 2018-2019 <a href="${pageContext.request.contextPath}/" target="_blank">www.mmmgdzl.cn</a></p>
     </div>
 </div>

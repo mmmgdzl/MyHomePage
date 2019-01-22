@@ -13,6 +13,9 @@
     <result column="rcContent" property="rccontent" jdbcType="VARCHAR" />
     <result column="rcEnable" property="rcenable" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="idResultMap" type="INTEGER" >
+    <id column="rcId" property="rcid" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="XKExample_Where_Clause" >
       <foreach collection="param1.oredCriteria" item="criteria" separator="or" >
         <if test="criteria.valid" >
@@ -69,5 +72,9 @@
   <select id="getMaxRccount" resultType="java.lang.Integer" >
     select max(rcCount) from resource_comment
     where rcResource=#{rid}
+  </select>
+  <select id="selectRcidsByRccount" resultMap="idResultMap">
+    select rcId from resource_comment
+    where rcCount=#{rccount}
   </select>
 </mapper>

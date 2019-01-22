@@ -23,4 +23,9 @@ public interface XKResourceCommentMapper {
      */
     Integer getMaxRccount(Integer rid);
 
+    /**
+     * 获取楼层数为某个值的所有行的id
+     */
+    List<Integer> selectRcidsByRccount(Integer rccount);
+
 }

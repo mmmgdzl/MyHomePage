@@ -37,13 +37,13 @@
                     <input id="resourceId" name="rcresource" type="hidden">
                     <input id="replyId" type="hidden">
                     <div id="replyContentDiv" class="layui-form-item" style="display: none">
-                        <label class="layui-form-label">回复评论内容:</label>
+                        <label class="layui-form-label">评论内容:</label>
                         <div class="layui-input-inline">
                             <textarea id='replyContent' class="layui-textarea" disabled></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">评论内容:<sup style="color:red;font-size:15px;">*</sup></label>
+                        <label class="layui-form-label">回复内容:<sup style="color:red;font-size:15px;">*</sup></label>
                         <div class="layui-input-inline">
                             <textarea placeholder="请输入评论内容(不多于500个字符)" name="rccontent" lay-verify=rccontent" class="layui-textarea"></textarea>
                         </div>

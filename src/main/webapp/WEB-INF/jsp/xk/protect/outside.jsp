@@ -101,7 +101,7 @@
                 </c:if>
                 <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
-                        <a class="javascript:;" href="javascript:;">权限管理</a>
+                        <a class="javascript:;" href="javascript:;">用户管理</a>
                         <dl class="layui-nav-child">
                             <dd id="oAddAdmin" style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/adminPage/addAdmin">用户添加</a>
@@ -112,18 +112,38 @@
                         </dl>
                     </li>
                 </c:if>
-                <c:if test="${sessionScope.admin.alevel<=1}">
+                <c:if test="${sessionScope.admin.alevel<=0}">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">网站详情</a>
                         <dl class="layui-nav-child">
                             <dd style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/addAdmin">站点统计</a>
                             </dd>
-                            <c:if test="${sessionScope.admin.alevel<=0}">
-                                <dd style="text-align: center;">
-                                    <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/personalPage/adminLoginInfo">用户登录记录</a>
-                                </dd>
-                            </c:if>
+                            <dd style="text-align: center;">
+                                <a href="http://www.mmmgdzl.cn:19999/" target="_blank">服务器状态</a>
+                            </dd>
+                            <dd style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/protect/personalPage/adminLoginInfo">用户登录记录</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.admin.alevel<=0}">
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">系统资源管理</a>
+                        <dl class="layui-nav-child">
+                            <dd id="oAddSystemResource" style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/systemResourcePage/addSystemResource">系统资源添加</a>
+                            </dd>
+                            <dd id="oSystemResourceControl" style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/systemResourcePage/systemResourceControl">系统资源管理</a>
+                            </dd>
+                            <dd id="oAddSystemResourceColumn" style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/systemResourceColumnPage/addSystemResourceColumn">系统资源栏目添加</a>
+                            </dd>
+                            <dd id="oSystemResourceColumnControl" style="text-align: center;">
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/systemResourceColumnPage/systemResourceColumnControl">系统资源栏目管理</a>
+                            </dd>
                         </dl>
                     </li>
                 </c:if>
