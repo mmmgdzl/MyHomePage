@@ -235,6 +235,76 @@ public class SystemResourceExample {
             return (Criteria) this;
         }
 
+        public Criteria andSrfilenameIsNull() {
+            addCriterion("srFileName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameIsNotNull() {
+            addCriterion("srFileName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameEqualTo(String value) {
+            addCriterion("srFileName =", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameNotEqualTo(String value) {
+            addCriterion("srFileName <>", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameGreaterThan(String value) {
+            addCriterion("srFileName >", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameGreaterThanOrEqualTo(String value) {
+            addCriterion("srFileName >=", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameLessThan(String value) {
+            addCriterion("srFileName <", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameLessThanOrEqualTo(String value) {
+            addCriterion("srFileName <=", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameLike(String value) {
+            addCriterion("srFileName like", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameNotLike(String value) {
+            addCriterion("srFileName not like", value, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameIn(List<String> values) {
+            addCriterion("srFileName in", values, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameNotIn(List<String> values) {
+            addCriterion("srFileName not in", values, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameBetween(String value1, String value2) {
+            addCriterion("srFileName between", value1, value2, "srfilename");
+            return (Criteria) this;
+        }
+
+        public Criteria andSrfilenameNotBetween(String value1, String value2) {
+            addCriterion("srFileName not between", value1, value2, "srfilename");
+            return (Criteria) this;
+        }
+
         public Criteria andSrcolumnIsNull() {
             addCriterion("srColumn is null");
             return (Criteria) this;

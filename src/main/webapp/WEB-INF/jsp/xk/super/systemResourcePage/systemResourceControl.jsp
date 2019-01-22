@@ -2,8 +2,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: mmmgdzl
-  Date: 2019/1/3
-  Time: 0:32
+  Date: 2019/1/23
+  Time: 1:11
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,35 +12,30 @@
     <div class="layui-main">
         <div id="LAY_preview">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>资源栏目网站管理</legend>
+                <legend>系统资源管理</legend>
             </fieldset>
             <div class="demoTable">
                 <form class="layui-form layui-inline">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">网站名称:</label>
+                        <label class="layui-form-label">系统资<br>源名称:</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="rcwname" name="rcwname" placeholder="筛选网站名称"
-                                   autocomplete="off" class="layui-input">
-                        </div>
-                        <label class="layui-form-label">链接地址:</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="rcwhref" name="rcwhref" placeholder="筛选链接地址"
+                            <input type="text" id="srname" name="srname" placeholder="筛选系统资源名称"
                                    autocomplete="off" class="layui-input">
                         </div>
                         <label class="layui-form-label">所属栏目:</label>
                         <div class="layui-input-inline">
-                            <select id="rcwcid" name="rcwcid">
+                            <select id="srcolumn" name="srcolumn">
                                 <option value="">--所有--</option>
-                                <c:forEach items="${resourceColumnList}" var="resourceColumn" varStatus="vs">
-                                    <option value="${resourceColumn.cid}">${resourceColumn.cname}</option>
+                                <c:forEach items="${systemResourceColumnList}" var="systemResourceColumn" varStatus="vs">
+                                    <option value="${systemResourceColumn.srcid}">${systemResourceColumn.srcname}</option>
                                 </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">网站链<br>接状态:</label>
+                        <label class="layui-form-label">系统资<br>源状态:</label>
                         <div class="layui-input-inline">
-                            <select id="rcwenable" name="rcwenable">
+                            <select id="srenable" name="srenable">
                                 <option value="">--所有有效--</option>
                                 <option value="1">可用</option>
                                 <option value="0">不可用</option>
@@ -56,6 +51,13 @@
                         <button type="button" class="layui-btn" onclick="doSelectRcreater()">选择创建用户</button>
                         <button type="button" class="layui-btn" onclick="$('#aidSelect').val('');$('#aaccountSelect').val('');">清除选择</button>
                         <button type="button" class="layui-btn" data-type="reload">筛选</button>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">备注:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="srdesc" name="srdesc" placeholder="筛选备注"
+                                   autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </form>
 
@@ -75,8 +77,8 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="websiteA">
-    <a href="javascript:void(0);" lay-event="a">{{d.rcwhref}}</a>
+<script type="text/html" id="fileA">
+    <a href="javascript:void(0);" lay-event="a">{{d.srname}}</a>
 </script>
 <script>
     var _hmt = _hmt || [];
@@ -94,17 +96,17 @@
         //方法级渲染
         table.render({
             elem: '#table'
-            ,url: '${pageContext.request.contextPath}/xk/super/resourceColumnWebsite'
+            ,url: '${pageContext.request.contextPath}/xk/super/systemResource'
             ,toolbar: '#toolbarDemo'
             ,cols: [[
                 {checkbox: true}
-                ,{field:'rcwid', title: 'ID'}
-                ,{field:'rcwname', title: '网站名称'}
-                ,{field:'rcwhref', title: '链接地址(点击跳转)', templet: '#websiteA', unresize: true}
-                ,{field:'rcwcreater', title: '创建用户'}
-                ,{field:'rcwcreatedate', title: '创建日期'}
-                ,{field:'rcwcid', title: '所属栏目'}
-                ,{field:'rcwenable', title: '资源状态'}
+                ,{field:'srid', title: 'ID'}
+                ,{field:'srname', title: '文件名称(点击下载)', templet: '#fileA', unresize: true}
+                ,{field:'srcreater', title: '创建用户'}
+                ,{field:'srcreatedate', title: '创建日期'}
+                ,{field:'srcolumn', title: '所属栏目'}
+                ,{field:'srenable', title: '状态'}
+                ,{field:'srdesc', title: '备注'}
                 ,{field:'right', title: '操作',toolbar:"#barDemo"}
             ]]
             ,id: 'testReload'
@@ -117,11 +119,11 @@
             reload: function(){
                 table.reload('testReload', {
                     where: {
-                        rcwname: $('#rcwname').val()
-                        ,rcwhref: $('#rcwhref').val()
-                        ,rcwcid: $('#rcwcid').val()
-                        ,rcwcreater: $("#aidSelect").val()
-                        ,rcwenable: $("#rcwenable").val()
+                        srname: $('#srname').val()
+                        ,srcolumn: $('#srcolumn').val()
+                        ,srcreater: $("#aidSelect").val()
+                        ,srenable: $("#srenable").val()
+                        ,srdesc:$("#srdesc").val()
                     }
                 });
             }
@@ -152,30 +154,30 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
-                if(data.rcwenable == "删除") {
+                if(data.srenable == "删除") {
                     layer.msg("已删除的数据无法操作!");
                     return;
                 }
-                layer.confirm('确定删除ID为' + data.rcwid + '的资源栏目网站么', function(index){
+                layer.confirm('确定删除ID为' + data.srid + '的系统资源么', function(index){
                     layer.close(index);
-                    del(data.rcwid);
+                    del(data.srid);
                 });
             } else if(obj.event === 'edit'){
-                if(data.rcwenable == "删除") {
+                if(data.srenable == "删除") {
                     layer.msg("已删除的数据无法操作!");
                     return;
                 }
                 //跳转至目标页面
-               loadPage("${pageContext.request.contextPath}/xk/super/resourceColumnWebsite/" + data.rcwid);
+               loadPage("${pageContext.request.contextPath}/xk/super/systemResource/" + data.srid);
             } else if(obj.event === 'a'){
-                if(data.rcwenable == "删除") {
+                if(data.srenable == "删除") {
                     layer.msg("已删除的数据无法查看!");
                     return false;
-                } else if(data.rcwenable == "不可用") {
+                } else if(data.srenable == "不可用") {
                     layer.msg("不可用的数据无法查看!");
                     return false;
                 }
-                window.open(data.rcwhref, "_blank");
+                window.open(data.srfilename);
             }
         });
         //在页面完成加载后再次渲染
@@ -188,7 +190,7 @@
         idArray[0] = id;
         //ajax请求删除数据
         $.ajax({
-            url:'${pageContext.request.contextPath}/xk/super/resourceColumnWebsite'
+            url:'${pageContext.request.contextPath}/xk/super/systemResource'
             ,type:'DELETE'
             ,dataType:'json'
             ,data:{ids:JSON.stringify(idArray)}
@@ -201,7 +203,7 @@
                     layer.msg("删除失败:" + data.msg);
                 }
                 //成功与否都刷新页面
-                setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/resourceColumnWebsitePage/resourceColumnWebsiteControl')", 500);
+                setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/systemResourcePage/systemResourceControl')", 500);
             }
         });
     }
@@ -210,18 +212,18 @@
     function delSelect(data) {
         if(data.length == 0) {
             layer.msg("未选中行!");
-        } else if(data[0].rcwenable == "删除") {
+        } else if(data[0].srenable == "删除") {
             layer.msg("已删除的数据无法操作!");
         } else {
             layer.confirm('确定删除已选中的' + data.length + '行么?', function(index){
                 layer.close(index);
                 var idArray = new Array();
                 for(var i=0; i<data.length; i++) {
-                    idArray[i] = data[i].rcwid;
+                    idArray[i] = data[i].srid;
                 }
                 //执行删除
                 $.ajax({
-                    url:'${pageContext.request.contextPath}/xk/super/resourceColumnWebsite'
+                    url:'${pageContext.request.contextPath}/xk/super/systemResource'
                     ,type:'DELETE'
                     ,dataType:'json'
                     ,data:{ids:JSON.stringify(idArray)}
@@ -233,7 +235,7 @@
                         } else {
                             layer.msg("删除失败:" + data1.msg);
                         }
-                        setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/resourceColumnWebsitePage/resourceColumnWebsiteControl')", 500);
+                        setTimeout("loadPage('${pageContext.request.contextPath}/xk/super/systemResourcePage/systemResourceControl')", 500);
                     }
                 });
             });

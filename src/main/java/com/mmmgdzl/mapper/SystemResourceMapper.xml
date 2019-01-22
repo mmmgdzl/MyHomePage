@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.SystemResource" >
     <id column="srId" property="srid" jdbcType="INTEGER" />
     <result column="srName" property="srname" jdbcType="VARCHAR" />
+    <result column="srFileName" property="srfilename" jdbcType="VARCHAR" />
     <result column="srColumn" property="srcolumn" jdbcType="INTEGER" />
     <result column="srCreater" property="srcreater" jdbcType="INTEGER" />
     <result column="srCreateDate" property="srcreatedate" jdbcType="TIMESTAMP" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    srId, srName, srColumn, srCreater, srCreateDate, srEnable, srDesc
+    srId, srName, srFileName, srColumn, srCreater, srCreateDate, srEnable, srDesc
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.SystemResourceExample" >
     select
@@ -102,12 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mmmgdzl.pojo.SystemResource" >
-    insert into system_resource (srId, srName, srColumn, 
-      srCreater, srCreateDate, srEnable, 
-      srDesc)
-    values (#{srid,jdbcType=INTEGER}, #{srname,jdbcType=VARCHAR}, #{srcolumn,jdbcType=INTEGER}, 
-      #{srcreater,jdbcType=INTEGER}, #{srcreatedate,jdbcType=TIMESTAMP}, #{srenable,jdbcType=INTEGER}, 
-      #{srdesc,jdbcType=VARCHAR})
+    insert into system_resource (srId, srName, srFileName, 
+      srColumn, srCreater, srCreateDate, 
+      srEnable, srDesc)
+    values (#{srid,jdbcType=INTEGER}, #{srname,jdbcType=VARCHAR}, #{srfilename,jdbcType=VARCHAR}, 
+      #{srcolumn,jdbcType=INTEGER}, #{srcreater,jdbcType=INTEGER}, #{srcreatedate,jdbcType=TIMESTAMP}, 
+      #{srenable,jdbcType=INTEGER}, #{srdesc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.SystemResource" >
     insert into system_resource
@@ -117,6 +118,9 @@
       </if>
       <if test="srname != null" >
         srName,
+      </if>
+      <if test="srfilename != null" >
+        srFileName,
       </if>
       <if test="srcolumn != null" >
         srColumn,
@@ -140,6 +144,9 @@
       </if>
       <if test="srname != null" >
         #{srname,jdbcType=VARCHAR},
+      </if>
+      <if test="srfilename != null" >
+        #{srfilename,jdbcType=VARCHAR},
       </if>
       <if test="srcolumn != null" >
         #{srcolumn,jdbcType=INTEGER},
@@ -173,6 +180,9 @@
       <if test="record.srname != null" >
         srName = #{record.srname,jdbcType=VARCHAR},
       </if>
+      <if test="record.srfilename != null" >
+        srFileName = #{record.srfilename,jdbcType=VARCHAR},
+      </if>
       <if test="record.srcolumn != null" >
         srColumn = #{record.srcolumn,jdbcType=INTEGER},
       </if>
@@ -197,6 +207,7 @@
     update system_resource
     set srId = #{record.srid,jdbcType=INTEGER},
       srName = #{record.srname,jdbcType=VARCHAR},
+      srFileName = #{record.srfilename,jdbcType=VARCHAR},
       srColumn = #{record.srcolumn,jdbcType=INTEGER},
       srCreater = #{record.srcreater,jdbcType=INTEGER},
       srCreateDate = #{record.srcreatedate,jdbcType=TIMESTAMP},
@@ -211,6 +222,9 @@
     <set >
       <if test="srname != null" >
         srName = #{srname,jdbcType=VARCHAR},
+      </if>
+      <if test="srfilename != null" >
+        srFileName = #{srfilename,jdbcType=VARCHAR},
       </if>
       <if test="srcolumn != null" >
         srColumn = #{srcolumn,jdbcType=INTEGER},
@@ -233,6 +247,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.SystemResource" >
     update system_resource
     set srName = #{srname,jdbcType=VARCHAR},
+      srFileName = #{srfilename,jdbcType=VARCHAR},
       srColumn = #{srcolumn,jdbcType=INTEGER},
       srCreater = #{srcreater,jdbcType=INTEGER},
       srCreateDate = #{srcreatedate,jdbcType=TIMESTAMP},

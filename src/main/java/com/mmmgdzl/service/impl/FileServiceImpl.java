@@ -1,7 +1,9 @@
 package com.mmmgdzl.service.impl;
 
 import com.mmmgdzl.mapper.ResourceColumnWebsiteMapper;
+import com.mmmgdzl.mapper.SystemResourceMapper;
 import com.mmmgdzl.pojo.ResourceColumnWebsite;
+import com.mmmgdzl.pojo.SystemResource;
 import com.mmmgdzl.service.FileService;
 import com.mmmgdzl.domain.Result;
 import com.mmmgdzl.exception.XKException;
@@ -32,6 +34,8 @@ public class FileServiceImpl implements FileService {
     private String RESOURCE_TITLE_IMAGE_PATH;
     @Value("${RESOURCE_COLUMN_WEBSITE_LOGO_PATH}")
     private String RESOURCE_COLUMN_WEBSITE_LOGO_PATH;
+    @Value("${SYSTEM_RESOURCE_PATH}")
+    private String SYSTEM_RESOURCE_PATH;
 
     @Autowired
     private AdminMapper adminMapper;
@@ -39,6 +43,8 @@ public class FileServiceImpl implements FileService {
     private ResourceMapper resourceMapper;
     @Autowired
     private ResourceColumnWebsiteMapper resourceColumnWebsiteMapper;
+    @Autowired
+    private SystemResourceMapper systemResourceMapper;
     //该session用于服务器版本获取真实路径
     @Autowired
     private HttpSession httpSession;
@@ -141,7 +147,7 @@ public class FileServiceImpl implements FileService {
                 && !originalFilename.toLowerCase().endsWith(".gif"))
             throw new XKException("Logo图片的格式只能为.jpg或.png或.gif");
         //生成新的文件名 日期_毫秒.后缀
-        String fileName = createNewFileName(originalFilename);
+        String fileName = this.createNewFileName(originalFilename);
         //组装完整文件路径
         String fileSavePath = this.getRealPath() + RESOURCE_COLUMN_WEBSITE_LOGO_PATH + "/" + fileName;
         //保存文件
@@ -159,11 +165,42 @@ public class FileServiceImpl implements FileService {
         //获取资源栏目网站对象
         ResourceColumnWebsite resourceColumnWebsite = resourceColumnWebsiteMapper.selectByPrimaryKey(rcwid);
         //组装完整文件路径
-        String fileSavePath = getRealPath() + RESOURCE_COLUMN_WEBSITE_LOGO_PATH + "/" + resourceColumnWebsite.getRcwlogo();
+        String fileSavePath = this.getRealPath() + RESOURCE_COLUMN_WEBSITE_LOGO_PATH + "/" + resourceColumnWebsite.getRcwlogo();
         File titleImgFile = new File(fileSavePath);
         if(titleImgFile.exists()) {
             //如果文件存在则删除
             titleImgFile.delete();
+        }
+        return Result.OK();
+    }
+
+    @Override
+    public Result uploadSystemResource(MultipartFile srfile) {
+        //获取文件名
+        String originalFilename = srfile.getOriginalFilename();
+        //生成新的文件名 毫秒_原文件名
+        String fileName = System.currentTimeMillis() + "_" + originalFilename;
+        //组装完整文件路径
+        String fileSavePath = this.getRealPath() + SYSTEM_RESOURCE_PATH + "/" + fileName;
+        //保存文件
+        try {
+            srfile.transferTo(new File(fileSavePath));
+        } catch (IOException e) {
+            throw new XKException("保存系统资源时出错");
+        }
+        //返回执行成功信息(包含文件名称)
+        return Result.OK(fileName);
+    }
+
+    @Override
+    public Result deleteSystemResourceBySrid(Integer srid) {
+        //获取系统资源对象
+        SystemResource systemResource = systemResourceMapper.selectByPrimaryKey(srid);
+        //组装完整文件路径
+        String filePath = this.getRealPath() + SYSTEM_RESOURCE_PATH + "/" + systemResource.getSrfilename();
+        File file = new File(filePath);
+        if(file.exists()) {
+            file.delete();
         }
         return Result.OK();
     }
@@ -177,7 +214,7 @@ public class FileServiceImpl implements FileService {
 //            realPath = new File(httpSession.getServletContext().getRealPath("")).getParentFile().getPath() + "/resource/";
 //            System.out.println("realPath:" + realPath);
             //本地端
-            realPath = "F:\\apache-tomcat-7.0.52\\webapps\\resource\\";
+            realPath = "F:/apache-tomcat-7.0.52/webapps/resource/";
         }
         return realPath;
     }

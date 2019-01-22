@@ -76,7 +76,7 @@
      * 询问是否继续添加
      */
     function checkContinueAddAdmin() {
-        layer.confirm('要继续添加栏目吗?', function(index){
+        layer.confirm('要继续添加系统资源栏目吗?', function(index){
             $("#tf")[0].reset();
             layer.close(index);
         },function(index){

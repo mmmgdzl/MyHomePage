@@ -11,6 +11,7 @@ import com.mmmgdzl.service.SystemResourceColumnService;
 import com.mmmgdzl.utils.ConstantValueUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -111,5 +112,7 @@ public class SystemResourceColumnController {
     public String toAdminPage(@PathVariable String page) {
         return "xk/super/systemResourceColumnPage/" + page;
     }
+
+
 
 }

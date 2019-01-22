@@ -19,7 +19,6 @@ public interface FileService {
      */
     Result uploadRtitleimg(MultipartFile rtitleimg);
 
-
     /**
      * 根据资源rid删除标题图
      */
@@ -34,4 +33,15 @@ public interface FileService {
      * 根据资源栏目网站rcwid删除资源栏目网站logo
      */
     Result deleteResourceColumnWebsiteLogo(Integer rcwid);
+
+    /**
+     * 上传系统资源
+     */
+    Result uploadSystemResource(MultipartFile srfile);
+
+    /**
+     * 根据系统资源srid删除系统资源
+     */
+    Result deleteSystemResourceBySrid(Integer srid);
+
 }

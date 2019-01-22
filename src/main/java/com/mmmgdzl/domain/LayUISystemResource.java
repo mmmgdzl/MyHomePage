@@ -1,21 +1,19 @@
-package com.mmmgdzl.pojo;
+package com.mmmgdzl.domain;
 
-import java.util.Date;
-
-public class SystemResource {
+public class LayUISystemResource {
     private Integer srid;
 
     private String srname;
 
     private String srfilename;
 
-    private Integer srcolumn;
+    private String srcolumn;
 
-    private Integer srcreater;
+    private String srcreater;
 
-    private Date srcreatedate;
+    private String srcreatedate;
 
-    private Integer srenable;
+    private String srenable;
 
     private String srdesc;
 
@@ -32,7 +30,7 @@ public class SystemResource {
     }
 
     public void setSrname(String srname) {
-        this.srname = srname == null ? null : srname.trim();
+        this.srname = srname;
     }
 
     public String getSrfilename() {
@@ -40,38 +38,38 @@ public class SystemResource {
     }
 
     public void setSrfilename(String srfilename) {
-        this.srfilename = srfilename == null ? null : srfilename.trim();
+        this.srfilename = srfilename;
     }
 
-    public Integer getSrcolumn() {
+    public String getSrcolumn() {
         return srcolumn;
     }
 
-    public void setSrcolumn(Integer srcolumn) {
+    public void setSrcolumn(String srcolumn) {
         this.srcolumn = srcolumn;
     }
 
-    public Integer getSrcreater() {
+    public String getSrcreater() {
         return srcreater;
     }
 
-    public void setSrcreater(Integer srcreater) {
+    public void setSrcreater(String srcreater) {
         this.srcreater = srcreater;
     }
 
-    public Date getSrcreatedate() {
+    public String getSrcreatedate() {
         return srcreatedate;
     }
 
-    public void setSrcreatedate(Date srcreatedate) {
+    public void setSrcreatedate(String srcreatedate) {
         this.srcreatedate = srcreatedate;
     }
 
-    public Integer getSrenable() {
+    public String getSrenable() {
         return srenable;
     }
 
-    public void setSrenable(Integer srenable) {
+    public void setSrenable(String srenable) {
         this.srenable = srenable;
     }
 
@@ -80,6 +78,6 @@ public class SystemResource {
     }
 
     public void setSrdesc(String srdesc) {
-        this.srdesc = srdesc == null ? null : srdesc.trim();
+        this.srdesc = srdesc;
     }
 }
