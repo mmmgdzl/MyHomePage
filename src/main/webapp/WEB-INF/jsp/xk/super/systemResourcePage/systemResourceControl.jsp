@@ -7,6 +7,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:if test="${!empty param.select}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/layui.css?t=1542630986927" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/admin/layui/css/global.css?t=1542630986927-6" media="all">
+    <script src="${pageContext.request.contextPath}/static/js/jquery-1.4.4.min.js"></script>
+    <script async src="${pageContext.request.contextPath}/static/admin/layui/fromOtherWebSite/adsbygoogle.js"></script>
+    <script src="${pageContext.request.contextPath}/static/admin/layui/layui.js?t=1542630986927" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery-form.js" charset="utf-8"></script>
+</c:if>
 <!-- 内容主体区域 -->
 <div class="layui-tab-item layui-show">
     <div class="layui-main">
@@ -71,8 +79,13 @@
             <table class="layui-hide" id="table" lay-filter="table"></table>
 
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <c:if test="${empty param.select}">
+                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                </c:if>
+                <c:if test="${!empty param.select}">
+                    <a class="layui-btn layui-btn-xs" lay-event="select">选择</a>
+                </c:if>
             </script>
         </div>
     </div>
@@ -100,10 +113,10 @@
             ,toolbar: '#toolbarDemo'
             ,cols: [[
                 {checkbox: true}
-                ,{field:'srid', title: 'ID'}
+                ,{field:'srid', title: 'ID', width:60}
                 ,{field:'srname', title: '文件名称(点击下载)', templet: '#fileA', unresize: true}
                 ,{field:'srcreater', title: '创建用户'}
-                ,{field:'srcreatedate', title: '创建日期'}
+                ,{field:'srcreatedate', title: '创建日期', width:200}
                 ,{field:'srcolumn', title: '所属栏目'}
                 ,{field:'srenable', title: '状态'}
                 ,{field:'srdesc', title: '备注'}
@@ -178,6 +191,16 @@
                     return false;
                 }
                 window.open(data.srfilename);
+            } else if(obj.event === "select") {
+                if(data.aenable == "删除") {
+                    layer.msg("已删除的数据无法选择!");
+                    return;
+                }
+                //将选择的数据传输至父页面
+                parent.$("#sridSelect").val(data.srid);
+                parent.$("#srnameSelect").val(data.srname);
+                var index1 = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                parent.layer.close(index1);//关闭窗口
             }
         });
         //在页面完成加载后再次渲染

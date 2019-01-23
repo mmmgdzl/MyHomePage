@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <img id="outsideHeadImage" src="${resourceServer}/my/headImages/${sessionScope.admin.aheadimg}" style="width:30px;height:30px;border-radius:30px;"/>
                             &nbsp;
                             <ul class="navbar-nav navbar-right" style="margin: 0;padding: 0;list-style-type:none">
-                                <li class="dropdown yamm-fw yamm-half"><a href="javascript:void(0);" class="dropdown-toggle" xkfilter="flag">${sessionScope.admin.aname} <b class="fa fa-angle-down"></b></a>
+                                <li class="dropdown yamm-fw yamm-half"><a href="javascript:void(0);" class="dropdown-toggle">${sessionScope.admin.aname} <b class="fa fa-angle-down"></b></a>
                                     <ul class="dropdown-menu" style="min-width: 120px;margin: 10px 0; padding:5px 0;">
                                         <li>
                                             <div class="yamm-content clearfix" style="cursor: pointer;" onmouseover="$(this).css('background', '#f0f0f0');" onmouseleave="$(this).css('background', '#ffffff');" onclick="doLogout();">

@@ -152,7 +152,7 @@
                         <a class="javascript:;" href="javascript:;">系统设置</a>
                         <dl class="layui-nav-child">
                             <dd style="text-align: center;">
-                                <a href="${pageContext.request.contextPath}/xk/protect/indexConfig">主页设置</a>
+                                <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/systemConfigPage/indexConfig">主页设置</a>
                             </dd>
                         </dl>
                     </li>

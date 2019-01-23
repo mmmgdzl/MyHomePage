@@ -61,6 +61,8 @@ public class SystemResourceServiceImpl implements SystemResourceService {
             //添加查询条件
             if(systemResource.getSrname() != null)
                 criteria.andSrnameLike("%" + systemResource.getSrname() + "%");
+            if(systemResource.getSrfilename() != null)
+                criteria.andSrfilenameLike("%" + systemResource.getSrfilename() + "%");
             if(systemResource.getSrcolumn() != null)
                 criteria.andSrcolumnEqualTo(systemResource.getSrcolumn());
             if(systemResource.getSrcreater() != null)
@@ -164,5 +166,18 @@ public class SystemResourceServiceImpl implements SystemResourceService {
             systemResourceMapper.updateByPrimaryKeySelective(systemResource);
         }
         return Result.OK();
+    }
+
+    @Override
+    public SystemResource selectSystemResourceBySrfilename(String srfilename) {
+        //创建查询条件
+        SystemResource systemResource = new SystemResource();
+        systemResource.setSrfilename(srfilename);
+        //执行查询
+        List<SystemResource> systemResourceList = this.selectSystemResources(systemResource, 1, 1);
+        if(systemResourceList.size() == 0)
+            return null;
+        else
+            return systemResourceList.get(0);
     }
 }

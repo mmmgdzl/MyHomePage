@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 </head>
 <body>
-    <audio src="${resourceServer }/my/music/christmas-bg.mp3" autoplay="autoplay" loop="loop"></audio>
+    <audio src="${resourceServer }/my/systemResource/${INDEX_BACKGROUND_MUSIC_FILE_NAME}" autoplay="autoplay" loop="loop"></audio>
     <!-- LOADER -->
     <div id="preloader">
         <img class="preloader" src="${resourceServer }/images/loader.gif" alt="">
@@ -79,6 +79,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript">
     	//获取服务器地址
     	var resourceServer = "${resourceServer}";
+    	//获取背景视频文件名
+        var bgvideoFileName =  "${INDEX_BACKGROUND_VIDEO_FILE_NAME}";
     </script>
     <script src="${pageContext.request.contextPath }/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath }/static/js/bootstrap.min.js"></script>

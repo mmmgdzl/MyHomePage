@@ -64,4 +64,9 @@ public interface SystemResourceService {
      */
     Result deleteSystemResourceByIds(List<Integer> ids);
 
+    /**
+     * 通过文件名查询系统资源对象
+     */
+    SystemResource selectSystemResourceBySrfilename(String srfilename);
+
 }

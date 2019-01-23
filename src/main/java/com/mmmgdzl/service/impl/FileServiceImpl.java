@@ -178,8 +178,8 @@ public class FileServiceImpl implements FileService {
     public Result uploadSystemResource(MultipartFile srfile) {
         //获取文件名
         String originalFilename = srfile.getOriginalFilename();
-        //生成新的文件名 毫秒_原文件名
-        String fileName = System.currentTimeMillis() + "_" + originalFilename;
+        //生成新的文件名 日期_毫秒.后缀
+        String fileName = this.createNewFileName(originalFilename);
         //组装完整文件路径
         String fileSavePath = this.getRealPath() + SYSTEM_RESOURCE_PATH + "/" + fileName;
         //保存文件

@@ -2,6 +2,7 @@ package com.mmmgdzl.web.listener;
 
 import com.mmmgdzl.utils.ConstantValueUtil;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.aspectj.apache.bcel.classfile.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,15 @@ public class InitApplicationContextListener implements ServletContextListener {
 			//将资源服务器路径设置到applicationContext域中
 			String resourceServer = config.getString("RESOURCE_SERVER");
 			arg0.getServletContext().setAttribute("resourceServer", resourceServer);
+
+			//初始化主页设置
+			//初始化主页背景音乐文件
+			String INDEX_BACKGROUND_MUSIC_FILE_NAME = config.getString(ConstantValueUtil.INDEX_BACKGROUND_MUSIC_FILE_NAME);
+			arg0.getServletContext().setAttribute(ConstantValueUtil.INDEX_BACKGROUND_MUSIC_FILE_NAME, INDEX_BACKGROUND_MUSIC_FILE_NAME);
+			//初始化主页背景视频文件
+			String INDEX_BACKGROUND_VIDEO_FILE_NAME = config.getString(ConstantValueUtil.INDEX_BACKGROUND_VIDEO_FILE_NAME);
+			arg0.getServletContext().setAttribute(ConstantValueUtil.INDEX_BACKGROUND_VIDEO_FILE_NAME, INDEX_BACKGROUND_VIDEO_FILE_NAME);
+
 			//重现网站的访问量
 			//重现访问次数
 			String totalRequest = config.getString(ConstantValueUtil.TOTAL_REQUEST);
