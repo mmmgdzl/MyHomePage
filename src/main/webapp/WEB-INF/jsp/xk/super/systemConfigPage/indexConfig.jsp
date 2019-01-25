@@ -36,6 +36,10 @@
                 <button type="button" class="layui-btn" onclick="commitUpdate('${pageContext.request.contextPath}/xk/super/indexConfig/updateIndexVideo', 'video')">提交修改</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </form>
+            <form class="layui-form" action="">
+                <button type="button" class="layui-btn" onclick="restartTomcatServer()">重启服务器</button>
+            </form>
+
         </div>
     </div>
 </div>
@@ -80,6 +84,43 @@
             }
         };
         $("#" + xkfilter + "tf").ajaxSubmit(option);
+    }
+
+    var loadingIndex;
+    /**
+     * 执行重启服务器
+     */
+    function restartTomcatServer() {
+        $.post("${pageContext.request.contextPath}/xk/restartTomcatServer",
+            {},function(data) {
+                if(data.code == 200) {
+                    //显示加载层
+                    layer.msg('服务器重启中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: 'auto', time:10000000});
+                    //测试服务器是否重启成功
+                    setTimeout("testServer();", 5000);
+                }
+            }
+        );
+    }
+
+    /**
+     * 测试服务器是否重启成功
+     */
+    function testServer() {
+        $.ajax({
+            url:"${pageContext.request.contextPath}/xk/testServer",
+            dataType:"json",
+            success:function(data) {
+                //重启成功则关闭加载层并回到登录界面
+                layer.close(loadingIndex);
+                layer.msg("服务器重启成功,请重新登录!");
+                setTimeout("location.href='${pageContext.request.contextPath}/xk'", 800);
+            },
+            error:function() {
+                //失败则继续测试服务器是否重启成功
+                setTimeout("testServer();", 5000);
+            }
+        });
     }
 
     //弹出选择系统资源窗口

@@ -198,7 +198,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     //执行登出
     function doLogout() {
         $.ajax({
-            url:"/xk/protect/adminLogout",
+            url:"${pageContext.request.contextPath}/xk/protect/adminLogout",
             dataType:"json",
             success:function(data) {
                 layer.msg("退出登录成功!");

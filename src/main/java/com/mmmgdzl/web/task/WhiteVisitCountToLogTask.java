@@ -19,7 +19,7 @@ public class WhiteVisitCountToLogTask {
 
     private Logger logger = LoggerFactory.getLogger(WhiteVisitCountToLogTask.class);
 
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void whiteVisitorCountToLogTask() {
         try {
             //获取配置文件路径

@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="${pageContext.request.contextPath }/static/admin/layui/layui.js"></script>
 <script type="text/javascript">
     if(${empty param.visitFalse ? false : true}) {
-        location.href = "/xk";
+        location.href = "${pageContext.request.contextPath}/xk";
     }
 
     layui.use(['form','layer','jquery'], function () {

@@ -184,7 +184,7 @@
 <script>
     function logout() {
         $.ajax({
-            url:"/xk/protect/adminLogout",
+            url:"${pageContext.request.contextPath}/xk/protect/adminLogout",
             dataType:"json",
             success:function(data) {
                 //无论成功失败都要跳回到登录界面
@@ -207,8 +207,8 @@
     }
 
     window.onload = function() {
-        //加载欢迎页面
-        loadPage("${pageContext.request.contextPath}/xk/welcome");
+        //加载个人中心页面
+        loadPage("${pageContext.request.contextPath}/xk/protect/personalPage/personalCenter");
     }
 
 </script>

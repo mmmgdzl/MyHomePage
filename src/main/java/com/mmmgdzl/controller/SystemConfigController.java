@@ -1,14 +1,13 @@
 package com.mmmgdzl.controller;
 
 import com.mmmgdzl.domain.Result;
-import com.mmmgdzl.pojo.ResourceColumn;
-import com.mmmgdzl.pojo.ResourceColumnExample;
+import com.mmmgdzl.exception.XKException;
+import com.mmmgdzl.pojo.Admin;
 import com.mmmgdzl.pojo.SystemResource;
 import com.mmmgdzl.service.SystemResourceService;
 import com.mmmgdzl.utils.ConstantValueUtil;
-import com.mmmgdzl.web.listener.InitApplicationContextListener;
+import com.mmmgdzl.utils.SystemUtil;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.lang.management.ManagementFactory;
 
 @Controller
 public class SystemConfigController {
@@ -96,6 +97,86 @@ public class SystemConfigController {
             e.printStackTrace();
             return Result.build(500, "未知错误");
         }
+    }
+
+    /**
+     * 重启服务器
+     */
+    @RequestMapping("/xk/restartTomcatServer")
+    @ResponseBody
+    public Result restartTomcat(HttpSession session) {
+        try {
+            //获取当前用户判断是否为超级管理员
+            Admin currentAdmin = (Admin) session.getAttribute(ConstantValueUtil.ADMIN);
+            if(currentAdmin.getAlevel() != 0)
+                throw new XKException("只有超级管理员能够执行重启服务器操作!");
+
+            File directory = new File("");//设定为当前文件夹
+            String binPath = directory.getAbsolutePath();
+            String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+            System.out.println("---------pid:" + pid);
+            //判断是Windows系统还是linux系统
+            if(SystemUtil.isWindows()) {
+                File restart = new File(binPath + "\\restart.bat");
+                String bats = "call taskkill /F /PID " + pid + " && call ping -n 5 127.0.0.1>nul && "
+                        + "call " + binPath + "\\catalina.bat start";
+                FileOutputStream fos = new FileOutputStream(restart);
+                fos.write(bats.getBytes());
+                fos.flush();
+                fos.close();
+
+                File restartVbs = new File(binPath + "\\restart.vbs");
+                String vbs = "Set ws = CreateObject(\"Wscript.Shell\") \n" +
+                        "ws.run \"cmd /c restart/bat\",0";
+                fos = new FileOutputStream(restartVbs);
+                fos.write(vbs.getBytes());
+                fos.flush();
+                fos.close();
+                Runtime.getRuntime().exec("cmd /c start " + binPath + "\\restart.vbs");
+            } else {
+                String scriptString = "#!/bin/bash \n" +
+                        "tomcatpid=`ps -ef|grep " + binPath + " |grep java | awk ' { print $2 } '` \n"+
+                        "echo $tomcatpid \n" +
+                        "if [ $tomcatpid -eq 0 ];then \n" +
+                        "    echo 'tomcat is stop' \n" +
+                        "else \n" +
+                        "    kill -9 $tomcatpid & \n" +
+                        "    sleep 5 & \n" +
+                        "    cd " + binPath + " & \n" +
+                        "    rm -rf ../work/* & \n" +
+                        "fi \n" +
+                        "nohup sh " + binPath + "/startup.sh &";
+                File restart = new File(binPath + "/restart.sh");
+                FileOutputStream stream = new FileOutputStream(restart);
+                stream.write(scriptString.getBytes());
+                stream.flush();
+                stream.close();
+                try {
+                    //修改restart.sh的文件操作权限
+                    Process proc = Runtime.getRuntime().exec("chmod a+x " + binPath + "/restart.sh");
+                    //阻塞直到上述命令执行完
+                    proc.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            //返回成功结果
+            return Result.OK();
+        } catch (XKException e) {
+            return Result.build(500, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.build(500, "未知错误");
+        }
+    }
+
+    /**
+     * 测试服务器是否已经启动
+     */
+    @RequestMapping("/xk/testServer")
+    @ResponseBody
+    public Result testServer() {
+        return Result.OK();
     }
 
     /**
