@@ -4,6 +4,7 @@ import com.mmmgdzl.domain.Result;
 import com.mmmgdzl.exception.XKException;
 import com.mmmgdzl.pojo.Admin;
 import com.mmmgdzl.pojo.SystemResource;
+import com.mmmgdzl.service.DataIndexService;
 import com.mmmgdzl.service.SystemResourceService;
 import com.mmmgdzl.utils.ConstantValueUtil;
 import com.mmmgdzl.utils.SystemUtil;
@@ -26,6 +27,8 @@ public class SystemConfigController {
 
     @Autowired
     private SystemResourceService systemResourceService;
+    @Autowired
+    private DataIndexService dataIndexService;
 
     /**
      * 前往主页设置
@@ -36,10 +39,12 @@ public class SystemConfigController {
         //获取主页背景音频名称并放入
         SystemResource backgroundMusic = systemResourceService.selectSystemResourceBySrfilename(servletContext.
                 getAttribute(ConstantValueUtil.INDEX_BACKGROUND_MUSIC_FILE_NAME).toString());
-        model.addAttribute("backgroundMusicName", backgroundMusic.getSrname());
+        if(backgroundMusic != null)
+            model.addAttribute("backgroundMusicName", backgroundMusic.getSrname());
         //获取主页背景视频名称并放入
         SystemResource backgroundVideo = systemResourceService.selectSystemResourceBySrfilename(servletContext.
                 getAttribute(ConstantValueUtil.INDEX_BACKGROUND_VIDEO_FILE_NAME).toString());
+        if(backgroundVideo != null)
         model.addAttribute("backgroundVideoName", backgroundVideo.getSrname());
 
         return "xk/super/systemConfigPage/indexConfig";
@@ -55,13 +60,9 @@ public class SystemConfigController {
         try {
             //根据srid查询系统资源对象
             SystemResource systemResource = systemResourceService.selectSystemResourceBySrid(srid);
-            //将更改更新至配置文件
-            String profilepath = SystemConfigController.class.getResource("/").getPath() + "conf/resource.properties";
-            PropertiesConfiguration config = new PropertiesConfiguration(profilepath);
-            //设置自动保存
-            config.setAutoSave(true);
-            //写入访问次数
-            config.setProperty(ConstantValueUtil.INDEX_BACKGROUND_MUSIC_FILE_NAME, systemResource.getSrfilename());
+            //将更改更新至数据库
+            //写入背景音乐文件名
+            dataIndexService.updateDivalue(ConstantValueUtil.INDEX_BACKGROUND_MUSIC_FILE_NAME, systemResource.getSrfilename());
             //写入servletcontext域
             servletContext.setAttribute(ConstantValueUtil.INDEX_BACKGROUND_MUSIC_FILE_NAME, systemResource.getSrfilename());
 
@@ -82,13 +83,8 @@ public class SystemConfigController {
         try {
             //根据srid查询系统资源对象
             SystemResource systemResource = systemResourceService.selectSystemResourceBySrid(srid);
-            //将更改更新至配置文件
-            String profilepath = SystemConfigController.class.getResource("/").getPath() + "conf/resource.properties";
-            PropertiesConfiguration config = new PropertiesConfiguration(profilepath);
-            //设置自动保存
-            config.setAutoSave(true);
             //写入访问次数
-            config.setProperty(ConstantValueUtil.INDEX_BACKGROUND_VIDEO_FILE_NAME, systemResource.getSrfilename());
+            dataIndexService.updateDivalue(ConstantValueUtil.INDEX_BACKGROUND_VIDEO_FILE_NAME, systemResource.getSrfilename());
             //写入servletcontext域
             servletContext.setAttribute(ConstantValueUtil.INDEX_BACKGROUND_VIDEO_FILE_NAME, systemResource.getSrfilename());
 
@@ -114,7 +110,7 @@ public class SystemConfigController {
             File directory = new File("");//设定为当前文件夹
             String binPath = directory.getAbsolutePath();
             String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
-            System.out.println("---------pid:" + pid);
+//            System.out.println("---------pid:" + pid);
             //判断是Windows系统还是linux系统
             if(SystemUtil.isWindows()) {
                 File restart = new File(binPath + "\\restart.bat");

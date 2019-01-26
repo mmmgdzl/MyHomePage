@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmmgdzl.mapper.DataIndexMapper" >
+  <resultMap id="BaseResultMap" type="com.mmmgdzl.pojo.DataIndex" >
+    <id column="diId" property="diid" jdbcType="INTEGER" />
+    <result column="diName" property="diname" jdbcType="VARCHAR" />
+    <result column="diValue" property="divalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    diId, diName, diValue
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mmmgdzl.pojo.DataIndexExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from data_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from data_index
+    where diId = #{diid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from data_index
+    where diId = #{diid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mmmgdzl.pojo.DataIndexExample" >
+    delete from data_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mmmgdzl.pojo.DataIndex" >
+    insert into data_index (diId, diName, diValue
+      )
+    values (#{diid,jdbcType=INTEGER}, #{diname,jdbcType=VARCHAR}, #{divalue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmmgdzl.pojo.DataIndex" >
+    insert into data_index
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="diid != null" >
+        diId,
+      </if>
+      <if test="diname != null" >
+        diName,
+      </if>
+      <if test="divalue != null" >
+        diValue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="diid != null" >
+        #{diid,jdbcType=INTEGER},
+      </if>
+      <if test="diname != null" >
+        #{diname,jdbcType=VARCHAR},
+      </if>
+      <if test="divalue != null" >
+        #{divalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mmmgdzl.pojo.DataIndexExample" resultType="java.lang.Integer" >
+    select count(*) from data_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update data_index
+    <set >
+      <if test="record.diid != null" >
+        diId = #{record.diid,jdbcType=INTEGER},
+      </if>
+      <if test="record.diname != null" >
+        diName = #{record.diname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.divalue != null" >
+        diValue = #{record.divalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update data_index
+    set diId = #{record.diid,jdbcType=INTEGER},
+      diName = #{record.diname,jdbcType=VARCHAR},
+      diValue = #{record.divalue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmmgdzl.pojo.DataIndex" >
+    update data_index
+    <set >
+      <if test="diname != null" >
+        diName = #{diname,jdbcType=VARCHAR},
+      </if>
+      <if test="divalue != null" >
+        diValue = #{divalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where diId = #{diid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmmgdzl.pojo.DataIndex" >
+    update data_index
+    set diName = #{diname,jdbcType=VARCHAR},
+      diValue = #{divalue,jdbcType=VARCHAR}
+    where diId = #{diid,jdbcType=INTEGER}
+  </update>
+</mapper>

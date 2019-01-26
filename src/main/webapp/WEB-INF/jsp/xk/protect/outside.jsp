@@ -116,9 +116,9 @@
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">网站详情</a>
                         <dl class="layui-nav-child">
-                            <dd style="text-align: center;">
+                            <%--<dd style="text-align: center;">
                                 <a href="javascript:void(0);" onclick="toLoadPage(this)" value="${pageContext.request.contextPath}/xk/super/addAdmin">站点统计</a>
-                            </dd>
+                            </dd>--%>
                             <dd style="text-align: center;">
                                 <a href="http://www.mmmgdzl.cn:19999/" target="_blank">服务器状态</a>
                             </dd>

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //获取当前登录的管理员
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        request.setAttribute("currentAdmin", admin);
         return true;
     }
 
@@ -19,9 +22,9 @@ public class AdminInterceptor implements HandlerInterceptor {
         //获取请求的地址
         String uri = request.getRequestURI();
         //获取当前登录的管理员
-        Admin admin = (Admin) request.getSession().getAttribute("admin");
-        if(uri.indexOf("xk/protect") > 0 && admin == null) {
-            visitFalse(modelAndView);
+        Admin admin = (Admin) request.getAttribute("currentAdmin");
+            if(uri.indexOf("xk/protect") > 0 && admin == null) {
+                visitFalse(modelAndView);
         } else if(uri.indexOf("xk/admin") > 0 && (admin == null || admin.getAlevel() > 1)) {
             visitFalse(modelAndView);
         } else if(uri.indexOf("xk/super") > 0 && (admin == null || admin.getAlevel() > 0)) {

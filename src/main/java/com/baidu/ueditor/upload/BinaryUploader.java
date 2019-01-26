@@ -28,9 +28,9 @@ public class BinaryUploader {
 
 		String MY_ROOT_PATH;
 		//服务器版本
-//		MY_ROOT_PATH = new File(request.getSession().getServletContext().getRealPath("")).getParentFile().getPath() + "/resource";
+		MY_ROOT_PATH = new File(request.getSession().getServletContext().getRealPath("")).getParentFile().getPath() + "/resource";
 		//本地版本
-		MY_ROOT_PATH = "F:/apache-tomcat-7.0.52/webapps/resource";
+//		MY_ROOT_PATH = "F:/apache-tomcat-7.0.52/webapps/resource";
 
 
 		FileItemStream fileStream = null;

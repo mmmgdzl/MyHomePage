@@ -21,11 +21,11 @@
      */
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
     //强行修改URL(本地版本)
-	URL = "http://localhost:8082/static/admin/ueditor/";
+	// URL = "http://localhost:8082/static/admin/ueditor/";
     /**
 	 * 服务器版本
      */
-    // URL = "http://www.mmmgdzl.cn/static/admin/ueditor/";
+    URL = "http://www.mmmgdzl.cn/static/admin/ueditor/";
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
      */

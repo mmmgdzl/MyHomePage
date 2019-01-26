@@ -27,14 +27,43 @@
     </filter-mapping>
 
     <!-- 解决post乱码 -->
+    <!--<filter>-->
+        <!--<filter-name>CharacterEncodingFilter</filter-name>-->
+        <!--<filter-class>com.mmmgdzl.web.filter.GenericEncodingFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>CharacterEncodingFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!-- 服务器版 -->
     <filter>
-        <filter-name>CharacterEncodingFilter</filter-name>
-        <filter-class>com.mmmgdzl.web.filter.GenericEncodingFilter</filter-class>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
-        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- 配置spring配置文件 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/applicationContext*.xml</param-value>
+    </context-param>
+
+    <!-- 使用监听器加载Spring配置文件 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <!-- 监听器配置 -->
     <!-- 配置servletContext初始化监听器 -->
     <listener>
@@ -58,16 +87,7 @@
     </listener>
     <!-- #############################################功能配置END############################################## -->
 
-    <!-- 配置spring配置文件 -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/applicationContext*.xml</param-value>
-    </context-param>
 
-    <!-- 使用监听器加载Spring配置文件 -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
 
     <!-- 配置SrpingMVC的前端控制器 -->
     <servlet>

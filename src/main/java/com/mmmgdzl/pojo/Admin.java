@@ -1,8 +1,9 @@
 package com.mmmgdzl.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Admin {
+public class Admin implements Serializable {
     private Integer aid;
 
     private String aaccount;

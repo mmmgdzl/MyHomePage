@@ -211,10 +211,9 @@ public class FileServiceImpl implements FileService {
     private String getRealPath() {
         if(realPath == null) {
             //如果是服务端
-//            realPath = new File(httpSession.getServletContext().getRealPath("")).getParentFile().getPath() + "/resource/";
-//            System.out.println("realPath:" + realPath);
+            realPath = new File(httpSession.getServletContext().getRealPath("")).getParentFile().getPath() + "/resource/";
             //本地端
-            realPath = "F:/apache-tomcat-7.0.52/webapps/resource/";
+//            realPath = "F:/apache-tomcat-7.0.52/webapps/resource/";
         }
         return realPath;
     }
